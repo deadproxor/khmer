@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a1f3a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ខ្មែរ">
+<title>ខ្មែរ — Учи кхмерский</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;600;700&family=Inter:wght@400;500;600;700&display=block" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #1a1f3a;
+  --bg2: #252b4a;
+  --bg3: #2e3560;
+  --gold: #e8a94d;
+  --gold-dim: #c48830;
+  --cream: #f5f0e8;
+  --cream-dim: #a09880;
+  --green: #5cba8a;
+  --red: #e05c5c;
+  --blue: #5c8ae0;
+  --card-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-khmer: 'Noto Sans Khmer', sans-serif;
+}
+
+[data-theme="light"] {
+  --bg: #f0ede6;
+  --bg2: #ffffff;
+  --bg3: #e4e0d8;
+  --gold: #b8762a;
+  --gold-dim: #9a6020;
+  --cream: #1a1a1a;
+  --cream-dim: #666655;
+  --card-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--font-ui);
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ── APP SHELL ── */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ── HEADER ── */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  background: var(--bg);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.logo {
+  font-family: var(--font-khmer);
+  font-size: 22px;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.header-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.streak-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg2);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.streak-badge .fire { font-size: 15px; }
+
+.known-badge {
+  font-size: 13px;
+  color: var(--cream-dim);
+  font-weight: 500;
+}
+.known-badge span { color: var(--cream); font-weight: 700; }
+
+/* ── NAV TABS ── */
+nav {
+  display: flex;
+  background: var(--bg2);
+  margin: 0 16px;
+  border-radius: var(--radius);
+  padding: 3px;
+  flex-shrink: 0;
+  gap: 2px;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: 13px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cream-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: transparent;
+  letter-spacing: 0.01em;
+}
+
+.tab.active {
+  background: var(--bg3);
+  color: var(--cream);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* ── CATEGORY FILTER ── */
+.category-bar {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+.category-bar::-webkit-scrollbar { display: none; }
+
+.cat-chip {
+  flex-shrink: 0;
+  background: var(--bg2);
+  border: 1.5px solid transparent;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cream-dim);
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.cat-chip.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(232,169,77,0.1);
+}
+
+/* ── SCREEN AREA ── */
+#screen {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── CARDS SCREEN ── */
+#cards-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 16px;
+}
+
+/* Card — checkbox flip */
+#card-flip { display: none; }
+
+.card-label {
+  min-width: 300px;
+  display: block;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card-face-front,
+.card-face-back {
+  width: 100%;
+  background: var(--bg2);
+  border-radius: 20px;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  gap: 10px;
+  min-height: 210px;
+  text-align: center;
+}
+
+/* back hidden by default */
+.card-face-back { display: none; }
+
+/* when checkbox checked: hide front, show back, hide label cursor */
+#card-flip:checked ~ .card-wrap .card-face-front { display: none; }
+#card-flip:checked ~ .card-wrap .card-face-back   { display: flex; }
+/* #card-flip:checked ~ .card-wrap .card-label — no longer blocked after flip */
+
+/* show rating buttons when checked */
+#card-flip:checked ~ .rating-btns { opacity: 1; pointer-events: all; }
+
+.card-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cream-dim);
+}
+
+.card-khmer {
+  font-family: var(--font-khmer);
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.card-transcription {
+  font-size: 14px;
+  color: var(--cream-dim);
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+.card-russian {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--cream);
+  text-align: center;
+  margin-top: 4px;
+}
+
+.card-rus-trans {
+  font-size: 14px;
+  color: var(--cream-dim);
+  font-style: italic;
+}
+
+.card-tap-hint {
+  font-size: 12px;
+  color: var(--cream-dim);
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.7;
+}
+
+/* Rating buttons */
+.rating-btns {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 360px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+.rating-btn {
+  flex: 1;
+  padding: 14px 8px;
+  border-radius: var(--radius);
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  letter-spacing: 0.01em;
+}
+.rating-btn .sub { font-size: 10px; font-weight: 500; opacity: 0.75; }
+.rating-btn:active { transform: scale(0.95); }
+
+.btn-hard { background: rgba(224,92,92,0.15); color: var(--red); border: 1.5px solid rgba(224,92,92,0.3); }
+.btn-ok   { background: rgba(92,138,224,0.15); color: var(--blue); border: 1.5px solid rgba(92,138,224,0.3); }
+.btn-easy { background: rgba(92,186,138,0.15); color: var(--green); border: 1.5px solid rgba(92,186,138,0.3); }
+
+.btn-hard:active { background: rgba(224,92,92,0.3); }
+.btn-ok:active   { background: rgba(92,138,224,0.3); }
+.btn-easy:active { background: rgba(92,186,138,0.3); }
+
+/* Session counter */
+.session-info {
+  font-size: 13px;
+  color: var(--cream-dim);
+  text-align: center;
+}
+.session-info strong { color: var(--cream); }
+
+/* Mode toggle (card direction) */
+.mode-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.direction-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg2);
+  border-radius: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--cream-dim);
+  border: none;
+  transition: all 0.18s;
+}
+.direction-toggle:active { opacity: 0.7; }
+.direction-toggle .arrow { color: var(--gold); }
+
+/* Done state */
+.done-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--bg2);
+  border-radius: 20px;
+  padding: 40px 28px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--card-shadow);
+}
+.done-icon { font-size: 56px; }
+.done-title { font-size: 22px; font-weight: 700; }
+.done-subtitle { font-size: 14px; color: var(--cream-dim); line-height: 1.5; }
+.done-btn {
+  background: var(--gold);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius);
+  padding: 14px 32px;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.done-btn:active { transform: scale(0.97); opacity: 0.9; }
+
+/* ── QUIZ SCREEN ── */
+#quiz-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.quiz-question {
+  background: var(--bg2);
+  border-radius: 20px;
+  padding: 32px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--card-shadow);
+}
+
+.quiz-khmer {
+  font-family: var(--font-khmer);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+.quiz-score {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  font-size: 13px;
+}
+.score-correct { color: var(--green); font-weight: 600; }
+.score-wrong   { color: var(--red); font-weight: 600; }
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.quiz-option {
+  background: var(--bg2);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  padding: 18px 12px;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cream);
+  cursor: pointer;
+  transition: all 0.18s;
+  text-align: center;
+  line-height: 1.3;
+}
+.quiz-option:active { transform: scale(0.97); }
+.quiz-option.correct { border-color: var(--green); background: rgba(92,186,138,0.15); color: var(--green); }
+.quiz-option.wrong   { border-color: var(--red);   background: rgba(224,92,92,0.15);  color: var(--red); }
+
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--cream-dim);
+}
+.quiz-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--bg3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+/* ── STATS SCREEN ── */
+#stats-screen {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stats-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.stat-card {
+  background: var(--bg2);
+  border-radius: var(--radius);
+  padding: 16px 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--cream-dim);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cream-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0 2px;
+}
+
+/* Weekly chart */
+.week-chart {
+  background: var(--bg2);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.week-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 70px;
+}
+.week-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+  justify-content: flex-end;
+}
+.week-bar {
+  width: 100%;
+  background: var(--gold);
+  border-radius: 4px 4px 0 0;
+  opacity: 0.8;
+  min-height: 3px;
+  transition: height 0.4s;
+}
+.week-bar.today { opacity: 1; }
+.week-day {
+  font-size: 10px;
+  color: var(--cream-dim);
+  font-weight: 500;
+  text-align: center;
+}
+.week-count {
+  font-size: 10px;
+  color: var(--cream-dim);
+  text-align: center;
+  margin-top: -2px;
+}
+
+/* Category progress */
+.cat-progress-list {
+  background: var(--bg2);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.cat-progress-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cat-progress-item:last-child { border-bottom: none; }
+.cat-progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+.cat-name { font-weight: 500; }
+.cat-count { color: var(--cream-dim); font-size: 12px; }
+.cat-bar-bg {
+  height: 4px;
+  background: var(--bg3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.cat-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.5s;
+}
+
+/* Actions */
+.actions-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.action-btn {
+  width: 100%;
+  background: var(--bg2);
+  border: 1.5px solid var(--bg3);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cream);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.18s;
+}
+.action-btn:active { background: var(--bg3); }
+.action-btn.danger { color: var(--red); border-color: rgba(224,92,92,0.3); }
+.action-btn .ico { font-size: 18px; width: 24px; text-align: center; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: calc(80px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--bg3);
+  color: var(--cream);
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+  z-index: 100;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-overlay.show { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--bg2);
+  border-radius: 20px 20px 0 0;
+  padding: 24px 20px;
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform: translateY(40px);
+  transition: transform 0.3s;
+}
+.modal-overlay.show .modal { transform: translateY(0); }
+.modal-title { font-size: 18px; font-weight: 700; }
+.modal-subtitle { font-size: 14px; color: var(--cream-dim); line-height: 1.5; }
+.modal-btns { display: flex; gap: 10px; }
+.modal-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: var(--radius);
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.modal-btn.cancel { background: var(--bg3); color: var(--cream); }
+.modal-btn.confirm { background: var(--red); color: #fff; }
+.modal-btn:active { opacity: 0.8; }
+
+/* Bottom safe area */
+.bottom-safe {
+  height: max(16px, env(safe-area-inset-bottom));
+  flex-shrink: 0;
+}
+
+/* Empty state */
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  padding: 32px;
+}
+.empty-icon { font-size: 48px; opacity: 0.5; }
+.empty-text { font-size: 15px; color: var(--cream-dim); line-height: 1.5; }
+
+/* Scroll fix */
+#stats-screen::-webkit-scrollbar { display: none; }
+#stats-screen { scrollbar-width: none; }
+#quiz-screen::-webkit-scrollbar { display: none; }
+#quiz-screen { scrollbar-width: none; }
+
+/* Theme toggle */
+.theme-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+.theme-btn:active { transform: scale(0.85); }
+
+/* Loading */
+.loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+.loading-khmer {
+  font-family: var(--font-khmer);
+  font-size: 48px;
+  color: var(--gold);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="logo">ខ្មែរ</div>
+    <div class="header-stats">
+      <button class="theme-btn" id="theme-btn" title="Сменить тему">🌙</button>
+      <div class="streak-badge"><span class="fire">🔥</span><span id="streak-count">0</span></div>
+      <div class="known-badge">Знаю <span id="known-count">0</span>/<span id="total-count">0</span></div>
+    </div>
+  </header>
+
+  <nav>
+    <button class="tab active" data-tab="cards">Карточки</button>
+    <button class="tab" data-tab="quiz">Квиз</button>
+    <button class="tab" data-tab="stats">Статистика</button>
+  </nav>
+
+  <div class="category-bar" id="category-bar"></div>
+
+  <div id="screen">
+    <!-- CARDS -->
+    <div id="cards-screen">
+      <div class="loading">
+        <div class="loading-khmer">ក</div>
+        <div style="font-size:13px;color:var(--cream-dim)">Загрузка...</div>
+      </div>
+    </div>
+
+    <!-- QUIZ (hidden) -->
+    <div id="quiz-screen" style="display:none"></div>
+
+    <!-- STATS (hidden) -->
+    <div id="stats-screen" style="display:none"></div>
+  </div>
+
+  <div class="bottom-safe"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Сбросить прогресс?</div>
+    <div class="modal-subtitle" id="modal-subtitle">Весь прогресс будет удалён. Это действие нельзя отменить.</div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" id="modal-cancel">Отмена</button>
+      <button class="modal-btn confirm" id="modal-confirm">Сбросить</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+// DICTIONARY — 446 words, 19 categories
+// ════════════════════════════════════════
+const DICT = [
+  // МЕСТОИМЕНИЯ
+  {id:1,k:'ខ្ញុំ',l:'khnhom',r:'кхньом',ru:'я',cat:'Местоимения'},
+  {id:2,k:'អ្នក',l:'neak',r:'ниэк',ru:'ты / вы',cat:'Местоимения'},
+  {id:3,k:'គាត់',l:'koat',r:'коат',ru:'он / она',cat:'Местоимения'},
+  {id:4,k:'យើង',l:'yeung',r:'юэнг',ru:'мы',cat:'Местоимения'},
+  {id:5,k:'ពួកគេ',l:'puok ke',r:'пуок ке',ru:'они',cat:'Местоимения'},
+  {id:6,k:'នេះ',l:'nih',r:'ни',ru:'это / здесь',cat:'Местоимения'},
+  {id:7,k:'នោះ',l:'nuh',r:'ну',ru:'то / там',cat:'Местоимения'},
+  {id:8,k:'អ្វី',l:'avey',r:'авей',ru:'что',cat:'Местоимения'},
+  {id:9,k:'ណា',l:'na',r:'на',ru:'который / какой',cat:'Местоимения'},
+  {id:10,k:'ណាមួយ',l:'na muoy',r:'на муой',ru:'какой-то',cat:'Местоимения'},
+  // ГЛАГОЛЫ
+  {id:11,k:'ជា',l:'chea',r:'чиэ',ru:'быть / являться',cat:'Глаголы'},
+  {id:12,k:'មាន',l:'mean',r:'миэн',ru:'иметь / есть',cat:'Глаголы'},
+  {id:13,k:'ទៅ',l:'tov',r:'тов',ru:'идти / ехать',cat:'Глаголы'},
+  {id:14,k:'មក',l:'mok',r:'мок',ru:'приходить',cat:'Глаголы'},
+  {id:15,k:'ញាំ',l:'nyam',r:'ньям',ru:'есть / кушать',cat:'Глаголы'},
+  {id:16,k:'ផឹក',l:'phoek',r:'пхэк',ru:'пить',cat:'Глаголы'},
+  {id:17,k:'ដេក',l:'dek',r:'дэк',ru:'спать',cat:'Глаголы'},
+  {id:18,k:'ក្រោក',l:'kraok',r:'краок',ru:'вставать',cat:'Глаголы'},
+  {id:19,k:'និយាយ',l:'niyeay',r:'ни-йиэй',ru:'говорить',cat:'Глаголы'},
+  {id:20,k:'ស្តាប់',l:'sdap',r:'сдап',ru:'слушать',cat:'Глаголы'},
+  {id:21,k:'មើល',l:'meul',r:'мэль',ru:'смотреть',cat:'Глаголы'},
+  {id:22,k:'អាន',l:'an',r:'ан',ru:'читать',cat:'Глаголы'},
+  {id:23,k:'សរសេរ',l:'soser',r:'сосэр',ru:'писать',cat:'Глаголы'},
+  {id:24,k:'ទិញ',l:'tinh',r:'тинь',ru:'покупать',cat:'Глаголы'},
+  {id:25,k:'លក់',l:'loak',r:'лоак',ru:'продавать',cat:'Глаголы'},
+  {id:26,k:'ដឹង',l:'doeng',r:'дынг',ru:'знать',cat:'Глаголы'},
+  {id:27,k:'យល់',l:'yol',r:'йоль',ru:'понимать',cat:'Глаголы'},
+  {id:28,k:'ចង់',l:'jong',r:'чонг',ru:'хотеть',cat:'Глаголы'},
+  {id:29,k:'ចូលចិត្ត',l:'chol chet',r:'чоль чет',ru:'нравиться / любить',cat:'Глаголы'},
+  {id:30,k:'ធ្វើ',l:'tveu',r:'твэй',ru:'делать',cat:'Глаголы'},
+  {id:31,k:'ជួប',l:'chuob',r:'чуоп',ru:'встречать',cat:'Глаголы'},
+  {id:32,k:'ស្រឡាញ់',l:'srolanh',r:'сролань',ru:'любить (человека)',cat:'Глаголы'},
+  {id:33,k:'ជួយ',l:'chuoy',r:'чуой',ru:'помогать',cat:'Глаголы'},
+  {id:34,k:'រៀន',l:'rien',r:'риэн',ru:'учиться',cat:'Глаголы'},
+  {id:35,k:'បង្រៀន',l:'bangrien',r:'бангриэн',ru:'учить (преподавать)',cat:'Глаголы'},
+  {id:36,k:'ធ្វើការ',l:'tveu kar',r:'твэй кар',ru:'работать',cat:'Глаголы'},
+  {id:37,k:'លេង',l:'leng',r:'лэнг',ru:'играть',cat:'Глаголы'},
+  {id:38,k:'ដំណើរ',l:'damnour',r:'дамноэр',ru:'путешествовать',cat:'Глаголы'},
+  {id:39,k:'ត្រឡប់',l:'trolob',r:'тролоп',ru:'возвращаться',cat:'Глаголы'},
+  {id:40,k:'ឈប់',l:'chhob',r:'чхоп',ru:'останавливаться',cat:'Глаголы'},
+  {id:41,k:'ចាប់ផ្ដើម',l:'chap phdaem',r:'чап пхдаем',ru:'начинать',cat:'Глаголы'},
+  {id:42,k:'បញ្ចប់',l:'banjob',r:'банчоп',ru:'заканчивать',cat:'Глаголы'},
+  {id:43,k:'ចាំ',l:'cham',r:'чам',ru:'ждать / помнить',cat:'Глаголы'},
+  {id:44,k:'ភ្លេច',l:'plech',r:'плэч',ru:'забывать',cat:'Глаголы'},
+  {id:45,k:'ខ្លាច',l:'khlach',r:'кхлач',ru:'бояться',cat:'Глаголы'},
+  // СУЩЕСТВИТЕЛЬНЫЕ (общие)
+  {id:46,k:'ផ្ទះ',l:'pteah',r:'птиэ',ru:'дом',cat:'Существительные'},
+  {id:47,k:'ផ្លូវ',l:'phlov',r:'пхлов',ru:'дорога / улица',cat:'Существительные'},
+  {id:48,k:'ទីក្រុង',l:'tikrong',r:'тикронг',ru:'город',cat:'Существительные'},
+  {id:49,k:'ប្រទេស',l:'prateh',r:'пратэ',ru:'страна',cat:'Существительные'},
+  {id:50,k:'ដំបូល',l:'damboul',r:'дамбуль',ru:'крыша',cat:'Существительные'},
+  {id:51,k:'ទឹក',l:'teuk',r:'тык',ru:'вода',cat:'Существительные'},
+  {id:52,k:'ភ្លើង',l:'phloeng',r:'пхлынг',ru:'огонь / свет',cat:'Существительные'},
+  {id:53,k:'ខ្យល់',l:'khyol',r:'кхйоль',ru:'ветер / воздух',cat:'Существительные'},
+  {id:54,k:'ពេលវេលា',l:'pelvelea',r:'пэлвэлэа',ru:'время',cat:'Существительные'},
+  {id:55,k:'ថ្ងៃ',l:'thnai',r:'тхней',ru:'день / солнце',cat:'Существительные'},
+  {id:56,k:'យប់',l:'yob',r:'йоп',ru:'ночь',cat:'Существительные'},
+  {id:57,k:'ព្រឹក',l:'proek',r:'прык',ru:'утро',cat:'Существительные'},
+  {id:58,k:'ល្ងាច',l:'lngeach',r:'лнгиач',ru:'вечер',cat:'Существительные'},
+  {id:59,k:'ឆ្នាំ',l:'chnam',r:'чнам',ru:'год',cat:'Существительные'},
+  {id:60,k:'ខែ',l:'khe',r:'кхэ',ru:'месяц',cat:'Существительные'},
+  {id:61,k:'សប្ដាហ៍',l:'sapda',r:'сапда',ru:'неделя',cat:'Существительные'},
+  {id:62,k:'ម៉ោង',l:'maong',r:'маонг',ru:'час',cat:'Существительные'},
+  {id:63,k:'នាទី',l:'neati',r:'ниэти',ru:'минута',cat:'Существительные'},
+  {id:64,k:'ឈ្មោះ',l:'chhmuoh',r:'чхмуо',ru:'имя',cat:'Существительные'},
+  {id:65,k:'ភាសា',l:'phiesa',r:'пхиэса',ru:'язык',cat:'Существительные'},
+  // ЕДА
+  {id:66,k:'បាយ',l:'bay',r:'бай',ru:'рис (варёный)',cat:'Еда'},
+  {id:67,k:'នំ',l:'nom',r:'ном',ru:'пирог / хлеб',cat:'Еда'},
+  {id:68,k:'ត្រី',l:'trei',r:'трей',ru:'рыба',cat:'Еда'},
+  {id:69,k:'សាច់',l:'sach',r:'сач',ru:'мясо',cat:'Еда'},
+  {id:70,k:'មាន់',l:'moan',r:'моан',ru:'курица',cat:'Еда'},
+  {id:71,k:'ជ្រូក',l:'chrouk',r:'чроук',ru:'свинина / свинья',cat:'Еда'},
+  {id:72,k:'គោ',l:'ko',r:'ко',ru:'говядина / корова',cat:'Еда'},
+  {id:73,k:'បន្លែ',l:'bonle',r:'бонлэ',ru:'овощи',cat:'Еда'},
+  {id:74,k:'ផ្លែឈើ',l:'phle chheu',r:'пхлэ чхэй',ru:'фрукты',cat:'Еда'},
+  {id:75,k:'ស្ករ',l:'skor',r:'скор',ru:'сахар',cat:'Еда'},
+  {id:76,k:'អំបិល',l:'ambel',r:'амбэль',ru:'соль',cat:'Еда'},
+  {id:77,k:'ប្រេង',l:'breng',r:'брэнг',ru:'масло',cat:'Еда'},
+  {id:78,k:'ទឹកស',l:'teuk sor',r:'тык сор',ru:'молоко',cat:'Еда'},
+  {id:79,k:'ស៊ុត',l:'sut',r:'сут',ru:'яйцо',cat:'Еда'},
+  {id:80,k:'ស្ទឹង',l:'stoeng',r:'стынг',ru:'суп',cat:'Еда'},
+  {id:81,k:'ហាង',l:'hang',r:'ханг',ru:'магазин / кафе',cat:'Еда'},
+  {id:82,k:'ភ្លើងឆ្អិន',l:'phloeng chhaen',r:'пхлынг чхаин',ru:'готовить (варить)',cat:'Еда'},
+  {id:83,k:'ឆ្ងាញ់',l:'chhnganh',r:'чхнгань',ru:'вкусный',cat:'Еда'},
+  {id:84,k:'ហឹរ',l:'hoer',r:'хыр',ru:'острый (вкус)',cat:'Еда'},
+  {id:85,k:'ផ្អែម',l:'phaaem',r:'пхаэм',ru:'сладкий',cat:'Еда'},
+  {id:86,k:'ជូរ',l:'chour',r:'чоэр',ru:'кислый',cat:'Еда'},
+  {id:87,k:'ល្វីង',l:'lving',r:'лвинг',ru:'манго',cat:'Еда'},
+  {id:88,k:'ចេក',l:'chek',r:'чэк',ru:'банан',cat:'Еда'},
+  {id:89,k:'ម្នាស់',l:'mnas',r:'мнас',ru:'ананас',cat:'Еда'},
+  {id:90,k:'ទទឹម',l:'totuem',r:'тотым',ru:'помидор',cat:'Еда'},
+  // ЧИСЛА
+  {id:91,k:'មួយ',l:'muoy',r:'муой',ru:'один',cat:'Числа'},
+  {id:92,k:'ពីរ',l:'pi',r:'пи',ru:'два',cat:'Числа'},
+  {id:93,k:'បី',l:'bei',r:'бэй',ru:'три',cat:'Числа'},
+  {id:94,k:'បួន',l:'boun',r:'бон',ru:'четыре',cat:'Числа'},
+  {id:95,k:'ប្រាំ',l:'bram',r:'брам',ru:'пять',cat:'Числа'},
+  {id:96,k:'ប្រាំមួយ',l:'bram muoy',r:'брам муой',ru:'шесть',cat:'Числа'},
+  {id:97,k:'ប្រាំពីរ',l:'bram pi',r:'брам пи',ru:'семь',cat:'Числа'},
+  {id:98,k:'ប្រាំបី',l:'bram bei',r:'брам бэй',ru:'восемь',cat:'Числа'},
+  {id:99,k:'ប្រាំបួន',l:'bram boun',r:'брам бон',ru:'девять',cat:'Числа'},
+  {id:100,k:'ដប់',l:'dob',r:'доп',ru:'десять',cat:'Числа'},
+  {id:101,k:'ដប់មួយ',l:'dob muoy',r:'доп муой',ru:'одиннадцать',cat:'Числа'},
+  {id:102,k:'ដប់ពីរ',l:'dob pi',r:'доп пи',ru:'двенадцать',cat:'Числа'},
+  {id:103,k:'ម្ភៃ',l:'mphe',r:'мпхэй',ru:'двадцать',cat:'Числа'},
+  {id:104,k:'សាមសិប',l:'saamsep',r:'саамсэп',ru:'тридцать',cat:'Числа'},
+  {id:105,k:'សែសិប',l:'saesep',r:'сэсэп',ru:'сорок',cat:'Числа'},
+  {id:106,k:'ហាសិប',l:'haasep',r:'хасэп',ru:'пятьдесят',cat:'Числа'},
+  {id:107,k:'មួយរយ',l:'muoy roy',r:'муой рой',ru:'сто',cat:'Числа'},
+  {id:108,k:'មួយពាន់',l:'muoy poan',r:'муой поан',ru:'тысяча',cat:'Числа'},
+  {id:109,k:'ពាក់កណ្ដាល',l:'peak kandal',r:'пиак кандаль',ru:'половина',cat:'Числа'},
+  {id:110,k:'ទីមួយ',l:'ti muoy',r:'ти муой',ru:'первый',cat:'Числа'},
+  // ЦВЕТА
+  {id:111,k:'ក្រហម',l:'krahom',r:'кратхом',ru:'красный',cat:'Цвета'},
+  {id:112,k:'លឿង',l:'luong',r:'лыонг',ru:'жёлтый',cat:'Цвета'},
+  {id:113,k:'បៃតង',l:'baitong',r:'байтонг',ru:'зелёный',cat:'Цвета'},
+  {id:114,k:'ខៀវ',l:'khiev',r:'кхиэв',ru:'синий / голубой',cat:'Цвета'},
+  {id:115,k:'ស',l:'sor',r:'сор',ru:'белый',cat:'Цвета'},
+  {id:116,k:'ខ្មៅ',l:'kmav',r:'кмав',ru:'чёрный',cat:'Цвета'},
+  {id:117,k:'ត្នោត',l:'tnaot',r:'тнаот',ru:'коричневый / серый',cat:'Цвета'},
+  {id:118,k:'ក្រូចឆ្មា',l:'krouch chhma',r:'кроуч чхма',ru:'оранжевый',cat:'Цвета'},
+  {id:119,k:'ស្វាយ',l:'svay',r:'свай',ru:'фиолетовый',cat:'Цвета'},
+  {id:120,k:'ផ្កាឈូក',l:'phka chhuk',r:'пхка чхук',ru:'розовый',cat:'Цвета'},
+  // СЕМЬЯ / ЛЮДИ
+  {id:121,k:'ម្ដាយ',l:'mdai',r:'мдай',ru:'мама',cat:'Семья'},
+  {id:122,k:'ឪពុក',l:'opouk',r:'опоук',ru:'папа',cat:'Семья'},
+  {id:123,k:'ប្អូន',l:'baon',r:'баон',ru:'младший брат/сестра',cat:'Семья'},
+  {id:124,k:'បង',l:'bong',r:'бонг',ru:'старший брат/сестра',cat:'Семья'},
+  {id:125,k:'ជីដូន',l:'chi don',r:'чи дон',ru:'бабушка',cat:'Семья'},
+  {id:126,k:'ជីតា',l:'chi ta',r:'чи та',ru:'дедушка',cat:'Семья'},
+  {id:127,k:'កូន',l:'kon',r:'кон',ru:'ребёнок',cat:'Семья'},
+  {id:128,k:'ប្ដី',l:'bde',r:'бдэй',ru:'муж',cat:'Семья'},
+  {id:129,k:'ប្រពន្ធ',l:'bropun',r:'бропон',ru:'жена',cat:'Семья'},
+  {id:130,k:'មិត្ត',l:'met',r:'мет',ru:'друг',cat:'Семья'},
+  {id:131,k:'ក្មេង',l:'kmeng',r:'кмэнг',ru:'ребёнок / молодой',cat:'Семья'},
+  {id:132,k:'ចាស់',l:'chas',r:'час',ru:'пожилой / старый',cat:'Семья'},
+  {id:133,k:'ប្រុស',l:'bros',r:'брос',ru:'мужчина / мужской',cat:'Семья'},
+  {id:134,k:'ស្រី',l:'srey',r:'срей',ru:'женщина / женский',cat:'Семья'},
+  {id:135,k:'ក្រុមគ្រួសារ',l:'krom kruosar',r:'кром круосар',ru:'семья',cat:'Семья'},
+  // ТРАНСПОРТ
+  {id:136,k:'រថយន្ត',l:'roth yon',r:'рот йон',ru:'машина',cat:'Транспорт'},
+  {id:137,k:'មោតូ',l:'moto',r:'мото',ru:'мотоцикл',cat:'Транспорт'},
+  {id:138,k:'ឡាន',l:'lan',r:'лан',ru:'грузовик',cat:'Транспорт'},
+  {id:139,k:'យន្តហោះ',l:'yonthoh',r:'йонтхо',ru:'самолёт',cat:'Транспорт'},
+  {id:140,k:'ទូក',l:'tuk',r:'тук',ru:'лодка',cat:'Транспорт'},
+  {id:141,k:'ទុក-ទុក',l:'tuk tuk',r:'тук-тук',ru:'тук-тук (такси)',cat:'Транспорт'},
+  {id:142,k:'រថភ្លើង',l:'roth phloeng',r:'рот пхлынг',ru:'поезд',cat:'Транспорт'},
+  {id:143,k:'ស្ថានីយ',l:'sthaniy',r:'стхани',ru:'вокзал / станция',cat:'Транспорт'},
+  {id:144,k:'ព្រលានយន្ដហោះ',l:'prolean yonthoh',r:'пролиан йонтхо',ru:'аэропорт',cat:'Транспорт'},
+  {id:145,k:'ចំណតរថយន្ត',l:'chamnot roth yon',r:'чамнот рот йон',ru:'парковка',cat:'Транспорт'},
+  // ПРИРОДА
+  {id:146,k:'ភ្នំ',l:'phnom',r:'пхном',ru:'гора',cat:'Природа'},
+  {id:147,k:'ទន្លេ',l:'tonle',r:'тонлэ',ru:'река',cat:'Природа'},
+  {id:148,k:'សមុទ្រ',l:'samot',r:'самот',ru:'море',cat:'Природа'},
+  {id:149,k:'ព្រៃ',l:'prey',r:'прей',ru:'лес / джунгли',cat:'Природа'},
+  {id:150,k:'ដី',l:'dey',r:'дэй',ru:'земля / почва',cat:'Природа'},
+  {id:151,k:'មេឃ',l:'mek',r:'мэк',ru:'небо',cat:'Природа'},
+  {id:152,k:'ពពក',l:'popok',r:'попок',ru:'облако',cat:'Природа'},
+  {id:153,k:'ភ្លៀង',l:'phlieng',r:'пхлиэнг',ru:'дождь',cat:'Природа'},
+  {id:154,k:'ព្រះអាទិត្យ',l:'preah atit',r:'прэа атит',ru:'солнце',cat:'Природа'},
+  {id:155,k:'ព្រះច័ន្ទ',l:'preah chan',r:'прэа чан',ru:'луна',cat:'Природа'},
+  {id:156,k:'ផ្កាយ',l:'phkay',r:'пхкай',ru:'звезда',cat:'Природа'},
+  {id:157,k:'ដើមឈើ',l:'daem chheu',r:'даем чхэй',ru:'дерево',cat:'Природа'},
+  {id:158,k:'ផ្កា',l:'phka',r:'пхка',ru:'цветок',cat:'Природа'},
+  {id:159,k:'ស្មៅ',l:'smav',r:'смав',ru:'трава',cat:'Природа'},
+  {id:160,k:'ខ្សាច់',l:'ksach',r:'ксач',ru:'песок',cat:'Природа'},
+  // ЖИВОТНЫЕ
+  {id:161,k:'ឆ្កែ',l:'chhke',r:'чхкэй',ru:'собака',cat:'Животные'},
+  {id:162,k:'ឆ្មា',l:'chhma',r:'чхма',ru:'кошка',cat:'Животные'},
+  {id:163,k:'ដំរី',l:'damrey',r:'дамрей',ru:'слон',cat:'Животные'},
+  {id:164,k:'ខ្លា',l:'khla',r:'кхла',ru:'тигр',cat:'Животные'},
+  {id:165,k:'ក្តាន់',l:'kdan',r:'кдан',ru:'крокодил',cat:'Животные'},
+  {id:166,k:'ពស់',l:'pos',r:'пос',ru:'змея',cat:'Животные'},
+  {id:167,k:'ត្រី',l:'trei',r:'трей',ru:'рыба',cat:'Животные'},
+  {id:168,k:'បក្សី',l:'baksei',r:'баксэй',ru:'птица',cat:'Животные'},
+  {id:169,k:'ស្វា',l:'sva',r:'сва',ru:'обезьяна',cat:'Животные'},
+  {id:170,k:'គោ',l:'ko',r:'ко',ru:'корова',cat:'Животные'},
+  {id:171,k:'ជ្រូក',l:'chrouk',r:'чроук',ru:'свинья',cat:'Животные'},
+  {id:172,k:'ទន្សាយ',l:'tonsay',r:'тонсай',ru:'кролик',cat:'Животные'},
+  {id:173,k:'សសរ',l:'sasor',r:'sasol',ru:'мышь',cat:'Животные'},
+  {id:174,k:'ក្ងោក',l:'kngaok',r:'кнгаок',ru:'лягушка',cat:'Животные'},
+  {id:175,k:'មាន់',l:'moan',r:'моан',ru:'курица',cat:'Животные'},
+  // ЧАСТИ ТЕЛА
+  {id:176,k:'ក្បាល',l:'kbal',r:'кбаль',ru:'голова',cat:'Тело'},
+  {id:177,k:'មុខ',l:'muk',r:'мук',ru:'лицо',cat:'Тело'},
+  {id:178,k:'ភ្នែក',l:'phnek',r:'пхнэк',ru:'глаза',cat:'Тело'},
+  {id:179,k:'ត្រចៀក',l:'tracheek',r:'трачиэк',ru:'ухо',cat:'Тело'},
+  {id:180,k:'ច្រមុះ',l:'chromos',r:'чромо',ru:'нос',cat:'Тело'},
+  {id:181,k:'មាត់',l:'moat',r:'моат',ru:'рот',cat:'Тело'},
+  {id:182,k:'ធ្មេញ',l:'thmenh',r:'тхмень',ru:'зубы',cat:'Тело'},
+  {id:183,k:'ដៃ',l:'dai',r:'дай',ru:'рука',cat:'Тело'},
+  {id:184,k:'ជើង',l:'cheung',r:'чынг',ru:'нога',cat:'Тело'},
+  {id:185,k:'ខ្នង',l:'khnong',r:'кхнонг',ru:'спина',cat:'Тело'},
+  {id:186,k:'ពោះ',l:'poh',r:'по',ru:'живот',cat:'Тело'},
+  {id:187,k:'ដើមទ្រូង',l:'daem trong',r:'даем тронг',ru:'грудь',cat:'Тело'},
+  {id:188,k:'សក់',l:'sok',r:'сок',ru:'волосы',cat:'Тело'},
+  {id:189,k:'ស្បែក',l:'sbaek',r:'сбаэк',ru:'кожа',cat:'Тело'},
+  {id:190,k:'ឈាម',l:'chhiam',r:'чхиам',ru:'кровь',cat:'Тело'},
+  // ДОМ
+  {id:191,k:'បន្ទប់',l:'bantob',r:'банто',ru:'комната',cat:'Дом'},
+  {id:192,k:'ផ្ទះបាយ',l:'pteah bay',r:'птиэ бай',ru:'кухня',cat:'Дом'},
+  {id:193,k:'បន្ទប់ទឹក',l:'bantob teuk',r:'банто тык',ru:'ванная / туалет',cat:'Дом'},
+  {id:194,k:'ទ្វារ',l:'tvea',r:'твиэ',ru:'дверь',cat:'Дом'},
+  {id:195,k:'បង្អួច',l:'bonguch',r:'бонгуч',ru:'окно',cat:'Дом'},
+  {id:196,k:'គ្រែ',l:'kre',r:'крэ',ru:'кровать',cat:'Дом'},
+  {id:197,k:'កៅអី',l:'kavy',r:'кавэй',ru:'стул',cat:'Дом'},
+  {id:198,k:'តុ',l:'tok',r:'ток',ru:'стол',cat:'Дом'},
+  {id:199,k:'ទូ',l:'tu',r:'ту',ru:'шкаф',cat:'Дом'},
+  {id:200,k:'ផ្ទាំង',l:'phtang',r:'пхтанг',ru:'стена',cat:'Дом'},
+  {id:201,k:'ជណ្ដើរ',l:'chandaeu',r:'чандаэй',ru:'лестница',cat:'Дом'},
+  {id:202,k:'ព្រំ',l:'prom',r:'пром',ru:'забор / граница',cat:'Дом'},
+  {id:203,k:'ទូរទស្សន៍',l:'turotoss',r:'туротосс',ru:'телевизор',cat:'Дом'},
+  {id:204,k:'ទូរស័ព្ទ',l:'turosap',r:'туросап',ru:'телефон',cat:'Дом'},
+  {id:205,k:'កុំព្យូទ័រ',l:'computer',r:'компьютр',ru:'компьютер',cat:'Дом'},
+  // ЗДОРОВЬЕ
+  {id:206,k:'ឈឺ',l:'chhu',r:'чхой',ru:'больной / болеть',cat:'Здоровье'},
+  {id:207,k:'ជំងឺ',l:'chomngeu',r:'чомнгый',ru:'болезнь',cat:'Здоровье'},
+  {id:208,k:'ថ្នាំ',l:'thnam',r:'тхнам',ru:'лекарство',cat:'Здоровье'},
+  {id:209,k:'វេជ្ជបណ្ឌិត',l:'veychbondet',r:'вейчбондет',ru:'врач / доктор',cat:'Здоровье'},
+  {id:210,k:'មន្ទីរពេទ្យ',l:'montirpeyt',r:'монтирпэйт',ru:'больница',cat:'Здоровье'},
+  {id:211,k:'ឈឺក្បាល',l:'chhu kbal',r:'чхой кбаль',ru:'головная боль',cat:'Здоровье'},
+  {id:212,k:'គ្រុនក្ដៅ',l:'kron kdav',r:'крон кдав',ru:'жар / лихорадка',cat:'Здоровье'},
+  {id:213,k:'ក្អក',l:'kaok',r:'каок',ru:'кашель',cat:'Здоровье'},
+  {id:214,k:'ហូរឈាម',l:'hou chhiam',r:'хоэр чхиам',ru:'кровотечение',cat:'Здоровье'},
+  {id:215,k:'ល្អ',l:'la',r:'ла',ru:'хорошо / здоровый',cat:'Здоровье'},
+  // ДЕНЬГИ
+  {id:216,k:'លុយ',l:'luy',r:'луй',ru:'деньги',cat:'Деньги'},
+  {id:217,k:'រៀល',l:'riel',r:'риэль',ru:'риель (валюта)',cat:'Деньги'},
+  {id:218,k:'ដុល្លារ',l:'dollar',r:'доллар',ru:'доллар',cat:'Деньги'},
+  {id:219,k:'តម្លៃ',l:'tomle',r:'томлэй',ru:'цена',cat:'Деньги'},
+  {id:220,k:'ថ្លៃ',l:'thle',r:'тхлэй',ru:'дорогой',cat:'Деньги'},
+  {id:221,k:'ថោក',l:'thaok',r:'тхаок',ru:'дешёвый',cat:'Деньги'},
+  {id:222,k:'ទូទាត់',l:'tuteat',r:'тутиат',ru:'платить',cat:'Деньги'},
+  {id:223,k:'ថ្លៃប៉ុន្មាន',l:'thle ponman',r:'тхлэй пономан',ru:'сколько стоит?',cat:'Деньги'},
+  {id:224,k:'ប្ដូរ',l:'bdou',r:'бдоэ',ru:'обменять / разменять',cat:'Деньги'},
+  {id:225,k:'ស',l:'chenh',r:'чень',ru:'сдача',cat:'Деньги'},
+  // ПРИЛАГАТЕЛЬНЫЕ
+  {id:226,k:'ធំ',l:'thom',r:'тхом',ru:'большой',cat:'Прилагательные'},
+  {id:227,k:'តូច',l:'toch',r:'точ',ru:'маленький',cat:'Прилагательные'},
+  {id:228,k:'វែង',l:'veng',r:'вэнг',ru:'длинный',cat:'Прилагательные'},
+  {id:229,k:'ខ្លី',l:'khli',r:'кхли',ru:'короткий',cat:'Прилагательные'},
+  {id:230,k:'ក្ដៅ',l:'kdav',r:'кдав',ru:'горячий',cat:'Прилагательные'},
+  {id:231,k:'ត្រជាក់',l:'trocheak',r:'трочиак',ru:'холодный',cat:'Прилагательные'},
+  {id:232,k:'ថ្មី',l:'thmey',r:'тхмэй',ru:'новый',cat:'Прилагательные'},
+  {id:233,k:'ចាស់',l:'chas',r:'час',ru:'старый',cat:'Прилагательные'},
+  {id:234,k:'ឆ្ងាញ់',l:'chhnganh',r:'чхнгань',ru:'красивый / вкусный',cat:'Прилагательные'},
+  {id:235,k:'អាក្រក់',l:'akrok',r:'акрок',ru:'плохой / некрасивый',cat:'Прилагательные'},
+  {id:236,k:'ឆ្លាត',l:'chhlaht',r:'чхлат',ru:'умный',cat:'Прилагательные'},
+  {id:237,k:'ល្ងង់',l:'lngong',r:'лнгонг',ru:'глупый',cat:'Прилагательные'},
+  {id:238,k:'ឆាប់',l:'chhap',r:'чхап',ru:'быстрый',cat:'Прилагательные'},
+  {id:239,k:'យឺត',l:'yuet',r:'йыэт',ru:'медленный',cat:'Прилагательные'},
+  {id:240,k:'ច្រើន',l:'chraen',r:'чраэн',ru:'много',cat:'Прилагательные'},
+  {id:241,k:'តិច',l:'tech',r:'тэч',ru:'мало',cat:'Прилагательные'},
+  {id:242,k:'ទំនេរ',l:'tomnea',r:'томниэ',ru:'свободный / пустой',cat:'Прилагательные'},
+  {id:243,k:'រវល់',l:'rovol',r:'ровол',ru:'занятой',cat:'Прилагательные'},
+  // ВОПРОСЫ
+  {id:244,k:'ហេតុអ្វី',l:'het avey',r:'хет авей',ru:'почему',cat:'Вопросы'},
+  {id:245,k:'ដូចម្ដេច',l:'doch mdech',r:'доч мдэч',ru:'как / каким образом',cat:'Вопросы'},
+  {id:246,k:'កន្លែងណា',l:'konleng na',r:'конлэнг на',ru:'где',cat:'Вопросы'},
+  {id:247,k:'ពេលណា',l:'pel na',r:'пэль на',ru:'когда',cat:'Вопросы'},
+  {id:248,k:'ប៉ុន្មាន',l:'ponman',r:'понман',ru:'сколько',cat:'Вопросы'},
+  {id:249,k:'អ្នកណា',l:'neak na',r:'ниэк на',ru:'кто',cat:'Вопросы'},
+  {id:250,k:'តើ',l:'tae',r:'тэ',ru:'вопросительная частица',cat:'Вопросы'},
+  {id:251,k:'ដែរទេ',l:'dae te',r:'даэ тэ',ru:'тоже / да?',cat:'Вопросы'},
+  {id:252,k:'ប្រាប់',l:'brab',r:'брап',ru:'сказать / объяснить',cat:'Вопросы'},
+  {id:253,k:'ជួយប្រាប់',l:'chuoy brab',r:'чуой брап',ru:'скажите пожалуйста',cat:'Вопросы'},
+  // ПРИВЕТСТВИЯ И ФРАЗЫ
+  {id:254,k:'ជំរាបសួរ',l:'chumreab suor',r:'чумриап суор',ru:'здравствуйте',cat:'Фразы'},
+  {id:255,k:'អរគុណ',l:'orkun',r:'оркун',ru:'спасибо',cat:'Фразы'},
+  {id:256,k:'សូមទោស',l:'som tos',r:'сом тос',ru:'извините',cat:'Фразы'},
+  {id:257,k:'បាទ',l:'bat',r:'бат',ru:'да (муж.)',cat:'Фразы'},
+  {id:258,k:'ចាស',l:'chas',r:'час',ru:'да (жен.)',cat:'Фразы'},
+  {id:259,k:'ទេ',l:'te',r:'тэ',ru:'нет / отрицание',cat:'Фразы'},
+  {id:260,k:'ជំរាបលា',l:'chumreab lea',r:'чумриап лэа',ru:'до свидания',cat:'Фразы'},
+  {id:261,k:'លាហើយ',l:'lea haey',r:'лэа хаэй',ru:'пока!',cat:'Фразы'},
+  {id:262,k:'អរគុណច្រើន',l:'orkun chraen',r:'оркун чраэн',ru:'большое спасибо',cat:'Фразы'},
+  {id:263,k:'មិនអីទេ',l:'men ey te',r:'мэн эй тэ',ru:'не беспокойтесь / ничего',cat:'Фразы'},
+  {id:264,k:'ចុះ',l:'chos',r:'чо',ru:'ну / ладно',cat:'Фразы'},
+  {id:265,k:'ហើយ',l:'haey',r:'хаэй',ru:'уже / вот',cat:'Фразы'},
+  {id:266,k:'ជោគជ័យ',l:'chok chay',r:'чок чай',ru:'удачи!',cat:'Фразы'},
+  {id:267,k:'ល្អណាស់',l:'la nas',r:'ла нас',ru:'очень хорошо',cat:'Фразы'},
+  {id:268,k:'ចូលមក',l:'chol mok',r:'чоль мок',ru:'заходите',cat:'Фразы'},
+  // МЕСТО / НАПРАВЛЕНИЕ
+  {id:269,k:'ខាងស្ដាំ',l:'khang sdam',r:'кханг сдам',ru:'направо',cat:'Направление'},
+  {id:270,k:'ខាងឆ្វេង',l:'khang chhveng',r:'кханг чхвэнг',ru:'налево',cat:'Направление'},
+  {id:271,k:'똑',l:'trong',r:'тронг',ru:'прямо',cat:'Направление'},
+  {id:272,k:'ខាងមុខ',l:'khang muk',r:'кханг мук',ru:'спереди / вперёд',cat:'Направление'},
+  {id:273,k:'ខាងក្រោយ',l:'khang kroy',r:'кханг крой',ru:'сзади / назад',cat:'Направление'},
+  {id:274,k:'ខាងលើ',l:'khang leu',r:'кханг лый',ru:'сверху / наверх',cat:'Направление'},
+  {id:275,k:'ខាងក្រោម',l:'khang kraom',r:'кханг краом',ru:'снизу / вниз',cat:'Направление'},
+  {id:276,k:'ជិត',l:'chet',r:'чет',ru:'близко / рядом',cat:'Направление'},
+  {id:277,k:'ឆ្ងាយ',l:'chhngay',r:'чхнгай',ru:'далеко',cat:'Направление'},
+  {id:278,k:'ខាងក្នុង',l:'khang knong',r:'кханг кнонг',ru:'внутри',cat:'Направление'},
+  {id:279,k:'ខាងក្រៅ',l:'khang krav',r:'кханг крав',ru:'снаружи',cat:'Направление'},
+  // РАБОТА И УЧЁБА
+  {id:280,k:'សាលារៀន',l:'sala rien',r:'сала риэн',ru:'школа',cat:'Работа'},
+  {id:281,k:'សាកលវិទ្យាល័យ',l:'sakal vittyalay',r:'сакаль виттьялай',ru:'университет',cat:'Работа'},
+  {id:282,k:'ការិយាល័យ',l:'kariyalay',r:'кариялай',ru:'офис',cat:'Работа'},
+  {id:283,k:'គ្រូ',l:'kru',r:'кру',ru:'учитель',cat:'Работа'},
+  {id:284,k:'សិស្ស',l:'sos',r:'сос',ru:'ученик',cat:'Работа'},
+  {id:285,k:'អ្នកជំនួញ',l:'neak chumnunh',r:'ниэк чумнунь',ru:'бизнесмен',cat:'Работа'},
+  {id:286,k:'ប៉ូលិស',l:'polis',r:'полис',ru:'полиция',cat:'Работа'},
+  {id:287,k:'ចៅហ្វាយ',l:'chaohvay',r:'чаохвай',ru:'начальник / босс',cat:'Работа'},
+  {id:288,k:'ប្រាក់ខែ',l:'brak khe',r:'брак кхэ',ru:'зарплата',cat:'Работа'},
+  {id:289,k:'កិច្ចការ',l:'kech kar',r:'кэч кар',ru:'задание / дело',cat:'Работа'},
+  // ВРЕМЯ
+  {id:290,k:'ថ្ងៃនេះ',l:'thnai nih',r:'тхней ни',ru:'сегодня',cat:'Время'},
+  {id:291,k:'ម្សិលមិញ',l:'msel minh',r:'мсэль минь',ru:'вчера',cat:'Время'},
+  {id:292,k:'ថ្ងៃស្អែក',l:'thnai saek',r:'тхней саэк',ru:'завтра',cat:'Время'},
+  {id:293,k:'ឥឡូវ',l:'eilov',r:'эйлов',ru:'сейчас',cat:'Время'},
+  {id:294,k:'ម្ដង',l:'mdong',r:'мдонг',ru:'иногда / однажды',cat:'Время'},
+  {id:295,k:'រហូត',l:'rohot',r:'рохот',ru:'всегда / постоянно',cat:'Время'},
+  {id:296,k:'ជានិច្ច',l:'chea nech',r:'чиэ нэч',ru:'всегда',cat:'Время'},
+  {id:297,k:'មិនដែល',l:'men dael',r:'мэн даэль',ru:'никогда',cat:'Время'},
+  {id:298,k:'ពេលក្រោយ',l:'pel kroy',r:'пэль крой',ru:'потом / позже',cat:'Время'},
+  {id:299,k:'ថ្មីៗ',l:'thmey thmey',r:'тхмэй тхмэй',ru:'недавно',cat:'Время'},
+  {id:300,k:'យូរ',l:'yu',r:'ю',ru:'долго',cat:'Время'},
+  // ПОГОДА
+  {id:301,k:'អាកាសធាតុ',l:'akastheat',r:'акасти',ru:'погода',cat:'Погода'},
+  {id:302,k:'ក្ដៅ',l:'kdav',r:'кдав',ru:'жарко',cat:'Погода'},
+  {id:303,k:'ត្រជាក់',l:'trocheak',r:'трочиак',ru:'холодно',cat:'Погода'},
+  {id:304,k:'ខ្យល់',l:'khyol',r:'кхйоль',ru:'ветрено',cat:'Погода'},
+  {id:305,k:'មូស',l:'mos',r:'мос',ru:'комар',cat:'Погода'},
+  {id:306,k:'ស្ងាត់',l:'sngat',r:'снгат',ru:'тихо / тишина',cat:'Погода'},
+  {id:307,k:'ភ្ញៀវ',l:'phnyiev',r:'пхньиэв',ru:'гость / турист',cat:'Погода'},
+  // МАГАЗИН / РЫНОК
+  {id:308,k:'ផ្សារ',l:'psar',r:'псар',ru:'рынок',cat:'Рынок'},
+  {id:309,k:'ហាង',l:'hang',r:'ханг',ru:'магазин',cat:'Рынок'},
+  {id:310,k:'ចង់បាន',l:'jong ban',r:'чонг бан',ru:'хочу купить',cat:'Рынок'},
+  {id:311,k:'ខ្ញុំត្រូវការ',l:'khnhom trov kar',r:'кхньом тров кар',ru:'мне нужно',cat:'Рынок'},
+  {id:312,k:'សូម',l:'som',r:'сом',ru:'пожалуйста / прошу',cat:'Рынок'},
+  {id:313,k:'ចុះថ្លៃ',l:'chos thle',r:'чо тхлэй',ru:'снизить цену',cat:'Рынок'},
+  {id:314,k:'ណាស់',l:'nas',r:'нас',ru:'очень',cat:'Рынок'},
+  {id:315,k:'គ្រប់គ្រាន់',l:'krob kroan',r:'кроп кроан',ru:'достаточно',cat:'Рынок'},
+  {id:316,k:'ច្រើន',l:'chraen',r:'чраэн',ru:'много',cat:'Рынок'},
+  {id:317,k:'តិច',l:'tech',r:'тэч',ru:'немного',cat:'Рынок'},
+  // РЕСТОРАН
+  {id:318,k:'ភោជនីយដ្ឋាន',l:'photchaniyattan',r:'потчаниятан',ru:'ресторан',cat:'Ресторан'},
+  {id:319,k:'តុ',l:'tok',r:'ток',ru:'стол',cat:'Ресторан'},
+  {id:320,k:'ចាន',l:'chan',r:'чан',ru:'тарелка',cat:'Ресторан'},
+  {id:321,k:'ស្លាបព្រា',l:'slabpra',r:'слапра',ru:'ложка',cat:'Ресторан'},
+  {id:322,k:'សម',l:'som',r:'сом',ru:'вилка',cat:'Ресторан'},
+  {id:323,k:'កាំបិត',l:'kambet',r:'камбэт',ru:'нож',cat:'Ресторан'},
+  {id:324,k:'ស្ដឹង',l:'sdoeng',r:'сдынг',ru:'чашка / стакан',cat:'Ресторан'},
+  {id:325,k:'ម៉ឺនុយ',l:'menu',r:'меню',ru:'меню',cat:'Ресторан'},
+  {id:326,k:'បញ្ជា',l:'banchea',r:'банчиэ',ru:'заказ (в ресторане)',cat:'Ресторан'},
+  {id:327,k:'គិតលុយ',l:'ket luy',r:'кет луй',ru:'счёт (просить)',cat:'Ресторан'},
+  // ГОСТИНИЦА
+  {id:328,k:'សណ្ឋាគារ',l:'santhakear',r:'сантхакиэ',ru:'гостиница / отель',cat:'Гостиница'},
+  {id:329,k:'បន្ទប់',l:'bantob',r:'банто',ru:'номер (комната)',cat:'Гостиница'},
+  {id:330,k:'ឈ្នួល',l:'chhnuol',r:'чхнуоль',ru:'аренда / стоимость',cat:'Гостиница'},
+  {id:331,k:'ចូល',l:'chol',r:'чоль',ru:'заезд (check-in)',cat:'Гостиница'},
+  {id:332,k:'ចេញ',l:'chenh',r:'чень',ru:'выезд (check-out)',cat:'Гостиница'},
+  {id:333,k:'ធ្នើ',l:'thnao',r:'тхнаой',ru:'полотенце',cat:'Гостиница'},
+  {id:334,k:'ជណ្ដើរយន្ត',l:'chandaeu yon',r:'чандаэй йон',ru:'лифт',cat:'Гостиница'},
+  {id:335,k:'ម៉ាស៊ីនត្រជាក់',l:'masin trocheak',r:'масин трочиак',ru:'кондиционер',cat:'Гостиница'},
+  {id:336,k:'WIFI',l:'wifi',r:'вайфай',ru:'вай-фай',cat:'Гостиница'},
+  {id:337,k:'ណែនាំ',l:'naenom',r:'нэноам',ru:'рекомендовать',cat:'Гостиница'},
+  // ДОСТОПРИМЕЧАТЕЛЬНОСТИ
+  {id:338,k:'អង្គរវត្ត',l:'angkor wat',r:'ангкор ват',ru:'Ангкор Ват',cat:'Места'},
+  {id:339,k:'ភ្នំពេញ',l:'phnom penh',r:'пхном пень',ru:'Пномпень',cat:'Места'},
+  {id:340,k:'សៀមរាប',l:'siem reap',r:'сиэм риэп',ru:'Сием Рип',cat:'Места'},
+  {id:341,k:'ព្រះវិហារ',l:'preah vihear',r:'прэа вихиэ',ru:'храм',cat:'Места'},
+  {id:342,k:'វត្ត',l:'vot',r:'вот',ru:'пагода (монастырь)',cat:'Места'},
+  {id:343,k:'ស្ទឹង',l:'stoeng',r:'стынг',ru:'река (малая)',cat:'Места'},
+  {id:344,k:'ទន្លេសាប',l:'tonle sab',r:'тонлэ сап',ru:'озеро Тонлесап',cat:'Места'},
+  {id:345,k:'ឆ្នេរ',l:'chhner',r:'чхнэр',ru:'пляж',cat:'Места'},
+  {id:346,k:'ស្ថានទូត',l:'sthantu',r:'стхантоу',ru:'посольство',cat:'Места'},
+  {id:347,k:'ធនាគារ',l:'thoneakear',r:'тхонэакиэ',ru:'банк',cat:'Места'},
+  // ДНИ НЕДЕЛИ
+  {id:348,k:'ថ្ងៃច័ន្ទ',l:'thnai chan',r:'тхней чан',ru:'понедельник',cat:'Дни'},
+  {id:349,k:'ថ្ងៃអង្គារ',l:'thnai angkear',r:'тхней ангкиэ',ru:'вторник',cat:'Дни'},
+  {id:350,k:'ថ្ងៃពុធ',l:'thnai put',r:'тхней пут',ru:'среда',cat:'Дни'},
+  {id:351,k:'ថ្ងៃព្រហស្បតិ៍',l:'thnai prohoh',r:'тхней прохо',ru:'четверг',cat:'Дни'},
+  {id:352,k:'ថ្ងៃសុក្រ',l:'thnai sok',r:'тхней сок',ru:'пятница',cat:'Дни'},
+  {id:353,k:'ថ្ងៃសៅរ៍',l:'thnai sav',r:'тхней сав',ru:'суббота',cat:'Дни'},
+  {id:354,k:'ថ្ងៃអាទិត្យ',l:'thnai atit',r:'тхней атит',ru:'воскресенье',cat:'Дни'},
+  // МЕСЯЦЫ
+  {id:355,k:'ខែមករា',l:'khe makara',r:'кхэ макара',ru:'январь',cat:'Месяцы'},
+  {id:356,k:'ខែកុម្ភៈ',l:'khe kompeak',r:'кхэ компиак',ru:'февраль',cat:'Месяцы'},
+  {id:357,k:'ខែមីនា',l:'khe mina',r:'кхэ мина',ru:'март',cat:'Месяцы'},
+  {id:358,k:'ខែមេសា',l:'khe mesa',r:'кхэ мэса',ru:'апрель',cat:'Месяцы'},
+  {id:359,k:'ខែឧសភា',l:'khe aosaphea',r:'кхэ аосапхиэ',ru:'май',cat:'Месяцы'},
+  {id:360,k:'ខែមិថុនា',l:'khe methona',r:'кхэ мэтхона',ru:'июнь',cat:'Месяцы'},
+  {id:361,k:'ខែកក្កដា',l:'khe kakada',r:'кхэ какада',ru:'июль',cat:'Месяцы'},
+  {id:362,k:'ខែសីហា',l:'khe seiha',r:'кхэ сэйха',ru:'август',cat:'Месяцы'},
+  {id:363,k:'ខែកញ្ញា',l:'khe kanhna',r:'кхэ каньня',ru:'сентябрь',cat:'Месяцы'},
+  {id:364,k:'ខែតុលា',l:'khe tola',r:'кхэ тола',ru:'октябрь',cat:'Месяцы'},
+  {id:365,k:'ខែវិច្ឆិកា',l:'khe vechchheka',r:'кхэ вэччхика',ru:'ноябрь',cat:'Месяцы'},
+  {id:366,k:'ខែធ្នូ',l:'khe thno',r:'кхэ тхноэ',ru:'декабрь',cat:'Месяцы'},
+  // ПРЕДЛОГИ И СЛУЖЕБНЫЕ СЛОВА
+  {id:367,k:'នៅ',l:'nov',r:'нов',ru:'находиться / предлог места',cat:'Предлоги'},
+  {id:368,k:'ពី',l:'pi',r:'пи',ru:'от / из',cat:'Предлоги'},
+  {id:369,k:'ទៅ',l:'tov',r:'тов',ru:'в / к',cat:'Предлоги'},
+  {id:370,k:'ជាមួយ',l:'chea muoy',r:'чиэ муой',ru:'вместе / с',cat:'Предлоги'},
+  {id:371,k:'សម្រាប់',l:'samrap',r:'самрап',ru:'для',cat:'Предлоги'},
+  {id:372,k:'លើ',l:'leu',r:'лый',ru:'на (поверхности)',cat:'Предлоги'},
+  {id:373,k:'ក្នុង',l:'knong',r:'кнонг',ru:'в (внутри)',cat:'Предлоги'},
+  {id:374,k:'ក្រោម',l:'kraom',r:'краом',ru:'под',cat:'Предлоги'},
+  {id:375,k:'នៅក្បែរ',l:'nov kbae',r:'нов кбаэ',ru:'около / рядом с',cat:'Предлоги'},
+  {id:376,k:'ដូចជា',l:'doch chea',r:'доч чиэ',ru:'например / как',cat:'Предлоги'},
+  // ШКОЛЬНЫЕ ПРЕДМЕТЫ И НАУКА
+  {id:377,k:'គណិតវិទ្យា',l:'kanetvitya',r:'канэтвитья',ru:'математика',cat:'Наука'},
+  {id:378,k:'វិទ្យាសាស្ត្រ',l:'vittyasar',r:'витьясаст',ru:'наука',cat:'Наука'},
+  {id:379,k:'ប្រវត្តិសាស្ត្រ',l:'brovattesar',r:'проваттесаст',ru:'история',cat:'Наука'},
+  {id:380,k:'ភូមិវិទ្យា',l:'phumi vitya',r:'пхуми витья',ru:'география',cat:'Наука'},
+  {id:381,k:'ចម្លើយ',l:'chamlaey',r:'чамлаэй',ru:'ответ',cat:'Наука'},
+  {id:382,k:'សំណួរ',l:'somnuor',r:'сомнуор',ru:'вопрос',cat:'Наука'},
+  {id:383,k:'ការប្រលង',l:'kar prolong',r:'кар пролонг',ru:'экзамен',cat:'Наука'},
+  {id:384,k:'សៀវភៅ',l:'sivphov',r:'сивпхов',ru:'книга',cat:'Наука'},
+  {id:385,k:'ប្រឡង',l:'prolong',r:'пролонг',ru:'сдавать экзамен',cat:'Наука'},
+  {id:386,k:'ថ្នាក់',l:'thnak',r:'тхнак',ru:'класс (учебный)',cat:'Наука'},
+  // СПОРТ И РАЗВЛЕЧЕНИЯ
+  {id:387,k:'ជ្រែង',l:'jreng',r:'чрэнг',ru:'бокс кхмерский',cat:'Спорт'},
+  {id:388,k:'បាល់ទាត់',l:'bal teat',r:'баль тиат',ru:'футбол',cat:'Спорт'},
+  {id:389,k:'ហែលទឹក',l:'hael teuk',r:'хаэль тык',ru:'плавание',cat:'Спорт'},
+  {id:390,k:'ប្រណាំង',l:'bronang',r:'бронанг',ru:'гонки / состязание',cat:'Спорт'},
+  {id:391,k:'លេងហ្គេម',l:'leng game',r:'лэнг гэйм',ru:'играть в игры',cat:'Спорт'},
+  {id:392,k:'ភាពយន្ត',l:'phieapyon',r:'пхиэпйон',ru:'кино / фильм',cat:'Спорт'},
+  {id:393,k:'តន្ត្រី',l:'tontrey',r:'тонтрэй',ru:'музыка',cat:'Спорт'},
+  {id:394,k:'រំដេញ',l:'romdanh',r:'ромдэнь',ru:'танец',cat:'Спорт'},
+  {id:395,k:'ប្រារព្ធ',l:'brarop',r:'браро',ru:'праздновать',cat:'Спорт'},
+  // ТЕХНОЛОГИИ
+  {id:396,k:'ទូរស័ព្ទ',l:'turosap',r:'туросап',ru:'мобильный телефон',cat:'Технологии'},
+  {id:397,k:'អ៊ីនធឺណិត',l:'internet',r:'интернет',ru:'интернет',cat:'Технологии'},
+  {id:398,k:'ប្រព័ន្ធ',l:'bropoan',r:'бропоан',ru:'система',cat:'Технологии'},
+  {id:399,k:'កម្មវិធី',l:'kammavithi',r:'камавитхи',ru:'приложение / программа',cat:'Технологии'},
+  {id:400,k:'សារ',l:'sar',r:'сар',ru:'сообщение',cat:'Технологии'},
+  {id:401,k:'អ៊ីម៉ែល',l:'email',r:'эмейль',ru:'электронная почта',cat:'Технологии'},
+  {id:402,k:'ថាមពល',l:'thampol',r:'тхамполь',ru:'заряд / энергия',cat:'Технологии'},
+  {id:403,k:'ការប្រើប្រាស់',l:'kar braeu bras',r:'кар браэй брас',ru:'использование',cat:'Технологии'},
+  // ЭМОЦИИ
+  {id:404,k:'រីករាយ',l:'rikreay',r:'рикриэй',ru:'счастливый / радостный',cat:'Эмоции'},
+  {id:405,k:'슬픈',l:'phnoy',r:'пхной',ru:'грустный',cat:'Эмоции'},
+  {id:406,k:'ខឹង',l:'khoeng',r:'кхынг',ru:'злой',cat:'Эмоции'},
+  {id:407,k:'ភ្ញាក់ផ្អើល',l:'phnyak phaoel',r:'пхньак пхаэль',ru:'удивлённый',cat:'Эмоции'},
+  {id:408,k:'អស់សង្ឃឹម',l:'ah songkhoem',r:'а сонгкхым',ru:'разочарованный',cat:'Эмоции'},
+  {id:409,k:'ក្លាហាន',l:'klahan',r:'клахан',ru:'храбрый',cat:'Эмоции'},
+  {id:410,k:'ខ្លាច',l:'khlach',r:'кхлач',ru:'страх',cat:'Эмоции'},
+  {id:411,k:'ឯកា',l:'ekea',r:'экиэ',ru:'одинокий',cat:'Эмоции'},
+  {id:412,k:'ចង់',l:'jong',r:'чонг',ru:'желание',cat:'Эмоции'},
+  {id:413,k:'ស្រឡាញ់',l:'srolanh',r:'сролань',ru:'любовь',cat:'Эмоции'},
+  // ПРИРОДНЫЕ ЯВЛЕНИЯ
+  {id:414,k:'រដូវវស្សា',l:'rodov vosa',r:'родов воса',ru:'сезон дождей',cat:'Сезоны'},
+  {id:415,k:'រដូវប្រាំង',l:'rodov brang',r:'родов бранг',ru:'сухой сезон',cat:'Сезоны'},
+  {id:416,k:'ព្យុះ',l:'pyoh',r:'пьо',ru:'шторм / ураган',cat:'Сезоны'},
+  {id:417,k:'ព្រះអាទិត្យលិច',l:'preah atit lech',r:'прэа атит лэч',ru:'закат',cat:'Сезоны'},
+  {id:418,k:'ព្រះអាទិត្យរះ',l:'preah atit ras',r:'прэа атит рас',ru:'восход',cat:'Сезоны'},
+  {id:419,k:'ឥន្ទធនូ',l:'entho nu',r:'энтхону',ru:'радуга',cat:'Сезоны'},
+  {id:420,k:'ភ្លើងបាញ់',l:'phloeng banh',r:'пхлынг бань',ru:'молния',cat:'Сезоны'},
+  {id:421,k:'ផ្គររន្ទះ',l:'pkoa ronteas',r:'пкоа ронтиас',ru:'гром',cat:'Сезоны'},
+  // БУДДИЗМ И КУЛЬТУРА
+  {id:422,k:'ព្រះពុទ្ធ',l:'preah put',r:'прэа пут',ru:'Будда',cat:'Культура'},
+  {id:423,k:'ព្រះសង្ឃ',l:'preah song',r:'прэа сонг',ru:'монах',cat:'Культура'},
+  {id:424,k:'ព្រះធម៌',l:'preah tho',r:'прэа тхо',ru:'Дхарма',cat:'Культура'},
+  {id:425,k:'ទានបិណ្ឌ',l:'thean ben',r:'тхиан бэн',ru:'пожертвование (еда монахам)',cat:'Культура'},
+  {id:426,k:'ព្រះគ្រីស្ទ',l:'preah kris',r:'прэа крис',ru:'Рождество (праздник)',cat:'Культура'},
+  {id:427,k:'ចូលឆ្នាំ',l:'chol chnam',r:'чоль чнам',ru:'Новый год',cat:'Культура'},
+  {id:428,k:'ទឹកដំហើម',l:'teuk domhaem',r:'тык домхаэм',ru:'духи / аромат',cat:'Культура'},
+  {id:429,k:'ខ្មែរ',l:'khmer',r:'кхмер',ru:'кхмер / кхмерский',cat:'Культура'},
+  {id:430,k:'ប្រពៃណី',l:'bropeni',r:'бропэни',ru:'традиция',cat:'Культура'},
+  // ПРОФЕССИИ
+  {id:431,k:'វេជ្ជបណ្ឌិត',l:'veychbondet',r:'вейчбондет',ru:'врач',cat:'Профессии'},
+  {id:432,k:'គ្រូ',l:'kru',r:'кру',ru:'учитель',cat:'Профессии'},
+  {id:433,k:'វិស្វករ',l:'viskor',r:'виском',ru:'инженер',cat:'Профессии'},
+  {id:434,k:'ជាង',l:'cheang',r:'чианг',ru:'мастер / умелец',cat:'Профессии'},
+  {id:435,k:'អ្នកចម្អិន',l:'neak chomain',r:'ниэк чомин',ru:'повар',cat:'Профессии'},
+  {id:436,k:'ជើងអ្នកបើកបរ',l:'cheung neak baekbo',r:'чынг ниэк баэкбо',ru:'водитель',cat:'Профессии'},
+  {id:437,k:'ពាណិជ្ជករ',l:'phaneachkea',r:'пханичкиэ',ru:'торговец',cat:'Профессии'},
+  {id:438,k:'កសិករ',l:'kasekea',r:'касэкиэ',ru:'фермер',cat:'Профессии'},
+  {id:439,k:'ពិទ្យាជន',l:'pittea chon',r:'питтиэ чон',ru:'исследователь',cat:'Профессии'},
+  {id:440,k:'ភ្ញៀវវិស',l:'phnyiev vis',r:'пхньиэв вис',ru:'иностранец',cat:'Профессии'},
+  // РАЗНОЕ
+  {id:441,k:'ជំហាន',l:'chomhean',r:'чомхиан',ru:'шаг',cat:'Разное'},
+  {id:442,k:'ការណ៍',l:'kar',r:'кар',ru:'ситуация / дело',cat:'Разное'},
+  {id:443,k:'ពាក្យ',l:'piek',r:'пиэк',ru:'слово',cat:'Разное'},
+  {id:444,k:'ប្រយោជន៍',l:'broyoch',r:'бройоч',ru:'польза',cat:'Разное'},
+  {id:445,k:'ការរៀបចំ',l:'kar riebchom',r:'кар риэпчом',ru:'подготовка',cat:'Разное'},
+  {id:446,k:'ចប់',l:'chob',r:'чоп',ru:'конец / готово',cat:'Разное'},
+];
+
+// ════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════
+const CATS = ['Все', ...new Set(DICT.map(w => w.cat))];
+let state = {
+  tab: 'cards',
+  cat: 'Все',
+  direction: 'kh2ru', // kh2ru | ru2kh
+  cards: {
+    flipped: false,
+    queue: [],
+    idx: 0,
+    sessionStats: {correct:0, wrong:0},
+    done: false,
+  },
+  quiz: {
+    current: null,
+    options: [],
+    answered: false,
+    correct: 0,
+    wrong: 0,
+    count: 0,
+  },
+};
+
+// SRS data in localStorage
+let srs = {}; // id -> { interval, ef, due, reviews }
+let streakData = {}; // { lastDate, streak, history: [{date,count}] }
+
+function loadStorage() {
+  try {
+    srs = JSON.parse(localStorage.getItem('khmer_srs') || '{}');
+    streakData = JSON.parse(localStorage.getItem('khmer_streak') || '{"lastDate":null,"streak":0,"history":[]}');
+  } catch(e) {
+    srs = {}; streakData = {lastDate:null,streak:0,history:[]};
+  }
+}
+
+function saveSRS() {
+  try { localStorage.setItem('khmer_srs', JSON.stringify(srs)); } catch(e) {}
+}
+
+function saveStreak() {
+  try { localStorage.setItem('khmer_streak', JSON.stringify(streakData)); } catch(e) {}
+}
+
+// ════════════════════════════════════════
+// SRS LOGIC (SM-2)
+// ════════════════════════════════════════
+function getWordData(id) {
+  if (!srs[id]) srs[id] = { interval: 0, ef: 2.5, due: 0, reviews: 0 };
+  return srs[id];
+}
+
+function rateWord(id, rating) { // 0=hard,1=ok,2=easy
+  const d = getWordData(id);
+  d.reviews++;
+  const now = Date.now();
+  if (rating === 0) {
+    d.interval = 1;
+  } else if (rating === 1) {
+    d.interval = d.interval < 1 ? 1 : Math.round(d.interval * d.ef);
+    d.ef = Math.max(1.3, d.ef - 0.08);
+  } else {
+    d.interval = d.interval < 1 ? 4 : Math.round(d.interval * d.ef * 1.3);
+    d.ef = Math.min(3.0, d.ef + 0.1);
+  }
+  d.due = now + d.interval * 86400000;
+  srs[id] = d;
+  saveSRS();
+  updateStreak();
+}
+
+function isKnown(id) {
+  const d = srs[id];
+  return d && d.reviews >= 3 && d.ef >= 2.0;
+}
+
+function isDue(id) {
+  const d = srs[id];
+  if (!d) return false;
+  return d.due <= Date.now();
+}
+
+function isNew(id) {
+  return !srs[id] || srs[id].reviews === 0;
+}
+
+// ════════════════════════════════════════
+// STREAK
+// ════════════════════════════════════════
+function updateStreak() {
+  const today = new Date().toISOString().slice(0,10);
+
+  // Update streak (once per day)
+  if (streakData.lastDate !== today) {
+    const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
+    streakData.streak = streakData.lastDate === yesterday ? streakData.streak + 1 : 1;
+    streakData.lastDate = today;
+  }
+
+  // Always increment today's word count
+  let entry = streakData.history.find(h => h.date === today);
+  if (!entry) {
+    entry = {date: today, count: 0};
+    streakData.history.push(entry);
+  }
+  entry.count++;
+  if (streakData.history.length > 30) streakData.history = streakData.history.slice(-30);
+
+  saveStreak();
+  renderHeader();
+}
+
+// ════════════════════════════════════════
+// FILTERED WORDS
+// ════════════════════════════════════════
+function filteredWords() {
+  if (state.cat === 'Все') return DICT;
+  return DICT.filter(w => w.cat === state.cat);
+}
+
+function buildCardQueue() {
+  const words = filteredWords();
+  const now = Date.now();
+  const due = words.filter(w => srs[w.id] && srs[w.id].due <= now && srs[w.id].reviews > 0);
+  const fresh = words.filter(w => isNew(w.id)).slice(0,20);
+  const queue = [...due, ...fresh].sort(() => Math.random()-0.5);
+  return queue;
+}
+
+// ════════════════════════════════════════
+// RENDER HEADER
+// ════════════════════════════════════════
+function renderHeader() {
+  document.getElementById('streak-count').textContent = streakData.streak || 0;
+  const known = DICT.filter(w => isKnown(w.id)).length;
+  document.getElementById('known-count').textContent = known;
+  document.getElementById('total-count').textContent = DICT.length;
+}
+
+// ════════════════════════════════════════
+// RENDER CATEGORY BAR
+// ════════════════════════════════════════
+function renderCategoryBar() {
+  const bar = document.getElementById('category-bar');
+  bar.innerHTML = CATS.map(c =>
+    `<button class="cat-chip${state.cat===c?' active':''}" data-cat="${c}">${c}</button>`
+  ).join('');
+  bar.querySelectorAll('.cat-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.cat = btn.dataset.cat;
+      renderCategoryBar();
+      if (state.tab === 'cards') initCards();
+      else if (state.tab === 'quiz') initQuiz();
+    });
+  });
+}
+
+// ════════════════════════════════════════
+// CARDS
+// ════════════════════════════════════════
+function initCards() {
+  state.cards.queue = buildCardQueue();
+  state.cards.idx = 0;
+  state.cards.flipped = false;
+  state.cards.done = false;
+  state.cards.sessionStats = {correct:0, wrong:0};
+  renderCard();
+}
+
+function renderCard() {
+  const screen = document.getElementById('cards-screen');
+  const queue  = state.cards.queue;
+  const idx    = state.cards.idx;
+
+  if (queue.length === 0 || idx >= queue.length) {
+    renderCardsDone();
+    return;
+  }
+
+  const word    = queue[idx];
+  const isKh2ru = state.direction === 'kh2ru';
+
+  // Build front content
+  const frontHTML = isKh2ru
+    ? `<div class="card-eyebrow">кхмерский</div>
+       <div class="card-khmer">${word.k}</div>
+       <div class="card-transcription">${word.l} · ${word.r}</div>
+       <div class="card-tap-hint"><span>👆</span> нажмите, чтобы открыть</div>`
+    : `<div class="card-eyebrow">русский</div>
+       <div class="card-russian" style="font-size:32px">${word.ru}</div>
+       <div class="card-tap-hint"><span>👆</span> нажмите, чтобы открыть</div>`;
+
+  // Build back content
+  const backHTML = isKh2ru
+    ? `<div class="card-eyebrow">перевод</div>
+       <div class="card-russian">${word.ru}</div>
+       <div class="card-rus-trans">${word.r}</div>`
+    : `<div class="card-eyebrow">кхмерский</div>
+       <div class="card-khmer">${word.k}</div>
+       <div class="card-transcription">${word.l} · ${word.r}</div>`;
+
+  screen.innerHTML = `
+    <div class="session-info">
+      Карточка <strong>${idx+1}</strong> из <strong>${queue.length}</strong>
+      &nbsp;·&nbsp; ✓ <strong>${state.cards.sessionStats.correct}</strong>
+      &nbsp; ✗ <strong>${state.cards.sessionStats.wrong}</strong>
+    </div>
+
+    <input type="checkbox" id="card-flip">
+
+    <div class="card-wrap">
+      <label class="card-label" for="card-flip">
+        <div class="card-face-front">${frontHTML}</div>
+        <div class="card-face-back">${backHTML}</div>
+      </label>
+    </div>
+
+    <div class="rating-btns" id="rating-btns">
+      <button class="rating-btn btn-hard" data-r="0">Трудно<span class="sub">завтра</span></button>
+      <button class="rating-btn btn-ok"   data-r="1">Нормально<span class="sub">×EF</span></button>
+      <button class="rating-btn btn-easy" data-r="2">Легко<span class="sub">+</span></button>
+    </div>
+
+    <div class="mode-row">
+      <button class="direction-toggle" id="dir-toggle">
+        <span>${isKh2ru ? 'ខ្មែរ' : 'RU'}</span>
+        <span class="arrow">→</span>
+        <span>${isKh2ru ? 'RU' : 'ខ្មែរ'}</span>
+      </button>
+    </div>
+  `;
+
+  // Vibrate on flip
+  document.getElementById('card-flip').addEventListener('change', () => {
+    state.cards.flipped = true;
+    vibrate([15]);
+  });
+
+  // DIRECTION TOGGLE
+  document.getElementById('dir-toggle').addEventListener('click', (e) => {
+    e.stopPropagation();
+    state.direction = state.direction === 'kh2ru' ? 'ru2kh' : 'kh2ru';
+    state.cards.flipped = false;
+    renderCard();
+  });
+
+  // RATING BUTTONS
+  document.getElementById('rating-btns').querySelectorAll('.rating-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const r = parseInt(btn.dataset.r);
+      rateWord(word.id, r);
+      if (r === 0) state.cards.sessionStats.wrong++;
+      else state.cards.sessionStats.correct++;
+      vibrate(r === 0 ? [30,20,30] : [20]);
+      state.cards.idx++;
+      state.cards.flipped = false;
+      renderCard();
+      renderHeader();
+    });
+  });
+}
+
+function renderCardsDone() {
+  const {correct, wrong} = state.cards.sessionStats;
+  const total = correct + wrong;
+  const screen = document.getElementById('cards-screen');
+  const known = DICT.filter(w => isKnown(w.id)).length;
+  screen.innerHTML = `
+    <div class="done-card">
+      <div class="done-icon">${total === 0 ? '☀️' : correct >= wrong ? '🏆' : '💪'}</div>
+      <div class="done-title">${total === 0 ? 'Всё повторено!' : 'Сессия завершена'}</div>
+      <div class="done-subtitle">
+        ${total > 0
+          ? `Карточек сегодня: <strong>${total}</strong><br>Правильно: <strong>${correct}</strong> · Ошибок: <strong>${wrong}</strong><br>Знаю слов: <strong>${known}</strong> из <strong>${DICT.length}</strong>`
+          : `Новых слов на сегодня нет.<br>Знаю слов: <strong>${known}</strong> из <strong>${DICT.length}</strong><br>Возвращайтесь завтра!`
+        }
+      </div>
+      <button class="done-btn" id="restart-btn">Начать снова</button>
+    </div>
+  `;
+  document.getElementById('restart-btn').addEventListener('click', initCards);
+}
+
+// ════════════════════════════════════════
+// QUIZ
+// ════════════════════════════════════════
+function initQuiz() {
+  state.quiz = { current:null, options:[], answered:false, correct:0, wrong:0, count:0 };
+  nextQuizQuestion();
+}
+
+function nextQuizQuestion() {
+  const words = filteredWords();
+  if (words.length < 4) {
+    document.getElementById('quiz-screen').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🗂️</div>
+        <div class="empty-text">В этой категории меньше 4 слов.<br>Выберите другую категорию.</div>
+      </div>`;
+    return;
+  }
+  const word = words[Math.floor(Math.random()*words.length)];
+  const wrong3 = words.filter(w => w.id !== word.id).sort(()=>Math.random()-0.5).slice(0,3);
+  const options = [word, ...wrong3].sort(()=>Math.random()-0.5);
+  state.quiz.current = word;
+  state.quiz.options = options;
+  state.quiz.answered = false;
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const {current, options, correct, wrong, count} = state.quiz;
+  const isKh2ru = state.direction === 'kh2ru';
+  const total = correct + wrong;
+  const progress = count > 0 ? Math.min(1, total/Math.max(count,10)) : 0;
+  const screen = document.getElementById('quiz-screen');
+
+  screen.innerHTML = `
+    <div class="quiz-progress">
+      <span>${total} вопросов</span>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${progress*100}%"></div></div>
+      <span class="score-correct">✓${correct}</span>
+      <span class="score-wrong">✗${wrong}</span>
+    </div>
+
+    <div class="quiz-question">
+      <div class="card-eyebrow">${isKh2ru ? 'переведите на русский' : 'переведите на кхмерский'}</div>
+      ${isKh2ru
+        ? `<div class="quiz-khmer">${current.k}</div>
+           <div class="card-transcription">${current.l} · ${current.r}</div>`
+        : `<div class="card-russian" style="font-size:32px;color:var(--gold)">${current.ru}</div>`
+      }
+    </div>
+
+    <div class="quiz-options" id="quiz-options">
+      ${options.map(opt => {
+        const label = isKh2ru ? opt.ru : opt.k;
+        return `<button class="quiz-option" data-id="${opt.id}">${label}</button>`;
+      }).join('')}
+    </div>
+
+    <div class="mode-row">
+      <button class="direction-toggle" id="dir-toggle-quiz">
+        <span>${isKh2ru ? 'ខ្មែរ' : 'RU'}</span>
+        <span class="arrow">→</span>
+        <span>${isKh2ru ? 'RU' : 'ខ្មែរ'}</span>
+      </button>
+    </div>
+  `;
+
+  document.getElementById('dir-toggle-quiz').addEventListener('click', () => {
+    state.direction = state.direction === 'kh2ru' ? 'ru2kh' : 'kh2ru';
+    nextQuizQuestion();
+  });
+
+  document.getElementById('quiz-options').querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => answerQuiz(btn));
+  });
+}
+
+function answerQuiz(btn) {
+  if (state.quiz.answered) return;
+  state.quiz.answered = true;
+  state.quiz.count++;
+  const id = parseInt(btn.dataset.id);
+  const correct = id === state.quiz.current.id;
+
+  document.querySelectorAll('.quiz-option').forEach(b => {
+    if (parseInt(b.dataset.id) === state.quiz.current.id) b.classList.add('correct');
+    else if (parseInt(b.dataset.id) === id && !correct) b.classList.add('wrong');
+  });
+
+  if (correct) {
+    state.quiz.correct++;
+    rateWord(id, 1);
+    vibrate([20]);
+  } else {
+    state.quiz.wrong++;
+    rateWord(state.quiz.current.id, 0);
+    vibrate([30,20,30]);
+  }
+  renderHeader();
+  setTimeout(nextQuizQuestion, 900);
+}
+
+// ════════════════════════════════════════
+// STATS
+// ════════════════════════════════════════
+function renderStats() {
+  const known = DICT.filter(w => isKnown(w.id)).length;
+  const learning = DICT.filter(w => srs[w.id] && srs[w.id].reviews > 0 && !isKnown(w.id)).length;
+  const notStarted = DICT.length - known - learning;
+
+  // Weekly chart
+  const today = new Date().toISOString().slice(0,10);
+  const days = [];
+  for (let i=6; i>=0; i--) {
+    const d = new Date(Date.now() - i*86400000);
+    const ds = d.toISOString().slice(0,10);
+    const entry = streakData.history?.find(h => h.date === ds);
+    days.push({ label: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'][d.getDay()], count: entry?.count||0, isToday: ds===today });
+  }
+  const maxCount = Math.max(...days.map(d=>d.count), 1);
+
+  // Category progress
+  const catStats = CATS.filter(c=>c!=='Все').map(cat => {
+    const words = DICT.filter(w => w.cat === cat);
+    const k = words.filter(w => isKnown(w.id)).length;
+    return { cat, total: words.length, known: k, pct: Math.round(k/words.length*100) };
+  }).sort((a,b) => b.pct - a.pct);
+
+  const screen = document.getElementById('stats-screen');
+  screen.innerHTML = `
+    <div class="section-title">Прогресс</div>
+    <div class="stats-summary">
+      <div class="stat-card">
+        <div class="stat-num">${known}</div>
+        <div class="stat-label">Знаю</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">${learning}</div>
+        <div class="stat-label">Учу</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">${notStarted}</div>
+        <div class="stat-label">Не начато</div>
+      </div>
+    </div>
+
+    <div class="section-title">Активность за неделю</div>
+    <div class="week-chart">
+      <div class="week-bars">
+        ${days.map(d => `
+          <div class="week-bar-wrap">
+            <div class="week-count">${d.count||''}</div>
+            <div class="week-bar${d.isToday?' today':''}" style="height:${Math.max(3, Math.round(d.count/maxCount*60))}px"></div>
+          </div>
+        `).join('')}
+      </div>
+      <div style="display:flex;gap:6px">
+        ${days.map(d => `<div class="week-day" style="flex:1">${d.label}</div>`).join('')}
+      </div>
+    </div>
+
+    <div class="section-title">По категориям</div>
+    <div class="cat-progress-list">
+      ${catStats.map(c => `
+        <div class="cat-progress-item">
+          <div class="cat-progress-row">
+            <span class="cat-name">${c.cat}</span>
+            <span class="cat-count">${c.known}/${c.total} · ${c.pct}%</span>
+          </div>
+          <div class="cat-bar-bg">
+            <div class="cat-bar-fill" style="width:${c.pct}%"></div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="section-title">Данные</div>
+    <div class="actions-row">
+      <button class="action-btn" id="export-btn">
+        <span class="ico">📤</span> Экспортировать прогресс
+      </button>
+      <button class="action-btn" id="import-btn">
+        <span class="ico">📥</span> Импортировать прогресс
+      </button>
+      <button class="action-btn danger" id="reset-btn">
+        <span class="ico">🗑️</span> Сбросить весь прогресс
+      </button>
+    </div>
+    <input type="file" id="import-file" accept=".json" style="display:none">
+    <div class="bottom-safe"></div>
+  `;
+
+  document.getElementById('export-btn').addEventListener('click', exportProgress);
+  document.getElementById('import-btn').addEventListener('click', () => document.getElementById('import-file').click());
+  document.getElementById('import-file').addEventListener('change', importProgress);
+  document.getElementById('reset-btn').addEventListener('click', showResetModal);
+}
+
+// ════════════════════════════════════════
+// EXPORT / IMPORT
+// ════════════════════════════════════════
+function exportProgress() {
+  const data = { srs, streakData, exportedAt: new Date().toISOString(), version: 1 };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `khmer-progress-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  showToast('✅ Прогресс сохранён');
+}
+
+function importProgress(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (data.srs) { srs = data.srs; saveSRS(); }
+      if (data.streakData) { streakData = data.streakData; saveStreak(); }
+      renderHeader();
+      renderStats();
+      showToast('✅ Прогресс загружен');
+    } catch(err) {
+      showToast('❌ Ошибка файла');
+    }
+    e.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+// ════════════════════════════════════════
+// RESET MODAL
+// ════════════════════════════════════════
+function showResetModal() {
+  document.getElementById('modal-overlay').classList.add('show');
+}
+
+document.getElementById('modal-cancel').addEventListener('click', () => {
+  document.getElementById('modal-overlay').classList.remove('show');
+});
+
+document.getElementById('modal-confirm').addEventListener('click', () => {
+  srs = {}; streakData = {lastDate:null,streak:0,history:[]};
+  saveSRS(); saveStreak();
+  document.getElementById('modal-overlay').classList.remove('show');
+  renderHeader();
+  renderStats();
+  showToast('Прогресс сброшен');
+});
+
+document.getElementById('modal-overlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('show');
+  }
+});
+
+// ════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ════════════════════════════════════════
+// VIBRATION
+// ════════════════════════════════════════
+function vibrate(pattern) {
+  if (navigator.vibrate) navigator.vibrate(pattern);
+}
+
+// ════════════════════════════════════════
+// TAB SWITCHING
+// ════════════════════════════════════════
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    state.tab = tab.dataset.tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('cards-screen').style.display = state.tab === 'cards' ? 'flex' : 'none';
+    document.getElementById('quiz-screen').style.display   = state.tab === 'quiz'  ? 'flex' : 'none';
+    document.getElementById('stats-screen').style.display  = state.tab === 'stats' ? 'flex' : 'none';
+    if (state.tab === 'cards') initCards();
+    else if (state.tab === 'quiz') initQuiz();
+    else renderStats();
+  });
+});
+
+// ════════════════════════════════════════
+// THEME
+// ════════════════════════════════════════
+function initTheme() {
+  const saved = localStorage.getItem('khmer_theme') || 'dark';
+  applyTheme(saved);
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme === 'light' ? 'light' : '');
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = theme === 'light' ? '☀️' : '🌙';
+  // update browser chrome color
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = theme === 'light' ? '#f0ede6' : '#1a1f3a';
+  localStorage.setItem('khmer_theme', theme);
+}
+
+document.getElementById('theme-btn').addEventListener('click', () => {
+  const current = localStorage.getItem('khmer_theme') || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+// ════════════════════════════════════════
+// BOOT
+// ════════════════════════════════════════
+loadStorage();
+initTheme();
+renderCategoryBar();
+renderHeader();
+initCards();
+
+// Service Worker registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
