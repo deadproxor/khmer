@@ -1,0 +1,3391 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ភាសាខ្មែរ — Учебник кхмерского языка</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --dark: #1a1208;
+    --gold: #c8923a;
+    --rust: #a04e2a;
+    --sage: #6b7c5e;
+    --papyrus: #e8dfc8;
+    --ink: #2c1f0f;
+    --highlight: #f0c060;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--dark);
+    color: var(--cream);
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: "ខ";
+    position: absolute;
+    right: -20px;
+    top: -40px;
+    font-size: 300px;
+    opacity: 0.06;
+    color: var(--gold);
+    line-height: 1;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rust), var(--gold), var(--rust));
+  }
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .khmer-title {
+    font-size: clamp(28px, 5vw, 56px);
+    color: var(--gold);
+    display: block;
+    margin-bottom: 20px;
+  }
+  header p {
+    font-size: 16px;
+    opacity: 0.7;
+    max-width: 500px;
+    font-style: italic;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--papyrus);
+    border-bottom: 2px solid var(--gold);
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+  }
+  nav a {
+    padding: 16px 20px;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    display: block;
+  }
+  nav a:hover, nav a.active {
+    color: var(--rust);
+    border-bottom-color: var(--rust);
+    background: rgba(200, 146, 58, 0.1);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 30px;
+  }
+
+  .section {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+  .section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION HEADERS */
+  .section-header {
+    margin-bottom: 48px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(200, 146, 58, 0.3);
+  }
+  .section-num {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--dark);
+  }
+  .section-header .khmer-sub {
+    font-size: 24px;
+    color: var(--rust);
+    opacity: 0.7;
+  }
+  .intro-text {
+    font-size: 15px;
+    color: #5a4a35;
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  /* INFO BOXES */
+  .info-box {
+    background: var(--papyrus);
+    border-left: 4px solid var(--gold);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .info-box h4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--rust);
+    margin-bottom: 8px;
+    font-size: 19px;
+  }
+  .info-box p, .info-box li {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--ink);
+  }
+  .info-box ul { padding-left: 20px; }
+
+  /* ALPHABET GRID */
+  .alphabet-section { margin: 40px 0; }
+  .alphabet-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--rust);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(160, 78, 42, 0.3);
+  }
+  .alpha-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .alpha-card {
+    background: white;
+    border: 1px solid #e0d4be;
+    border-radius: 8px;
+    padding: 16px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .alpha-card:hover {
+    background: var(--dark);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+  .alpha-card:hover .kh { color: var(--gold); }
+  .alpha-card:hover .trans, .alpha-card:hover .sound { color: var(--cream); opacity: 0.8; }
+  .alpha-card .kh {
+    font-size: 38px;
+    line-height: 1.2;
+    color: var(--dark);
+    display: block;
+    transition: color 0.25s;
+  }
+  .alpha-card .trans {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--rust);
+    display: block;
+    margin-top: 4px;
+    transition: color 0.25s;
+  }
+  .alpha-card .sound {
+    font-size: 13px;
+    color: #888;
+    display: block;
+    margin-top: 2px;
+    transition: color 0.25s;
+  }
+  .series-label {
+    display: inline-block;
+    background: var(--rust);
+    color: white;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  /* VOWELS */
+  .vowel-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+  }
+  .vowel-table th {
+    background: var(--dark);
+    color: var(--gold);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-size: 13px;
+  }
+  .vowel-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid #e8dfc8;
+    vertical-align: middle;
+  }
+  .vowel-table tr:nth-child(even) td { background: rgba(232, 223, 200, 0.4); }
+  .vowel-table tr:hover td { background: rgba(200, 146, 58, 0.1); }
+  .vowel-table .kh-big { font-size: 24px; color: var(--dark); }
+  .vowel-table .placeholder { font-size: 20px; color: var(--rust); opacity: 0.4; }
+
+  /* PHRASES */
+  .phrase-block {
+    background: white;
+    border: 1px solid #e0d4be;
+    border-radius: 10px;
+    padding: 0;
+    margin: 16px 0;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .phrase-block:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  .phrase-head {
+    background: var(--papyrus);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .phrase-head .ru { font-size: 17px; font-weight: 600; color: var(--dark); }
+  .phrase-head .toggle { color: var(--gold); font-size: 20px; transition: transform 0.2s; }
+  .phrase-head.open .toggle { transform: rotate(45deg); }
+  .phrase-body {
+    display: none;
+    padding: 16px 20px 20px;
+  }
+  .phrase-body.open { display: block; }
+  .phrase-row { margin: 10px 0; }
+  .phrase-row .label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 2px;
+  }
+  .phrase-row .kh-text {
+    font-size: 30px;
+    color: var(--dark);
+    line-height: 1.4;
+  }
+  .phrase-row .roman {
+    font-size: 16px;
+    color: var(--rust);
+    font-style: italic;
+    margin-top: 2px;
+  }
+  .phrase-row .meaning {
+    font-size: 15px;
+    color: #777;
+    margin-top: 2px;
+  }
+
+  /* NUMBERS */
+  .numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .num-card {
+    background: white;
+    border: 1px solid #e0d4be;
+    border-radius: 8px;
+    padding: 16px 12px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .num-card:hover {
+    border-color: var(--gold);
+    background: var(--dark);
+  }
+  .num-card:hover .num-arabic { color: var(--gold); }
+  .num-card:hover .num-kh { color: white; }
+  .num-card:hover .num-ro { color: var(--cream); opacity: 0.7; }
+  .num-card .num-arabic {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: var(--rust);
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .num-card .num-kh {
+    font-size: 32px;
+    color: var(--dark);
+    display: block;
+    margin: 6px 0 4px;
+    transition: color 0.2s;
+  }
+  .num-card .num-ro {
+    font-size: 14px;
+    color: #888;
+    transition: color 0.2s;
+  }
+
+  /* GRAMMAR */
+  .grammar-rule {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    margin: 20px 0;
+    border: 1px solid #e0d4be;
+  }
+  .grammar-rule h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--dark);
+    margin-bottom: 12px;
+  }
+  .grammar-rule .rule-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .example-line {
+    background: var(--papyrus);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .ex-kh { font-size: 26px; color: var(--dark); grid-row: span 2; align-self: center; min-width: 80px; }
+  .ex-ro { font-size: 15px; color: var(--rust); font-style: italic; }
+  .ex-ru { font-size: 15px; color: #666; }
+
+  /* WRITING */
+  .writing-guide {
+    background: white;
+    border-radius: 10px;
+    padding: 28px;
+    margin: 20px 0;
+    border: 1px solid #e0d4be;
+  }
+  .writing-guide h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--rust);
+    margin-bottom: 16px;
+  }
+  .stroke-demo {
+    background: var(--papyrus);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin: 16px 0;
+    font-size: 64px;
+    color: var(--dark);
+    line-height: 1;
+    position: relative;
+  }
+  .stroke-demo::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+  .writing-note {
+    font-size: 13px;
+    color: #666;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* TIPS CARD */
+  .tip-card {
+    background: var(--dark);
+    color: var(--cream);
+    border-radius: 10px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .tip-card .tip-icon { font-size: 24px; margin-bottom: 10px; }
+  .tip-card h4 { color: var(--gold); margin-bottom: 10px; font-family: 'Playfair Display', serif; }
+  .tip-card p, .tip-card li { font-size: 16px; line-height: 1.8; opacity: 0.85; }
+  .tip-card ul { padding-left: 20px; }
+
+  /* LIVE SPEECH BADGE */
+  .live-badge {
+    display: inline-block;
+    background: #2a6e3f;
+    color: #d4f5e2;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-right: 6px;
+    vertical-align: middle;
+    font-style: normal;
+    font-weight: 600;
+  }
+  .live-text {
+    color: #2a6e3f;
+    font-style: italic;
+  }
+  .num-card .num-live {
+    display: block;
+    font-size: 12px;
+    color: #2a6e3f;
+    font-style: italic;
+    margin-top: 3px;
+    transition: color 0.2s;
+  }
+  .num-card:hover .num-live { color: #7ee8a2; }
+
+  /* WORD BREAKDOWN */
+  .word-breakdown {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .word-chip {
+    background: var(--papyrus);
+    border: 1px solid #d8ccb4;
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: center;
+    min-width: 70px;
+  }
+  .wc-kh  { display:block; font-size:22px; color:var(--dark); line-height:1.3; }
+  .wc-lat { display:block; font-size:11px; color:#888; font-style:italic; margin-top:2px; }
+  .wc-ru  { display:block; font-size:12px; color:var(--rust); margin-top:1px; font-weight:600; }
+  .wc-plus { color:var(--gold); font-size:18px; font-weight:300; align-self:center; }
+
+  /* VOCABULARY */
+  .vocab-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 24px 0 32px;
+  }
+  .vocab-filter {
+    padding: 8px 18px;
+    border-radius: 24px;
+    border: 2px solid var(--gold);
+    background: transparent;
+    color: var(--ink);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .vocab-filter:hover { background: var(--papyrus); }
+  .vocab-filter.active { background: var(--dark); color: var(--gold); border-color: var(--dark); }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .vocab-card {
+    background: white;
+    border: 1px solid #e0d4be;
+    border-radius: 10px;
+    padding: 16px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .vocab-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    transform: translateY(-1px);
+  }
+  .vocab-card .vc-kh {
+    font-size: 28px;
+    color: var(--dark);
+    line-height: 1.3;
+    display: block;
+  }
+  .vocab-card .vc-ru {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 6px;
+    display: block;
+  }
+  .vocab-card .vc-lat {
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+    display: block;
+    margin-top: 2px;
+  }
+  .vocab-card .vc-rus-pron {
+    font-size: 12px;
+    color: var(--rust);
+    display: block;
+    margin-top: 1px;
+  }
+  .vocab-card .vc-live {
+    font-size: 11px;
+    color: #2a6e3f;
+    font-style: italic;
+    display: block;
+    margin-top: 3px;
+  }
+  .vocab-card .vc-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-top: 8px;
+    font-weight: 600;
+  }
+  .tag-noun     { background: #e8f0ff; color: #3a5fbf; }
+  .tag-pronoun  { background: #ede7f6; color: #4527a0; }
+  .tag-question { background: #fff3e0; color: #e65100; }
+  .tag-verb     { background: #fff0e0; color: #a05010; }
+  .tag-adj      { background: #e8f5e9; color: #2e7d32; }
+  .tag-adv      { background: #fce4ec; color: #880e4f; }
+  .tag-body     { background: #f3e5f5; color: #6a1b9a; }
+  .tag-food     { background: #fff8e1; color: #f57f17; }
+  .tag-meat     { background: #fbe9e7; color: #bf360c; }
+  .tag-animal   { background: #f9fbe7; color: #558b2f; }
+  .tag-place    { background: #e0f7fa; color: #00695c; }
+  .tag-time     { background: #f1f8e9; color: #33691e; }
+  .tag-nature   { background: #e8f5e9; color: #1b5e20; }
+  .tag-transport{ background: #e3f2fd; color: #0d47a1; }
+  .tag-color    { background: #fce4ec; color: #ad1457; }
+  .tag-people   { background: #fff3e0; color: #bf360c; }
+  .tag-home     { background: #f3e5f5; color: #4a148c; }
+  .tag-health   { background: #e8f5e9; color: #2e7d32; }
+  .tag-money    { background: #fffde7; color: #f57f17; }
+  .tag-adj     { background: #e8f5e9; color: #2e7d32; }
+  .tag-adv     { background: #fce4ec; color: #880e4f; }
+  .tag-body    { background: #f3e5f5; color: #6a1b9a; }
+  .tag-food    { background: #fff8e1; color: #f57f17; }
+  .tag-place   { background: #e0f7fa; color: #00695c; }
+  .tag-time    { background: #f1f8e9; color: #33691e; }
+  .vocab-cat-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--rust);
+    margin: 36px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(160,78,42,0.3);
+  }
+
+  /* BUILDER */
+  .builder-slot {
+    margin: 20px 0;
+  }
+  .builder-slot-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .builder-slot-label span {
+    background: var(--sage);
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+  }
+  .builder-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .builder-chip {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 2px solid #e0d4be;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    min-width: 80px;
+  }
+  .builder-chip:hover { border-color: var(--gold); background: var(--papyrus); }
+  .builder-chip.selected { border-color: var(--rust); background: var(--dark); color: white; }
+  .builder-chip.selected .bc-kh { color: var(--gold); }
+  .builder-chip.selected .bc-ru { color: var(--cream); opacity: 0.8; }
+  .builder-chip.selected .bc-lat { color: #aaa; }
+  .bc-kh  { display: block; font-size: 22px; color: var(--dark); line-height: 1.3; }
+  .bc-ru  { display: block; font-size: 12px; font-weight: 600; color: var(--rust); margin-top: 3px; }
+  .bc-lat { display: block; font-size: 11px; color: #999; font-style: italic; }
+
+  .builder-none {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 2px dashed #e0d4be;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    color: #aaa;
+    transition: all 0.2s;
+  }
+  .builder-none:hover { border-color: var(--gold); color: var(--ink); }
+  .builder-none.selected { border-color: var(--sage); color: var(--sage); background: rgba(107,124,94,0.08); }
+
+  .builder-result {
+    background: var(--dark);
+    border-radius: 12px;
+    padding: 28px;
+    margin: 32px 0 16px;
+    color: var(--cream);
+    display: none;
+  }
+  .builder-result.visible { display: block; }
+  .builder-result-kh {
+    font-size: 34px;
+    color: var(--gold);
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .builder-result-ro {
+    font-size: 17px;
+    font-style: italic;
+    color: var(--cream);
+    opacity: 0.8;
+    margin-bottom: 6px;
+  }
+  .builder-result-literal {
+    font-size: 14px;
+    color: var(--sage);
+    margin-bottom: 16px;
+  }
+  .builder-result-breakdown {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .br-chip {
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 6px 12px;
+    text-align: center;
+  }
+  .br-kh  { display: block; font-size: 18px; color: var(--gold); }
+  .br-ru  { display: block; font-size: 11px; color: #aaa; margin-top: 2px; }
+  .br-plus { color: rgba(255,255,255,0.2); font-size: 18px; align-self: center; }
+
+  .builder-reset {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: var(--cream);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.2s;
+  }
+  .builder-reset:hover { background: rgba(255,255,255,0.1); }
+
+  .builder-tip {
+    background: var(--papyrus);
+    border-left: 3px solid var(--sage);
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: #555;
+    margin-top: 16px;
+  }
+
+  /* DIVIDER */
+  .ornament {
+    text-align: center;
+    margin: 40px 0;
+    color: var(--gold);
+    opacity: 0.5;
+    font-size: 20px;
+    letter-spacing: 12px;
+  }
+
+  footer {
+    background: var(--dark);
+    color: var(--cream);
+    text-align: center;
+    padding: 30px;
+    font-size: 13px;
+    opacity: 0.9;
+  }
+  footer .kh-footer { font-size: 28px; color: var(--gold); display: block; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">Пособие для начинающих</div>
+  <h1>
+    Кхмерский язык
+    <span class="khmer-title">ភាសាខ្មែរ</span>
+  </h1>
+  <p>Язык Камбоджи — один из древнейших в Юго-Восточной Азии. Письменность, фонетика, грамматика — с нуля.</p>
+</header>
+
+<nav id="mainNav">
+  <a href="#" class="active" onclick="showSection('intro', this)">Введение</a>
+  <a href="#" onclick="showSection('alphabet', this)">Согласные</a>
+  <a href="#" onclick="showSection('vowels', this)">Гласные</a>
+  <a href="#" onclick="showSection('writing', this)">Письмо</a>
+  <a href="#" onclick="showSection('numbers', this)">Числа</a>
+  <a href="#" onclick="showSection('phrases', this)">Фразы</a>
+  <a href="#" onclick="showSection('grammar', this)">Грамматика</a>
+  <a href="#" onclick="showSection('vocab', this)">Словарь</a>
+  <a href="#" onclick="showSection('builder', this)">🔧 Конструктор</a>
+  <a href="#" onclick="showSection('tips', this)">Советы</a>
+</nav>
+
+<main>
+
+<!-- ===== ВВЕДЕНИЕ ===== -->
+<div id="intro" class="section active">
+  <div class="section-header">
+    <div class="section-num">Урок 0</div>
+    <h2>Введение <span class="khmer-sub">ការណែនាំ</span></h2>
+    <p class="intro-text">Прежде чем учить — узнай, что за язык перед тобой.</p>
+  </div>
+
+  <div class="info-box">
+    <h4>🌏 Что такое кхмерский язык?</h4>
+    <p>Кхмерский (ភាសាខ្មែរ, <em>phiasaa khmae</em>) — официальный язык Камбоджи, на нём говорят около <strong>16 миллионов человек</strong>. Это один из старейших письменных языков Юго-Восточной Азии — первые надписи датируются VII веком н.э.</p>
+  </div>
+
+  <div class="info-box">
+    <h4>✍️ Особенности письменности</h4>
+    <ul>
+      <li>Письменность — <strong>абугида</strong> (слоговой алфавит), основана на индийском письме.</li>
+      <li>Каждый символ — <strong>согласная + встроенная гласная «а/о»</strong></li>
+      <li>Отдельные знаки для гласных меняют или убирают эту базовую гласную</li>
+      <li>Пишется <strong>слева направо</strong>, без пробелов между словами (только между предложениями)</li>
+      <li>Буквы делятся на <strong>две серии</strong> — они влияют на произношение гласных</li>
+    </ul>
+  </div>
+
+  <div class="info-box">
+    <h4>🔊 Особенности произношения</h4>
+    <ul>
+      <li>Нет тонов (в отличие от тайского или вьетнамского) — учить легче!</li>
+      <li>Есть звуки, отсутствующие в русском: <strong>ng</strong> в начале слова, аспирированные согласные</li>
+      <li>Многие финальные согласные «проглатываются» — слово заканчивается мягко</li>
+      <li>В разговорной речи много слогов редуцируется</li>
+    </ul>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-icon">💡</div>
+    <h4>Как пользоваться этим пособием</h4>
+    <ul>
+      <li>Начни с раздела <strong>«Согласные»</strong> — это основа алфавита</li>
+      <li>Параллельно изучай <strong>«Гласные»</strong> — без них нельзя читать</li>
+      <li>Раздел <strong>«Письмо»</strong> объясняет, как буквы сочетаются в слоги</li>
+      <li>Используй <strong>«Фразы»</strong> для практики с первых дней</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== СОГЛАСНЫЕ ===== -->
+<div id="alphabet" class="section">
+  <div class="section-header">
+    <div class="section-num">Урок 1</div>
+    <h2>Согласные буквы <span class="khmer-sub">ព្យញ្ជនៈ</span></h2>
+    <p class="intro-text">В кхмерском алфавите 33 основные согласные, разделённые на две серии.</p>
+  </div>
+
+  <div class="info-box">
+    <h4>Две серии согласных</h4>
+    <p>Каждая согласная относится к одной из двух серий (ក-серия или គ-серия). Это определяет, как читаются гласные знаки рядом с ней. Серия — это не вариант написания, а свойство самой буквы, которое нужно запомнить.</p>
+  </div>
+
+  <div class="alphabet-section">
+    <span class="series-label">Серия А (ក) — 1-я серия, базовая гласная «а»</span>
+    <div class="alpha-grid" id="grid1"></div>
+
+    <span class="series-label">Серия О (គ) — 2-я серия, базовая гласная «о»</span>
+    <div class="alpha-grid" id="grid2"></div>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-icon">📌</div>
+    <h4>Как запоминать</h4>
+    <p>Не пытайся выучить всё сразу. Начни с первых 5–7 букв каждой серии. Пиши их от руки — это ускоряет запоминание в 3 раза. Кхмерские буквы красивы — относись к ним как к каллиграфии.</p>
+  </div>
+</div>
+
+<!-- ===== ГЛАСНЫЕ ===== -->
+<div id="vowels" class="section">
+  <div class="section-header">
+    <div class="section-num">Урок 2</div>
+    <h2>Гласные знаки <span class="khmer-sub">ស្រៈ</span></h2>
+    <p class="intro-text">Гласные в кхмерском — это диакритики, которые пишутся вокруг согласной.</p>
+  </div>
+
+  <div class="info-box">
+    <h4>Как работают гласные знаки</h4>
+    <p>Гласный знак всегда «сидит» на согласной: сверху, снизу, слева, справа или со всех сторон. Знак <strong>◌</strong> означает место согласной. Звук гласной зависит от серии согласной, к которой он присоединяется!</p>
+  </div>
+
+  <table class="vowel-table">
+    <thead>
+      <tr>
+        <th>Знак</th>
+        <th>Серия А (1-я)</th>
+        <th>Серия О (2-я)</th>
+        <th>Позиция</th>
+        <th>Пример</th>
+      </tr>
+    </thead>
+    <tbody id="vowelTable"></tbody>
+  </table>
+
+  <div class="info-box">
+    <h4>Самостоятельные гласные</h4>
+    <p>Есть также 10 независимых гласных букв, используемых когда слог начинается с гласного звука. Например: <strong style="font-size:20px">អ</strong> (а/о), <strong style="font-size:20px">ឥ</strong> (и), <strong style="font-size:20px">ឦ</strong> (ии), <strong style="font-size:20px">ឧ</strong> (у), <strong style="font-size:20px">ឯ</strong> (эй).</p>
+  </div>
+</div>
+
+<!-- ===== ПИСЬМО ===== -->
+<div id="writing" class="section">
+  <div class="section-header">
+    <div class="section-num">Урок 3</div>
+    <h2>Как читать и писать <span class="khmer-sub">ការសរសេរ</span></h2>
+    <p class="intro-text">Разбираемся, как буквы складываются в слоги и слова.</p>
+  </div>
+
+  <div class="writing-guide">
+    <h4>Структура слога</h4>
+    <div class="stroke-demo" data-name="ក + ា = កា «ка»">ការ</div>
+    <p class="writing-note">Слово «ការ» (kaa) — «дело, работа». Состоит из ក (к) + гласный знак ា (аа).</p>
+    <div class="info-box" style="margin-top:16px">
+      <p>Базовая формула слога: <strong>[Согласная] + [Гласный знак] + [Финальная согласная]</strong><br>
+      Или просто: <strong>[Согласная] + [Гласный знак]</strong><br>
+      Или просто: <strong>[Согласная]</strong> — читается с базовой гласной серии</p>
+    </div>
+  </div>
+
+  <div class="writing-guide">
+    <h4>Подписные согласные (ជើង)</h4>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0">
+      <div class="stroke-demo" style="font-size:50px" data-name="ក + ្រ = ក្រ «кр»">ក្រ</div>
+      <div class="stroke-demo" style="font-size:50px" data-name="ស + ្ត = ស្ត «ст»">ស្ត</div>
+    </div>
+    <p class="writing-note">Когда две согласные идут подряд без гласной между ними, вторая пишется меньшей формой под первой — это «джоенг» (ноги). Каждая буква имеет свою форму джоенга.</p>
+  </div>
+
+  <div class="writing-guide">
+    <h4>Знаки над буквами</h4>
+    <table class="vowel-table">
+      <thead><tr><th>Знак</th><th>Название</th><th>Функция</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="kh-big">់</td><td>Мусакатоан</td><td>Сокращает финальную гласную</td><td class="kh-big">ម + ់ → ម</td></tr>
+        <tr><td class="kh-big">ំ</td><td>Никахит</td><td>Носовой призвук «-ум/ом»</td><td class="kh-big">ហ + ំ = ហំ</td></tr>
+        <tr><td class="kh-big">ះ</td><td>Реах</td><td>Финальный «-ах/эах»</td><td class="kh-big">ហ + ះ = ហះ</td></tr>
+        <tr><td class="kh-big">៍</td><td>Тоандакхат</td><td>Убирает букву (немой знак)</td><td class="kh-big">ណ + ៍ = немое</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="writing-guide">
+    <h4>Пунктуация</h4>
+    <table class="vowel-table">
+      <thead><tr><th>Знак</th><th>Название</th><th>Аналог</th></tr></thead>
+      <tbody>
+        <tr><td class="kh-big">។</td><td>Хан</td><td>Точка (конец предложения)</td></tr>
+        <tr><td class="kh-big">៕</td><td>Барийосан</td><td>Конец абзаца/главы</td></tr>
+        <tr><td class="kh-big">៖</td><td>Хан ках</td><td>Двоеточие</td></tr>
+        <tr><td class="kh-big">«»</td><td>—</td><td>Кавычки (используют французские)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-icon">✍️</div>
+    <h4>Практика письма</h4>
+    <p>Начни с написания отдельных букв, затем простых слогов типа កា (ка), គី (кии), ចូ (чоо). Порядок штрихов: обычно сверху-вниз, слева-направо. Кхмерские буквы имеют округлые формы — не торопись, следи за плавностью линий.</p>
+  </div>
+</div>
+
+<!-- ===== ЧИСЛА ===== -->
+<div id="numbers" class="section">
+  <div class="section-header">
+    <div class="section-num">Урок 4</div>
+    <h2>Числа и счёт <span class="khmer-sub">លេខ</span></h2>
+    <p class="intro-text">Своя система цифр, своя логика счёта — и связь с историей всей математики.</p>
+  </div>
+
+  <!-- ЦИФРЫ 0–9 -->
+  <h3 class="vocab-cat-title">Цифры 0–9 <span style="font-size:16px;color:#888;font-family:'Source Sans 3',sans-serif">— основа системы</span></h3>
+  <div class="numbers-grid" id="numGrid09"></div>
+
+  <div class="info-box" style="border-left-color:#2a6e3f">
+    <h4 style="color:#2a6e3f">🗣 Живое произношение</h4>
+    <p>Дифтонги в разговорной речи «схлопываются»: <strong>muəy → муй</strong>, <strong>buən → бун</strong>. Финальный <strong>-p</strong> в «дап» (10) почти не слышен. Цифра <strong>០</strong> (ноль) — одна из древнейших записей нуля в мире, найдена в Камбодже на Стеле К-127 (683 г. н.э.).</p>
+  </div>
+
+  <!-- 10–19 -->
+  <h3 class="vocab-cat-title">11–19 <span style="font-size:16px;color:#888;font-family:'Source Sans 3',sans-serif">— ដប់ + единица</span></h3>
+  <div class="numbers-grid" id="numGrid1019"></div>
+
+  <!-- ДЕСЯТКИ -->
+  <h3 class="vocab-cat-title">Десятки <span style="font-size:16px;color:#888;font-family:'Source Sans 3',sans-serif">— особые слова</span></h3>
+  <div class="info-box">
+    <h4>⚠️ Внимание: 20 — исключение!</h4>
+    <p>Число 20 — <strong>ម្ភៃ</strong> (мпхей) — особое слово, не «два-десять». Остальные десятки строятся как <strong>число + សិប</strong> (сэп = десяток).</p>
+  </div>
+  <div class="numbers-grid" id="numGridTens"></div>
+
+  <!-- СОТНИ / ТЫСЯЧИ -->
+  <h3 class="vocab-cat-title">Сотни, тысячи и больше</h3>
+  <div class="numbers-grid" id="numGridBig"></div>
+
+  <!-- СОСТАВНЫЕ ЧИСЛА -->
+  <h3 class="vocab-cat-title">Составные числа — примеры</h3>
+  <div class="info-box">
+    <h4>Логика составных чисел</h4>
+    <p>Числа складываются слева направо: <strong>тысячи + сотни + десятки + единицы</strong>. Между разрядами ничего не добавляется — просто произносятся подряд. Например: 35 = សាមសិប + ប្រាំ = «три-десять пять».</p>
+  </div>
+  <div class="numbers-grid" id="numGridComplex"></div>
+
+  <!-- ПОРЯДКОВЫЕ -->
+  <h3 class="vocab-cat-title">Порядковые числительные</h3>
+  <div class="info-box">
+    <h4>Формула: ទី + число</h4>
+    <p>Порядковое числительное образуется добавлением <strong>ទី</strong> (тии) перед числом. Исключение — «первый»: <strong>ដំបូង</strong> (дамбоонг) или <strong>ទីមួយ</strong>.</p>
+  </div>
+  <div class="numbers-grid" id="numGridOrdinal"></div>
+
+  <!-- СЧЁТНЫЕ СЛОВА -->
+  <h3 class="vocab-cat-title">Счётные слова (классификаторы)</h3>
+  <div class="info-box">
+    <h4>Кхмерский считает иначе</h4>
+    <p>Как и в других языках ЮВА, для счёта нужны <strong>классификаторы</strong> — слова-мерки, которые ставятся между числом и существительным. Нельзя сказать «два человека» напрямую — нужно «два + нак + человек».</p>
+  </div>
+  <div id="classifierTable"></div>
+
+  <!-- МАТЕМАТИКА -->
+  <h3 class="vocab-cat-title">Математические действия</h3>
+  <div id="mathTable"></div>
+
+  <!-- ВРЕМЯ И ЧИСЛА -->
+  <h3 class="vocab-cat-title">Числа в быту: время, деньги, возраст</h3>
+  <div id="practiceTable"></div>
+
+  <div class="writing-guide" style="margin-top:32px">
+    <h4>🏛 История кхмерских цифр</h4>
+    <p style="font-size:15px;color:#555;line-height:1.8">Кхмерские цифры восходят к индийскому письму Брахми. Именно через индийскую математику и торговые пути цифры распространились на арабский мир, а оттуда — в Европу. Наши «арабские» цифры <strong>1 2 3...</strong> — прямые потомки кхмерских <strong>១ ២ ៣...</strong>. Кхмерский ноль <strong>០</strong>, записанный в 683 году, — одно из древнейших документальных свидетельств концепции нуля на планете.</p>
+  </div>
+</div>
+
+<!-- ===== ФРАЗЫ ===== -->
+<div id="phrases" class="section">
+  <div class="section-header">
+    <div class="section-num">Урок 5</div>
+    <h2>Базовые фразы <span class="khmer-sub">ឃ្លាមូលដ្ឋាន</span></h2>
+    <p class="intro-text">Фразы разбиты по темам. Нажми на фразу — раскроется разбор по словам с дословным переводом.</p>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;align-items:center">
+    <button onclick="filterPhrases('all',this)" class="vocab-filter active" id="pfAll">Все фразы</button>
+    <button onclick="filterPhrases('greet',this)" class="vocab-filter">👋 Приветствия</button>
+    <button onclick="filterPhrases('polite',this)" class="vocab-filter">🙏 Вежливость</button>
+    <button onclick="filterPhrases('questions',this)" class="vocab-filter">❓ Вопросы</button>
+    <button onclick="filterPhrases('wants',this)" class="vocab-filter">💬 Желания</button>
+    <button onclick="filterPhrases('fishing',this)" class="vocab-filter">🎣 Рыбалка</button>
+    <button onclick="filterPhrases('feelings',this)" class="vocab-filter">❤️ Чувства</button>
+    <button onclick="toggleAllPhrases()" id="toggleAllBtn" style="padding:9px 22px;border-radius:24px;border:2px solid var(--gold);background:transparent;color:var(--ink);font-family:'Source Sans 3',sans-serif;font-size:14px;cursor:pointer;margin-left:8px" onmouseover="this.style.background='var(--papyrus)'" onmouseout="this.style.background='transparent'">↕ Открыть все</button>
+  </div>
+  <div id="phraseList"></div>
+</div>
+
+<!-- ===== ГРАММАТИКА ===== -->
+<div id="grammar" class="section">
+  <div class="section-header">
+    <div class="section-num">Урок 6</div>
+    <h2>Основы грамматики <span class="khmer-sub">វេយ្យាករណ៍</span></h2>
+    <p class="intro-text">Хорошая новость: кхмерская грамматика намного проще русской.</p>
+  </div>
+
+  <!-- ПОРЯДОК СЛОВ -->
+  <div class="grammar-rule">
+    <div class="rule-badge">Порядок слов</div>
+    <h4>Подлежащее — Сказуемое — Дополнение</h4>
+    <p style="font-size:15px;color:#666;margin-bottom:16px">Как в русском, только нельзя менять порядок. Нет падежей — смысл меняется только от перестановки слов.</p>
+    <div class="example-line">
+      <div class="ex-kh">ខ្ញុំ ស្រឡាញ់ អ្នក</div>
+      <div>
+        <div class="ex-ro">kñom srɑlaɲ neak &nbsp;<span style="color:var(--rust)">[кньом сралань ниак]</span></div>
+        <div class="ex-ru">Я люблю тебя</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом сралань няк</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">គាត់ ញ៉ាំ បាយ</div>
+      <div>
+        <div class="ex-ro">koat ɲam baay &nbsp;<span style="color:var(--rust)">[коат ньам бааи]</span></div>
+        <div class="ex-ru">Он ест рис</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">коат ньам бай</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">ខ្ញុំ ទិញ ត្រី</div>
+      <div>
+        <div class="ex-ro">kñom tiɲ trəy &nbsp;<span style="color:var(--rust)">[кньом тинь трэй]</span></div>
+        <div class="ex-ru">Я покупаю рыбу</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом тинь трэй</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- МАРКЕРЫ ВРЕМЕНИ -->
+  <div class="grammar-rule">
+    <div class="rule-badge">Нет времён!</div>
+    <h4>Время выражается словами-маркерами</h4>
+    <p style="font-size:15px;color:#666;margin-bottom:16px">Глагол не изменяется. Время показывают отдельные слова. В разговорной речи маркеры часто опускают — время понятно из контекста.</p>
+    <div class="example-line">
+      <div class="ex-kh">បាន</div>
+      <div>
+        <div class="ex-ro">baan &nbsp;<span style="color:var(--rust)">[баан]</span></div>
+        <div class="ex-ru">прошедшее — ставится <em>после</em> глагола</div>
+        <div class="ex-ro" style="margin-top:6px;font-style:normal;font-size:14px">
+          ខ្ញុំ ញ៉ាំ បាយ <strong>បាន</strong> — kñom ɲam baay baan &nbsp;<span style="color:var(--rust)">[кньом ньам бай баан]</span><br>
+          <span style="color:#888">«Я поел» (уже сделал)</span>
+          <span style="display:block;margin-top:3px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом ньам бай бан</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">នឹង</div>
+      <div>
+        <div class="ex-ro">nɨng &nbsp;<span style="color:var(--rust)">[нынг]</span></div>
+        <div class="ex-ru">будущее — ставится <em>перед</em> глаголом</div>
+        <div class="ex-ro" style="margin-top:6px;font-style:normal;font-size:14px">
+          ខ្ញុំ <strong>នឹង</strong> ទៅ — kñom nɨng tɨv &nbsp;<span style="color:var(--rust)">[кньом нынг тыв]</span><br>
+          <span style="color:#888">«Я пойду»</span>
+          <span style="display:block;margin-top:3px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом нынг тэв ~ кньом тэв</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">កំពុង</div>
+      <div>
+        <div class="ex-ro">kɑmpung &nbsp;<span style="color:var(--rust)">[кампунг]</span></div>
+        <div class="ex-ru">настоящее длительное — «сейчас делает»</div>
+        <div class="ex-ro" style="margin-top:6px;font-style:normal;font-size:14px">
+          គាត់ <strong>កំពុង</strong> ដេក — koat kɑmpung daek &nbsp;<span style="color:var(--rust)">[коат кампунг дэк]</span><br>
+          <span style="color:#888">«Он сейчас спит»</span>
+          <span style="display:block;margin-top:3px"><span class="live-badge">🗣 разговорное</span><span class="live-text">коат кампунг дэк</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">ហើយ</div>
+      <div>
+        <div class="ex-ro">haəy &nbsp;<span style="color:var(--rust)">[хаэй]</span></div>
+        <div class="ex-ru">«уже / вот и всё» — завершённость действия</div>
+        <div class="ex-ro" style="margin-top:6px;font-style:normal;font-size:14px">
+          ញ៉ាំ <strong>ហើយ</strong>? — ɲam haəy? &nbsp;<span style="color:var(--rust)">[ньам хаэй?]</span><br>
+          <span style="color:#888">«Уже поел?» (очень частый вопрос при встрече!)</span>
+          <span style="display:block;margin-top:3px"><span class="live-badge">🗣 разговорное</span><span class="live-text">ньам хэй?</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ОТРИЦАНИЕ -->
+  <div class="grammar-rule">
+    <div class="rule-badge">Отрицание</div>
+    <h4>Двойное отрицание: មិន … ទេ</h4>
+    <p style="font-size:15px;color:#666;margin-bottom:16px">Отрицание «обнимает» глагол: <strong>មិន</strong> ставится перед, <strong>ទេ</strong> — в конце предложения.</p>
+    <div class="example-line">
+      <div class="ex-kh">ខ្ញុំ មិន ដឹង ទេ</div>
+      <div>
+        <div class="ex-ro">kñom mɨn dəŋ tee &nbsp;<span style="color:var(--rust)">[кньом мын дынг тэ]</span></div>
+        <div class="ex-ru">Я не знаю</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом мин дынг тэ</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">ខ្ញុំ មិន ស្គាល់ ទេ</div>
+      <div>
+        <div class="ex-ro">kñom mɨn skɔal tee &nbsp;<span style="color:var(--rust)">[кньом мын скоал тэ]</span></div>
+        <div class="ex-ru">Я не знаком (с этим человеком)</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом мин скоал тэ</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">គាត់ មិន មក ទេ</div>
+      <div>
+        <div class="ex-ro">koat mɨn mɔɔk tee &nbsp;<span style="color:var(--rust)">[коат мын моок тэ]</span></div>
+        <div class="ex-ru">Он не придёт</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">коат мин мок тэ</span></div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:14px">
+      <h4>Запрет: កុំ</h4>
+      <p>Для запрета «не делай!» используется <strong style="font-size:20px">កុំ</strong> (kom / [ком]) перед глаголом — без ទេ в конце.<br>
+      <strong style="font-size:18px">កុំ និយាយ!</strong> — kom niyiey! &nbsp;<span style="color:var(--rust)">[ком нийиэй!]</span> — «Не говори!»<br>
+      <span style="color:#2a6e3f;font-style:italic">🗣 ком нийей!</span></p>
+    </div>
+  </div>
+
+  <!-- ВОПРОСЫ -->
+  <div class="grammar-rule">
+    <div class="rule-badge">Вопросы</div>
+    <h4>Общий вопрос: частица ទេ в конце</h4>
+    <p style="font-size:15px;color:#666;margin-bottom:16px">Да/нет вопрос образуется просто добавлением <strong>ទេ</strong> (tee) в конец утверждения. Интонация не меняется.</p>
+    <div class="example-line">
+      <div class="ex-kh">អ្នក ស្រេក ទេ?</div>
+      <div>
+        <div class="ex-ro">neak srɛɛk tee? &nbsp;<span style="color:var(--rust)">[ниак срэк тэ?]</span></div>
+        <div class="ex-ru">Ты хочешь пить?</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">няк срэк тэ?</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">អ្នក ទៅ ទេ?</div>
+      <div>
+        <div class="ex-ro">neak tɨv tee? &nbsp;<span style="color:var(--rust)">[ниак тыв тэ?]</span></div>
+        <div class="ex-ru">Ты пойдёшь?</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">няк тэв тэ?</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ВОПРОСИТЕЛЬНЫЕ СЛОВА -->
+  <div class="grammar-rule">
+    <div class="rule-badge">Вопросительные слова</div>
+    <h4>Что, кто, где, когда, как, почему</h4>
+    <p style="font-size:15px;color:#666;margin-bottom:16px">Вопросительное слово обычно ставится <em>в конец</em> предложения — в отличие от русского.</p>
+    <table class="vowel-table" style="margin-top:12px">
+      <thead><tr><th>Кхмерский</th><th>Латиница</th><th>[Русск.]</th><th>🗣 живая речь</th><th>Перевод</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="kh-big">អ្វី</td><td>avəy</td><td style="color:var(--rust)">[авэй]</td>
+          <td class="live-text">авэй</td><td>Что?</td>
+        </tr>
+        <tr>
+          <td class="kh-big">នរណា</td><td>nɔɔ naa</td><td style="color:var(--rust)">[ноо наа]</td>
+          <td class="live-text">но наа</td><td>Кто?</td>
+        </tr>
+        <tr>
+          <td class="kh-big">ណា / ឯណា</td><td>naa / ae naa</td><td style="color:var(--rust)">[наа / эй наа]</td>
+          <td class="live-text">наа / эй наа</td><td>Где?</td>
+        </tr>
+        <tr>
+          <td class="kh-big">ពេលណា</td><td>peel naa</td><td style="color:var(--rust)">[пэл наа]</td>
+          <td class="live-text">пэл наа</td><td>Когда?</td>
+        </tr>
+        <tr>
+          <td class="kh-big">ម្ដេច</td><td>mdəc</td><td style="color:var(--rust)">[мдэч]</td>
+          <td class="live-text">мдэч ~ дэч</td><td>Как?</td>
+        </tr>
+        <tr>
+          <td class="kh-big">ហេតុអ្វី</td><td>het avəy</td><td style="color:var(--rust)">[хет авэй]</td>
+          <td class="live-text">хет авэй ~ хет эй</td><td>Почему?</td>
+        </tr>
+        <tr>
+          <td class="kh-big">ប៉ុន្មាន</td><td>ponmaan</td><td style="color:var(--rust)">[понмаан]</td>
+          <td class="live-text">пунмаан</td><td>Сколько?</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="example-line" style="margin-top:16px">
+      <div class="ex-kh">អ្នក ទៅ ណា?</div>
+      <div>
+        <div class="ex-ro">neak tɨv naa? &nbsp;<span style="color:var(--rust)">[ниак тыв наа?]</span></div>
+        <div class="ex-ru">Куда ты идёшь? (дословно: «ты идёшь куда?»)</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">няк тэв наа? — стандартное приветствие на улице!</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- МЕСТОИМЕНИЯ -->
+  <div class="grammar-rule">
+    <div class="rule-badge">Местоимения</div>
+    <h4>Местоимения зависят от статуса собеседника</h4>
+    <p style="font-size:15px;color:#666;margin-bottom:16px">В кхмерском нет единого «ты» — выбор слова зависит от возраста, пола и социального положения.</p>
+    <table class="vowel-table" style="margin-top:12px">
+      <thead><tr><th>Русский</th><th>Кхмерский</th><th>Латиница</th><th>[Русск.]</th><th>🗣 живая речь</th><th>Контекст</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Я</td><td class="kh-big">ខ្ញុំ</td><td>kñom</td>
+          <td style="color:var(--rust)">[кньом]</td>
+          <td class="live-text">кньом</td>
+          <td>Нейтральное, для всех</td>
+        </tr>
+        <tr>
+          <td>Ты / Вы</td><td class="kh-big">អ្នក</td><td>neak</td>
+          <td style="color:var(--rust)">[ниак]</td>
+          <td class="live-text">няк</td>
+          <td>Уважительное, нейтральное</td>
+        </tr>
+        <tr>
+          <td>Ты (к ровеснику)</td><td class="kh-big">បង</td><td>bɑɑŋ</td>
+          <td style="color:var(--rust)">[баанг]</td>
+          <td class="live-text">банг</td>
+          <td>Букв. «старший брат/сестра», тепло и неформально</td>
+        </tr>
+        <tr>
+          <td>Он / она</td><td class="kh-big">គាត់</td><td>koat</td>
+          <td style="color:var(--rust)">[коат]</td>
+          <td class="live-text">коат</td>
+          <td>Уважительное (о взрослом)</td>
+        </tr>
+        <tr>
+          <td>Он / она (фам.)</td><td class="kh-big">វា</td><td>vea</td>
+          <td style="color:var(--rust)">[виа]</td>
+          <td class="live-text">виа</td>
+          <td>Фамильярное, о ребёнке или животном</td>
+        </tr>
+        <tr>
+          <td>Мы</td><td class="kh-big">យើង</td><td>yɨng</td>
+          <td style="color:var(--rust)">[йынг]</td>
+          <td class="live-text">йынг ~ йэнг</td>
+          <td>Нейтральное</td>
+        </tr>
+        <tr>
+          <td>Они</td><td class="kh-big">គេ</td><td>kee</td>
+          <td style="color:var(--rust)">[кэ]</td>
+          <td class="live-text">кэ</td>
+          <td>Нейтральное; также «люди вообще»</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ПРИЛАГАТЕЛЬНЫЕ -->
+  <div class="grammar-rule">
+    <div class="rule-badge">Прилагательные</div>
+    <h4>Прилагательное стоит <em>после</em> существительного</h4>
+    <p style="font-size:15px;color:#666;margin-bottom:16px">Никаких окончаний и согласований — слово не меняется.</p>
+    <div class="example-line">
+      <div class="ex-kh">ម្ហូប ឆ្ងាញ់</div>
+      <div>
+        <div class="ex-ro">mhoup chnɑɲ &nbsp;<span style="color:var(--rust)">[мхуп чнань]</span></div>
+        <div class="ex-ru">Вкусная еда (букв. «еда вкусная»)</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">мхуп чнань — само по себе значит «вкусно!»</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">ផ្ទះ ធំ</div>
+      <div>
+        <div class="ex-ro">pteah thom &nbsp;<span style="color:var(--rust)">[птэах том]</span></div>
+        <div class="ex-ru">Большой дом</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">птэа том</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">ស្រី ស្អាត</div>
+      <div>
+        <div class="ex-ro">srəy s'aat &nbsp;<span style="color:var(--rust)">[срэй саат]</span></div>
+        <div class="ex-ru">Красивая девушка</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">срэй саат</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ГЛАГОЛЫ ДВИЖЕНИЯ -->
+  <div class="grammar-rule">
+    <div class="rule-badge">Полезные глаголы</div>
+    <h4>Базовые глаголы — без спряжения</h4>
+    <p style="font-size:15px;color:#666;margin-bottom:16px">Глагол не изменяется никогда — ни по лицу, ни по числу, ни по времени.</p>
+    <table class="vowel-table" style="margin-top:12px">
+      <thead><tr><th>Кхмерский</th><th>Латиница</th><th>[Русск.]</th><th>🗣 живая речь</th><th>Перевод</th></tr></thead>
+      <tbody>
+        <tr><td class="kh-big">ទៅ</td><td>tɨv</td><td style="color:var(--rust)">[тыв]</td><td class="live-text">тэв</td><td>идти, ехать (туда)</td></tr>
+        <tr><td class="kh-big">មក</td><td>mɔɔk</td><td style="color:var(--rust)">[моок]</td><td class="live-text">мок</td><td>приходить, приезжать (сюда)</td></tr>
+        <tr><td class="kh-big">ញ៉ាំ</td><td>ɲam</td><td style="color:var(--rust)">[ньам]</td><td class="live-text">ньам</td><td>есть, кушать</td></tr>
+        <tr><td class="kh-big">ផឹក</td><td>pʰɨk</td><td style="color:var(--rust)">[пхык]</td><td class="live-text">пхэк</td><td>пить</td></tr>
+        <tr><td class="kh-big">ដេក</td><td>daek</td><td style="color:var(--rust)">[дэк]</td><td class="live-text">дэк</td><td>спать, лежать</td></tr>
+        <tr><td class="kh-big">ឈរ</td><td>cʰɔɔ</td><td style="color:var(--rust)">[чоо]</td><td class="live-text">чоо</td><td>стоять</td></tr>
+        <tr><td class="kh-big">អង្គុយ</td><td>ɑŋkuy</td><td style="color:var(--rust)">[ангкуй]</td><td class="live-text">ангкуй ~ ангкой</td><td>сидеть</td></tr>
+        <tr><td class="kh-big">ទិញ</td><td>tiɲ</td><td style="color:var(--rust)">[тинь]</td><td class="live-text">тинь</td><td>покупать</td></tr>
+        <tr><td class="kh-big">លក់</td><td>loak</td><td style="color:var(--rust)">[лоак]</td><td class="live-text">лоак ~ лок</td><td>продавать</td></tr>
+        <tr><td class="kh-big">និយាយ</td><td>niyiey</td><td style="color:var(--rust)">[нийиэй]</td><td class="live-text">нийей</td><td>говорить</td></tr>
+        <tr><td class="kh-big">យល់</td><td>yul</td><td style="color:var(--rust)">[юл]</td><td class="live-text">юл</td><td>понимать</td></tr>
+        <tr><td class="kh-big">ចង់</td><td>cɑŋ</td><td style="color:var(--rust)">[чанг]</td><td class="live-text">чанг</td><td>хотеть</td></tr>
+      </tbody>
+    </table>
+    <div class="example-line" style="margin-top:16px">
+      <div class="ex-kh">ខ្ញុំ ចង់ ផឹក ទឹក</div>
+      <div>
+        <div class="ex-ro">kñom cɑŋ pʰɨk tɨk &nbsp;<span style="color:var(--rust)">[кньом чанг пхык тык]</span></div>
+        <div class="ex-ru">Я хочу пить воду</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом чанг пхэк тык</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ХОЧУ vs НУЖНО -->
+  <div class="grammar-rule">
+    <div class="rule-badge">Желание vs Необходимость</div>
+    <h4>ចង់ «хочу» vs ត្រូវការ «нужно» vs ត្រូវ «должен»</h4>
+    <p style="font-size:15px;color:#666;margin-bottom:16px">Три разных конструкции — три разных оттенка. Выбор между ними важен: «чанг» звучит как личное желание, «трэвкаа» — как нейтральная потребность, «трэв» — как обязанность.</p>
+
+    <div class="example-line">
+      <div class="ex-kh">ខ្ញុំ ចង់ ទៅ</div>
+      <div>
+        <div class="ex-ro">kñom cɑŋ tɨv &nbsp;<span style="color:var(--rust)">[кньом чанг тыв]</span></div>
+        <div class="ex-ru">Я <strong>хочу</strong> пойти — личное желание, порыв</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом чанг тэв</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">ខ្ញុំ ត្រូវការ ទឹក</div>
+      <div>
+        <div class="ex-ro">kñom trəv kaa tɨk &nbsp;<span style="color:var(--rust)">[кньом трэв каа тык]</span></div>
+        <div class="ex-ru">Мне <strong>нужна</strong> вода — нейтральная потребность (в магазине, в разговоре)</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом трэвкаа тык</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">ខ្ញុំ ត្រូវ ទៅ</div>
+      <div>
+        <div class="ex-ro">kñom trəv tɨv &nbsp;<span style="color:var(--rust)">[кньом трэв тыв]</span></div>
+        <div class="ex-ru">Мне <strong>надо</strong> идти — долг, необходимость, «нельзя не пойти»</div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом трэв тэв</span></div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:16px">
+      <h4>Запомни разницу</h4>
+      <p><strong>ចង់</strong> (чанг) — хочу, тянет, мечтаю<br>
+      <strong>ត្រូវការ</strong> (трэвкаа) — нужно, требуется, необходимо<br>
+      <strong>ត្រូវ</strong> (трэв) — должен, обязан, надо</p>
+    </div>
+  </div>
+
+  <!-- ГЛАГОЛ НЕЛЬЗЯ ОПУСТИТЬ -->
+  <div class="grammar-rule">
+    <div class="rule-badge">Глагол нельзя опустить</div>
+    <h4>«Я хочу воды» — в кхмерском так не скажешь</h4>
+    <p style="font-size:15px;color:#666;margin-bottom:16px">В русском глагол часто подразумевается: «я хочу воды», «дай чаю». В кхмерском глагол обязателен — нельзя пропустить «пить», «есть», «купить». Это общая черта языков Юго-Восточной Азии.</p>
+
+    <div class="example-line">
+      <div class="ex-kh">ខ្ញុំ ចង់ <span style="color:var(--rust)">ផឹក</span> ទឹក</div>
+      <div>
+        <div class="ex-ro">kñom cɑŋ <span style="color:var(--rust)">pʰɨk</span> tɨk &nbsp;<span style="color:var(--rust)">[кньом чанг <strong>пхэк</strong> тык]</span></div>
+        <div class="ex-ru">Я хочу <strong>пить</strong> воду <span style="color:#aaa">(«пить» — обязательно)</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">ខ្ញុំ ចង់ <span style="color:var(--rust)">ញ៉ាំ</span> បាយ</div>
+      <div>
+        <div class="ex-ro">kñom cɑŋ <span style="color:var(--rust)">ɲam</span> baay &nbsp;<span style="color:var(--rust)">[кньом чанг <strong>ньам</strong> бай]</span></div>
+        <div class="ex-ru">Я хочу <strong>есть</strong> рис <span style="color:#aaa">(«есть» — обязательно)</span></div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом чанг ньам бай</span></div>
+      </div>
+    </div>
+    <div class="example-line">
+      <div class="ex-kh">ខ្ញុំ ចង់ <span style="color:var(--rust)">ទិញ</span> អាវ</div>
+      <div>
+        <div class="ex-ro">kñom cɑŋ <span style="color:var(--rust)">tiɲ</span> aav &nbsp;<span style="color:var(--rust)">[кньом чанг <strong>тинь</strong> аав]</span></div>
+        <div class="ex-ru">Я хочу <strong>купить</strong> рубашку <span style="color:#aaa">(«купить» — обязательно)</span></div>
+        <div class="ex-ro" style="margin-top:4px"><span class="live-badge">🗣 разговорное</span><span class="live-text">кньом чанг тинь аав</span></div>
+      </div>
+    </div>
+    <div class="tip-card" style="margin-top:16px">
+      <div class="tip-icon">💡</div>
+      <h4>Практическое правило</h4>
+      <p>После <strong>ចង់</strong> (чанг) всегда должен идти глагол. Структура неизменна:<br>
+      <strong>ខ្ញុំ ចង់ + [глагол] + [объект]</strong><br>
+      Я · хочу · [что делать] · [с чем]</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== СЛОВАРЬ ===== -->
+<div id="vocab" class="section">
+  <div class="section-header">
+    <div class="section-num">Урок 7</div>
+    <h2>Словарь <span class="khmer-sub">វចនានុក្រម</span></h2>
+    <p class="intro-text">Ищи по-русски, по-кхмерски или транскрипцией. Или фильтруй по категории.</p>
+  </div>
+
+  <div style="margin-bottom:20px;position:relative">
+    <input id="vocabSearch" type="text" placeholder="🔍  Поиск — рыба, трэй, ត្រី..."
+      oninput="searchVocab(this.value)"
+      style="width:100%;padding:14px 20px 14px 20px;font-size:16px;font-family:'Source Sans 3',sans-serif;
+             border:2px solid var(--gold);border-radius:10px;background:white;color:var(--ink);
+             outline:none;box-sizing:border-box;transition:border-color 0.2s"
+      onfocus="this.style.borderColor='var(--rust)'"
+      onblur="this.style.borderColor='var(--gold)'"
+    >
+    <span id="searchCount" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);
+          font-size:13px;color:#aaa;pointer-events:none"></span>
+  </div>
+
+  <div id="vocabFiltersWrap" class="vocab-filters">
+    <button class="vocab-filter active" onclick="filterVocab('all', this)">Все слова</button>
+    <button class="vocab-filter" onclick="filterVocab('question', this)">❓ Вопросы</button>
+    <button class="vocab-filter" onclick="filterVocab('pronoun', this)">👤 Местоимения</button>
+    <button class="vocab-filter" onclick="filterVocab('noun', this)">🏠 Существительные</button>
+    <button class="vocab-filter" onclick="filterVocab('verb', this)">🏃 Глаголы</button>
+    <button class="vocab-filter" onclick="filterVocab('adj', this)">🎨 Прилагательные</button>
+    <button class="vocab-filter" onclick="filterVocab('adv', this)">💬 Наречия</button>
+    <button class="vocab-filter" onclick="filterVocab('body', this)">🫀 Тело</button>
+    <button class="vocab-filter" onclick="filterVocab('food', this)">🍜 Еда</button>
+    <button class="vocab-filter" onclick="filterVocab('meat', this)">🐟 Мясо и рыба</button>
+    <button class="vocab-filter" onclick="filterVocab('animal', this)">🐍 Животные</button>
+    <button class="vocab-filter" onclick="filterVocab('place', this)">📍 Места</button>
+    <button class="vocab-filter" onclick="filterVocab('time', this)">⏰ Время</button>
+    <button class="vocab-filter" onclick="filterVocab('nature', this)">🌿 Природа</button>
+    <button class="vocab-filter" onclick="filterVocab('transport', this)">🚗 Транспорт</button>
+    <button class="vocab-filter" onclick="filterVocab('color', this)">🌈 Цвета</button>
+    <button class="vocab-filter" onclick="filterVocab('people', this)">👨‍👩‍👧 Люди</button>
+    <button class="vocab-filter" onclick="filterVocab('home', this)">🏠 Дом и быт</button>
+    <button class="vocab-filter" onclick="filterVocab('health', this)">💊 Здоровье</button>
+    <button class="vocab-filter" onclick="filterVocab('money', this)">💰 Деньги</button>
+  </div>
+
+  <div class="vocab-grid" id="vocabGrid"></div>
+  <div id="vocabEmpty" style="display:none;text-align:center;padding:48px 20px;color:#aaa;font-size:16px;font-style:italic">
+    Ничего не найдено — попробуй другой запрос
+  </div>
+</div>
+
+<!-- ===== КОНСТРУКТОР ===== -->
+<div id="builder" class="section">
+  <div class="section-header">
+    <div class="section-num">Практика</div>
+    <h2>Конструктор фраз <span class="khmer-sub">សាងសង់ប្រយោគ</span></h2>
+    <p class="intro-text">Выбирай блоки слева — фраза строится справа в реальном времени.</p>
+  </div>
+
+  <!-- СХЕМА ПОРЯДКА СЛОВ -->
+  <div style="background:var(--dark);border-radius:12px;padding:24px;margin-bottom:28px">
+    <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Полная схема кхмерского предложения</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:16px" id="schemaRow"></div>
+    <div style="font-size:13px;color:#888;line-height:1.9">
+      <span style="color:#ccc">Обязательны:</span> подлежащее + глагол.<br>
+      <span style="color:#ccc">Отрицание</span> — <span style="color:var(--gold)">មិន</span> перед глаголом, <span style="color:var(--gold)">ទេ</span> в конце.<br>
+      <span style="color:#ccc">Время</span> — не глагол, а маркер: <span style="color:var(--gold)">នឹង</span> (будет), <span style="color:var(--gold)">កំពុង</span> (сейчас), <span style="color:var(--gold)">ហើយ</span> (уже).<br>
+      <span style="color:#ccc">Вопрос да/нет</span> — добавь <span style="color:var(--gold)">ទេ?</span> в конец.<br>
+      <span style="color:#ccc">Вопросит. слово</span> (что, где, кто...) — ставится <strong>в конец</strong> предложения.
+    </div>
+  </div>
+
+  <!-- ШАБЛОНЫ -->
+  <div style="margin-bottom:24px">
+    <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Быстрые шаблоны</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px" id="templateBtns"></div>
+  </div>
+
+  <!-- ДВУХКОЛОНОЧНЫЙ LAYOUT -->
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start">
+
+    <!-- ЛЕВАЯ КОЛОНКА — СЛОТЫ -->
+    <div id="builderBlocks"></div>
+
+    <!-- ПРАВАЯ КОЛОНКА — РЕЗУЛЬТАТ (sticky) -->
+    <div style="position:sticky;top:80px">
+      <div style="background:var(--dark);border-radius:12px;padding:22px;margin-bottom:12px">
+        <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px">Результат</div>
+        <div id="resKhmer" style="font-size:28px;color:white;line-height:1.5;margin-bottom:10px;min-height:40px">—</div>
+        <div id="resLat" style="font-size:13px;color:#aaa;font-style:italic;margin-bottom:4px;min-height:18px"></div>
+        <div id="resRu" style="font-size:14px;color:var(--gold);min-height:18px"></div>
+        <div id="resLiteral" style="font-size:12px;color:#666;margin-top:8px;font-style:italic;min-height:16px"></div>
+      </div>
+      <div style="background:var(--papyrus);border-radius:10px;padding:14px;margin-bottom:10px">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-bottom:10px">По словам</div>
+        <div id="resChips" style="display:flex;flex-wrap:wrap;gap:5px;align-items:center;min-height:36px">
+          <span style="color:#ccc;font-style:italic;font-size:13px">выбери слова слева</span>
+        </div>
+      </div>
+      <button onclick="resetBuilder()" style="width:100%;padding:10px;background:transparent;color:var(--ink);border:1px solid #ccc;border-radius:8px;font-size:14px;font-family:'Source Sans 3',sans-serif;cursor:pointer" onmouseover="this.style.background='var(--papyrus)'" onmouseout="this.style.background='transparent'">↺ Сбросить всё</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== СОВЕТЫ ===== -->
+<div id="tips" class="section">
+  <div class="section-header">
+    <div class="section-num">Приложение</div>
+    <h2>Советы и ресурсы <span class="khmer-sub">ដំបូន្មាន</span></h2>
+    <p class="intro-text">Как учить эффективно и куда идти дальше.</p>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-icon">🎯</div>
+    <h4>Стратегия обучения</h4>
+    <ul>
+      <li><strong>Неделя 1–2:</strong> Выучи все 33 согласные, разбей на группы по 5–6</li>
+      <li><strong>Неделя 3–4:</strong> Основные гласные знаки (начни с ា, ិ, ី, ុ, ូ)</li>
+      <li><strong>Месяц 2:</strong> Читай простые слова, учи числа и базовые фразы</li>
+      <li><strong>Месяц 3+:</strong> Грамматика, диалоги, простые тексты</li>
+    </ul>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-icon">📱</div>
+    <h4>Полезные ресурсы</h4>
+    <ul>
+      <li><strong>Drops</strong> — приложение с кхмерским словарным запасом</li>
+      <li><strong>Ling App</strong> — уроки кхмерского с геймификацией</li>
+      <li><strong>SEAsite KSEA</strong> — бесплатный онлайн-курс (английский)</li>
+      <li><strong>YouTube: Learn Khmer with Pidor</strong> — видеоуроки</li>
+      <li><strong>Forvo.com</strong> — произношение кхмерских слов носителями</li>
+    </ul>
+  </div>
+
+  <div class="grammar-rule">
+    <h4>🔤 Транскрипция, используемая в этом пособии</h4>
+    <p style="font-size:14px;color:#666;margin-bottom:12px">Упрощённая система для русскоязычных читателей:</p>
+    <table class="vowel-table">
+      <thead><tr><th>Символ</th><th>Звук</th></tr></thead>
+      <tbody>
+        <tr><td><strong>kñ</strong></td><td>«кнь» — как в «кньом» (я)</td></tr>
+        <tr><td><strong>ng</strong></td><td>«нг» в начале слова — как носовое «нг»</td></tr>
+        <tr><td><strong>ɲ</strong></td><td>мягкое «нь» (как в «нять»)</td></tr>
+        <tr><td><strong>ɔɔ</strong></td><td>долгое «о»</td></tr>
+        <tr><td><strong>əə / ɨ</strong></td><td>нейтральный звук, средний между «э» и «ы»</td></tr>
+        <tr><td><strong>aa</strong></td><td>долгое «а»</td></tr>
+        <tr><td><strong>ch</strong></td><td>«ч» (иногда ближе к «тч»)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-box">
+    <h4>🙏 Культурная заметка: Самфеа</h4>
+    <p>При приветствии кхмеры складывают ладони и слегка кланяются — это жест <em>самфеа</em> (សំពះ). Чем выше ладони — тем больше уважение. При встрече с монахами ладони поднимают до лба. Это важнее знания слов!</p>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <span class="kh-footer">សូមអរគុណ · សុខសប្បាយ</span>
+  Спасибо за учёбу · Удачи в изучении кхмерского языка
+</footer>
+
+<script>
+// ===== ДАННЫЕ =====
+
+const consonants1 = [
+  {kh:'ក', trans:'K', sound:'ка', ru:'[ка]'},
+  {kh:'ខ', trans:'KH', sound:'кх-а', ru:'[кха]'},
+  {kh:'ច', trans:'CH', sound:'ча', ru:'[ча]'},
+  {kh:'ឆ', trans:'CHH', sound:'чх-а', ru:'[чха]'},
+  {kh:'ដ', trans:'D', sound:'да', ru:'[да]'},
+  {kh:'ឋ', trans:'TH', sound:'тх-а', ru:'[тха]'},
+  {kh:'ត', trans:'T', sound:'та', ru:'[та]'},
+  {kh:'ថ', trans:'TH', sound:'тха', ru:'[тха]'},
+  {kh:'ប', trans:'B/P', sound:'ба/па', ru:'[ба/па]'},
+  {kh:'ផ', trans:'PH', sound:'пха', ru:'[пха]'},
+  {kh:'ស', trans:'S', sound:'са', ru:'[са]'},
+  {kh:'ហ', trans:'H', sound:'ха', ru:'[ха]'},
+  {kh:'អ', trans:'—', sound:'(немое)', ru:'[—]'},
+  {kh:'ញ', trans:'NY', sound:'нья', ru:'[нья]'},
+  {kh:'ណ', trans:'N', sound:'на', ru:'[на]'},
+  {kh:'ល', trans:'L', sound:'ла', ru:'[ла]'},
+];
+const consonants2 = [
+  {kh:'គ', trans:'G/K', sound:'ко', ru:'[ко]'},
+  {kh:'ឃ', trans:'KH', sound:'кхо', ru:'[кхо]'},
+  {kh:'ជ', trans:'CH/J', sound:'чо', ru:'[чо]'},
+  {kh:'ឈ', trans:'CHH', sound:'чхо', ru:'[чхо]'},
+  {kh:'ឌ', trans:'D', sound:'до', ru:'[до]'},
+  {kh:'ឍ', trans:'DH', sound:'дхо', ru:'[дхо]'},
+  {kh:'ទ', trans:'T/D', sound:'до', ru:'[до]'},
+  {kh:'ធ', trans:'TH', sound:'тхо', ru:'[тхо]'},
+  {kh:'ព', trans:'P/B', sound:'по', ru:'[по]'},
+  {kh:'ភ', trans:'PH', sound:'пхо', ru:'[пхо]'},
+  {kh:'ង', trans:'NG', sound:'нго', ru:'[нго]'},
+  {kh:'ញ', trans:'NY', sound:'ньо', ru:'[ньо]'},
+  {kh:'ន', trans:'N', sound:'но', ru:'[но]'},
+  {kh:'ម', trans:'M', sound:'мо', ru:'[мо]'},
+  {kh:'យ', trans:'Y', sound:'йо', ru:'[йо]'},
+  {kh:'រ', trans:'R', sound:'ро', ru:'[ро]'},
+  {kh:'វ', trans:'V/W', sound:'во', ru:'[во]'},
+];
+
+const vowels = [
+  {sign:'◌ា', ser1:'аа', ser2:'иэ', pos:'справа'},
+  {sign:'◌ិ', ser1:'и', ser2:'и', pos:'сверху'},
+  {sign:'◌ី', ser1:'ии', ser2:'ии', pos:'сверху'},
+  {sign:'◌ឹ', ser1:'ы/эы', ser2:'ы/эы', pos:'сверху'},
+  {sign:'◌ឺ', ser1:'ыы', ser2:'ыы', pos:'сверху'},
+  {sign:'◌ុ', ser1:'у', ser2:'у', pos:'снизу'},
+  {sign:'◌ូ', ser1:'уу', ser2:'уу', pos:'снизу'},
+  {sign:'◌ួ', ser1:'уэ', ser2:'иэ', pos:'снизу+справа'},
+  {sign:'◌ើ', ser1:'эы', ser2:'ёы', pos:'сверху+справа'},
+  {sign:'◌ឿ', ser1:'ыэ', ser2:'иэ', pos:'сверху+справа'},
+  {sign:'◌ៀ', ser1:'иэ', ser2:'иэ', pos:'сверху+справа'},
+  {sign:'◌េ', ser1:'эй', ser2:'ей', pos:'над+справа'},
+  {sign:'◌ែ', ser1:'аэ', ser2:'аэ', pos:'сверху'},
+  {sign:'◌ៃ', ser1:'ай', ser2:'ей', pos:'сверху'},
+  {sign:'◌ោ', ser1:'оо', ser2:'уо', pos:'обрамляет'},
+  {sign:'◌ៅ', ser1:'ав', ser2:'ув', pos:'справа'},
+];
+
+// ===== ДАННЫЕ ЧИСЕЛ =====
+const khDigits = ['០','១','២','៣','៤','៥','៦','៧','៨','៩'];
+
+const nums09 = [
+  {arab:'0',  n:'០', kh:'សូន្យ',      ro:'soony',     ru:'[суун]',      live:'суун'},
+  {arab:'1',  n:'១', kh:'មួយ',        ro:'muəy',      ru:'[муэй]',      live:'муй'},
+  {arab:'2',  n:'២', kh:'ពីរ',        ro:'pii',       ru:'[пии]',       live:'пии'},
+  {arab:'3',  n:'៣', kh:'បី',         ro:'bəy',       ru:'[бэй]',       live:'бэй'},
+  {arab:'4',  n:'៤', kh:'បួន',        ro:'buən',      ru:'[буэн]',      live:'бун'},
+  {arab:'5',  n:'៥', kh:'ប្រាំ',       ro:'pram',      ru:'[прам]',      live:'прам'},
+  {arab:'6',  n:'៦', kh:'ប្រាំមួយ',    ro:'pram muəy', ru:'[прам муэй]', live:'прам муй'},
+  {arab:'7',  n:'៧', kh:'ប្រាំពីរ',    ro:'pram pii',  ru:'[прам пии]',  live:'прам пии'},
+  {arab:'8',  n:'៨', kh:'ប្រាំបី',     ro:'pram bəy',  ru:'[прам бэй]',  live:'прам бэй'},
+  {arab:'9',  n:'៩', kh:'ប្រាំបួន',    ro:'pram buən', ru:'[прам буэн]', live:'прам бун'},
+  {arab:'10', n:'១០', kh:'ដប់',       ro:'dɑp',       ru:'[дап]',       live:'дап'},
+];
+
+const nums1019 = [
+  {arab:'11', n:'១១', kh:'ដប់មួយ',     ro:'dɑp muəy',  ru:'[дап муй]'},
+  {arab:'12', n:'១២', kh:'ដប់ពីរ',     ro:'dɑp pii',   ru:'[дап пии]'},
+  {arab:'13', n:'១៣', kh:'ដប់បី',      ro:'dɑp bəy',   ru:'[дап бэй]'},
+  {arab:'14', n:'១៤', kh:'ដប់បួន',     ro:'dɑp buən',  ru:'[дап бун]'},
+  {arab:'15', n:'១៥', kh:'ដប់ប្រាំ',    ro:'dɑp pram',  ru:'[дап прам]'},
+  {arab:'16', n:'១៦', kh:'ដប់ប្រាំមួយ', ro:'dɑp pram muəy', ru:'[дап прам муй]'},
+  {arab:'17', n:'១៧', kh:'ដប់ប្រាំពីរ', ro:'dɑp pram pii',  ru:'[дап прам пии]'},
+  {arab:'18', n:'១៨', kh:'ដប់ប្រាំបី',  ro:'dɑp pram bəy',  ru:'[дап прам бэй]'},
+  {arab:'19', n:'១៩', kh:'ដប់ប្រាំបួន', ro:'dɑp pram buən',  ru:'[дап прам бун]'},
+];
+
+const numsTens = [
+  {arab:'20',  n:'២០', kh:'ម្ភៃ',       ro:'mpʰey',      ru:'[мпхей]',      live:'мпхей ⚠️ особое'},
+  {arab:'30',  n:'៣០', kh:'សាមសិប',    ro:'saamsəp',    ru:'[саамсэп]',    live:'саамсэп'},
+  {arab:'40',  n:'៤០', kh:'សែសិប',     ro:'saesəp',     ru:'[сэйсэп]',     live:'сэйсэп'},
+  {arab:'50',  n:'៥០', kh:'ហាសិប',     ro:'haasəp',     ru:'[хаасэп]',     live:'хаасэп'},
+  {arab:'60',  n:'៦០', kh:'ហុកសិប',    ro:'hoksəp',     ru:'[хоксэп]',     live:'хоксэп'},
+  {arab:'70',  n:'៧០', kh:'ចិតសិប',    ro:'cətsəp',     ru:'[чэтсэп]',     live:'чэтсэп'},
+  {arab:'80',  n:'៨០', kh:'ប៉ែតសិប',   ro:'paetsəp',    ru:'[пэтсэп]',     live:'пэтсэп'},
+  {arab:'90',  n:'៩០', kh:'កៅសិប',     ro:'kavsəp',     ru:'[кавсэп]',     live:'кавсэп'},
+];
+
+const numsBig = [
+  {arab:'100',         n:'១០០',     kh:'មួយរយ',      ro:'muəy rɔɔy',    ru:'[муй рой]'},
+  {arab:'200',         n:'២០០',     kh:'ពីររយ',       ro:'pii rɔɔy',     ru:'[пии рой]'},
+  {arab:'500',         n:'៥០០',     kh:'ប្រាំរយ',     ro:'pram rɔɔy',    ru:'[прам рой]'},
+  {arab:'1 000',       n:'១.០០០',   kh:'មួយពាន់',     ro:'muəy poan',    ru:'[муй поан]',  live:'муй поан'},
+  {arab:'10 000',      n:'១០.០០០',  kh:'មួយម៉ឺន',     ro:'muəy məən',    ru:'[муй мэн]'},
+  {arab:'100 000',     n:'១០០.០០០', kh:'មួយសែន',      ro:'muəy saen',    ru:'[муй сэн]'},
+  {arab:'1 000 000',   n:'១.០០០.០០០',kh:'មួយលាន',    ro:'muəy lien',    ru:'[муй лян]'},
+];
+
+const numsComplex = [
+  {arab:'21',        n:'២១',        kh:'ម្ភៃមួយ',          ro:'mpʰey muəy',             ru:'[мпхей муй]'},
+  {arab:'35',        n:'៣៥',        kh:'សាមសិបប្រាំ',       ro:'saamsəp pram',           ru:'[саамсэп прам]'},
+  {arab:'42',        n:'៤២',        kh:'សែសិបពីរ',          ro:'saesəp pii',             ru:'[сэйсэп пии]'},
+  {arab:'99',        n:'៩៩',        kh:'កៅសិបប្រាំបួន',      ro:'kavsəp pram buən',       ru:'[кавсэп прам бун]'},
+  {arab:'123',       n:'១២៣',       kh:'មួយរយដប់ប្រាំបី',    ro:'muəy rɔɔy dɑp pram bəy', ru:'[муй рой дап прам бэй]'},
+  {arab:'2 024',     n:'២.០២៤',     kh:'ពីរពាន់ម្ភៃបួន',    ro:'pii poan mpʰey buən',    ru:'[пии поан мпхей бун]'},
+  {arab:'1 000 000', n:'១.០០០.០០០', kh:'មួយលាន',           ro:'muəy lien',              ru:'[муй лян]'},
+];
+
+const numsOrdinal = [
+  {arab:'1-й', n:'ទី១', kh:'ដំបូង / ទីមួយ',   ro:'dɑmboong / tii muəy', ru:'[дамбоонг / тии муй]', note:'первый'},
+  {arab:'2-й', n:'ទី២', kh:'ទីពីរ',            ro:'tii pii',             ru:'[тии пии]',             note:'второй'},
+  {arab:'3-й', n:'ទី៣', kh:'ទីបី',             ro:'tii bəy',             ru:'[тии бэй]',             note:'третий'},
+  {arab:'4-й', n:'ទី៤', kh:'ទីបួន',            ro:'tii buən',            ru:'[тии бун]',             note:'четвёртый'},
+  {arab:'5-й', n:'ទី៥', kh:'ទីប្រាំ',           ro:'tii pram',            ru:'[тии прам]',            note:'пятый'},
+  {arab:'10-й',n:'ទី១០',kh:'ទីដប់',            ro:'tii dɑp',             ru:'[тии дап]',             note:'десятый'},
+  {arab:'—',   n:'—',   kh:'ចុងក្រោយ',          ro:'coŋ kraoy',           ru:'[чонг краой]',          note:'последний'},
+];
+
+const classifiers = [
+  {cl:'នាក់',  ro:'neak',  ru:'[ниак]',  use:'люди',        ex:'មនុស្ស ២ នាក់ — два человека'},
+  {cl:'ក្បាល', ro:'kbaal', ru:'[кбаал]', use:'животные',    ex:'ឆ្កែ ១ ក្បាល — одна собака'},
+  {cl:'គ្រាប់', ro:'kroap', ru:'[кроап]', use:'зерно, пули, маленькие предметы', ex:'ស្ករ ៣ គ្រាប់ — три конфеты'},
+  {cl:'ដើម',   ro:'daəm', ru:'[дэм]',   use:'деревья, длинные предметы', ex:'ដើមឈើ ២ ដើម — два дерева'},
+  {cl:'ក្តាប់', ro:'kdap', ru:'[кдап]',  use:'связки, пучки', ex:'ផ្កា ១ ក្តាប់ — один букет'},
+  {cl:'ខ្នង',  ro:'knɑŋ', ru:'[кнанг]', use:'книги, тетради', ex:'សៀវភៅ ២ ខ្នង — две книги'},
+  {cl:'គូ',    ro:'kuu',  ru:'[куу]',   use:'пары',         ex:'ស្បែកជើង ១ គូ — одна пара обуви'},
+  {cl:'ដំណក់', ro:'dɑmnak', ru:'[дамнак]', use:'капли',     ex:'ទឹក ១ ដំណក់ — одна капля воды'},
+];
+
+const mathOps = [
+  {sym:'បូក',   ro:'book',    ru:'[боок]',   mean:'плюс / сложение',  ex:'ពីរ បូក បី ស្មើ ប្រាំ — 2+3=5'},
+  {sym:'ដក',    ro:'dɑk',     ru:'[дак]',    mean:'минус / вычитание', ex:'ដប់ ដក ប្រាំ ស្មើ ប្រាំ — 10−5=5'},
+  {sym:'គុណ',   ro:'kun',     ru:'[кун]',    mean:'умножить',         ex:'ពីរ គុណ បី ស្មើ ប្រាំមួយ — 2×3=6'},
+  {sym:'ចែក',   ro:'caek',    ru:'[чэк]',    mean:'разделить',        ex:'ដប់ ចែក ពីរ ស្មើ ប្រាំ — 10÷2=5'},
+  {sym:'ស្មើ',  ro:'smaə',    ru:'[смэ]',    mean:'равно',            ex:''},
+  {sym:'ភាគរយ', ro:'phiek rɔɔy', ru:'[пхьяк рой]', mean:'процент (%)', ex:'ហាសិបភាគរយ — 50%'},
+];
+
+const practiceNums = [
+  {topic:'Который час?', kh:'ម៉ោងប៉ុន្មាន?', ro:'maaŋ ponmaan?', ru:'[маанг понмаан?]',
+   ex:[
+     {kh:'ម៉ោង ២', ro:'maaŋ pii', ru:'[маанг пии]', note:'2 часа'},
+     {kh:'ម៉ោង ១០ និង ៣០ នាទី', ro:'maaŋ dɑp niŋ saamsəp niətii', ru:'[маанг дап нынг саамсэп]', note:'10:30'},
+   ]},
+  {topic:'Сколько лет?', kh:'អាយុប៉ុន្មានឆ្នាំ?', ro:'aayʊ ponmaan chnam?', ru:'[ааю понмаан чнам?]',
+   ex:[
+     {kh:'ខ្ញុំ អាយុ ២៥ ឆ្នាំ', ro:'kñom aayʊ mpʰey pram chnam', ru:'[кньом ааю мпхей прам чнам]', note:'мне 25 лет'},
+   ]},
+  {topic:'Цена', kh:'តម្លៃប៉ុន្មាន?', ro:'tɑmlay ponmaan?', ru:'[тамлай понмаан?]',
+   ex:[
+     {kh:'១០០០ រៀល', ro:'muəy poan riel', ru:'[муй поан рьял]', note:'1000 риелей'},
+     {kh:'ប្រាំដុល្លារ', ro:'pram dollar', ru:'[прам доллар]', note:'5 долларов'},
+   ]},
+  {topic:'Дата', kh:'ថ្ងៃទីប៉ុន្មាន?', ro:'tŋay tii ponmaan?', ru:'[тнгай тии понмаан?]',
+   ex:[
+     {kh:'ថ្ងៃទី ១ ខែមករា', ro:'tŋay tii muəy khae mɔɔkɔraa', ru:'[тнгай тии муй кхэ мокора]', note:'1 января'},
+   ]},
+];
+
+function makeNumCard(item) {
+  const liveHtml = item.live ? `<span class="num-live">🗣 ${item.live}</span>` : '';
+  const noteHtml = item.note ? `<span style="display:block;font-size:11px;color:#888;margin-top:3px">${item.note}</span>` : '';
+  return `<div class="num-card">
+    <div style="display:flex;justify-content:center;align-items:baseline;gap:8px;margin-bottom:4px">
+      <span style="font-family:'Playfair Display',serif;font-size:26px;color:var(--sage);font-weight:400">${item.arab}</span>
+      <span style="font-size:11px;color:#ccc">·</span>
+      <span style="font-size:26px;color:var(--rust)">${item.n}</span>
+    </div>
+    <span class="num-kh">${item.kh}</span>
+    <span class="num-ro">${item.ro}</span>
+    <span class="num-ro" style="color:var(--rust);font-style:italic">${item.ru}</span>
+    ${liveHtml}${noteHtml}
+  </div>`;
+}
+
+function renderNumbers() {
+  document.getElementById('numGrid09').innerHTML    = nums09.map(makeNumCard).join('');
+  document.getElementById('numGrid1019').innerHTML  = nums1019.map(makeNumCard).join('');
+  document.getElementById('numGridTens').innerHTML  = numsTens.map(makeNumCard).join('');
+  document.getElementById('numGridBig').innerHTML   = numsBig.map(makeNumCard).join('');
+  document.getElementById('numGridComplex').innerHTML = numsComplex.map(makeNumCard).join('');
+  document.getElementById('numGridOrdinal').innerHTML = numsOrdinal.map(makeNumCard).join('');
+
+  // Классификаторы
+  document.getElementById('classifierTable').innerHTML = `
+    <table class="vowel-table">
+      <thead><tr><th>Классификатор</th><th>Латиница</th><th>[Русск.]</th><th>Используется для</th><th>Пример</th></tr></thead>
+      <tbody>${classifiers.map(c => `<tr>
+        <td class="kh-big" style="font-size:22px">${c.cl}</td>
+        <td>${c.ro}</td>
+        <td style="color:var(--rust)">${c.ru}</td>
+        <td style="font-size:14px">${c.use}</td>
+        <td style="font-size:13px;color:#555;font-style:italic">${c.ex}</td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+
+  // Математика
+  document.getElementById('mathTable').innerHTML = `
+    <table class="vowel-table">
+      <thead><tr><th>Кхмерский</th><th>Латиница</th><th>[Русск.]</th><th>Значение</th><th>Пример</th></tr></thead>
+      <tbody>${mathOps.map(m => `<tr>
+        <td class="kh-big" style="font-size:22px">${m.sym}</td>
+        <td>${m.ro}</td>
+        <td style="color:var(--rust)">${m.ru}</td>
+        <td>${m.mean}</td>
+        <td style="font-size:13px;color:#555;font-style:italic">${m.ex}</td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+
+  // Практика
+  const practHTML = practiceNums.map(t => `
+    <div class="grammar-rule" style="margin:16px 0">
+      <div class="rule-badge">${t.topic}</div>
+      <div class="example-line" style="margin-bottom:8px">
+        <div class="ex-kh" style="font-size:20px">${t.kh}</div>
+        <div>
+          <div class="ex-ro">${t.ro} &nbsp;<span style="color:var(--rust)">${t.ru}</span></div>
+        </div>
+      </div>
+      ${t.ex.map(e => `<div class="example-line">
+        <div class="ex-kh" style="font-size:18px">${e.kh}</div>
+        <div>
+          <div class="ex-ro">${e.ro} &nbsp;<span style="color:var(--rust)">${e.ru}</span></div>
+          <div class="ex-ru">${e.note}</div>
+        </div>
+      </div>`).join('')}
+    </div>`).join('');
+  document.getElementById('practiceTable').innerHTML = practHTML;
+}
+
+const phrases = [
+
+  // ПРИВЕТСТВИЯ
+  {
+    cat: 'greet',
+    ru: 'Здравствуйте / Привет',
+    kh: 'សួស្ដី',
+    ro: 'suostei', ruPron: '[суостэй]', live: 'суэсдэй',
+    note: 'Универсальное, любое время суток',
+    words: [{kh:'សួស្ដី', lat:'suostei', ru:'привет/здравствуй'}]
+  },
+  {
+    cat: 'greet',
+    ru: 'Как дела?',
+    kh: 'តើ អ្នក សុខសប្បាយ ទេ?',
+    ro: 'taə neak sok sapbaay tee?', ruPron: '[тэ ниак сок сапбааи тэ?]', live: 'сок сабааи тэ?',
+    note: 'Начало «тэ ниак» в быстрой речи опускают',
+    words: [
+      {kh:'តើ', lat:'taə', ru:'[вопрос]'},
+      {kh:'អ្នក', lat:'neak', ru:'ты'},
+      {kh:'សុខ', lat:'sok', ru:'здоровье'},
+      {kh:'សប្បាយ', lat:'sapbaay', ru:'счастливый'},
+      {kh:'ទេ?', lat:'tee?', ru:'[вопрос]?'},
+    ],
+    literal: 'вопрос · ты · здоровье · счастливый · вопрос?'
+  },
+  {
+    cat: 'greet',
+    ru: 'Хорошо, спасибо',
+    kh: 'សុខសប្បាយ អរគុណ',
+    ro: 'sok sapbaay, ɔɔ kun', ruPron: '[сок сапбааи, оо кун]', live: 'сок сабааи, оо кун',
+    note: '',
+    words: [
+      {kh:'សុខ', lat:'sok', ru:'здоровье'},
+      {kh:'សប្បាយ', lat:'sapbaay', ru:'счастливый'},
+      {kh:'អរគុណ', lat:'ɔɔ kun', ru:'спасибо'},
+    ],
+    literal: 'здоровье · счастливый · радость-доброта'
+  },
+  {
+    cat: 'greet',
+    ru: 'Меня зовут...',
+    kh: 'ខ្ញុំ ឈ្មោះ ...',
+    ro: 'kñom chmuh ...', ruPron: '[кньом чмуh ...]', live: 'кньом чмуh ...',
+    note: 'Вставьте своё имя в конец',
+    words: [
+      {kh:'ខ្ញុំ', lat:'kñom', ru:'я'},
+      {kh:'ឈ្មោះ', lat:'chmuh', ru:'называться'},
+    ],
+    literal: 'я · называться · ...'
+  },
+  {
+    cat: 'greet',
+    ru: 'Как вас зовут?',
+    kh: 'តើ អ្នក ឈ្មោះ អ្វី?',
+    ro: 'taə neak chmuh avəy?', ruPron: '[тэ ниак чмуh авэй?]', live: 'тэ няк чмуh авэй?',
+    note: '',
+    words: [
+      {kh:'តើ', lat:'taə', ru:'[вопрос]'},
+      {kh:'អ្នក', lat:'neak', ru:'ты'},
+      {kh:'ឈ្មោះ', lat:'chmuh', ru:'называться'},
+      {kh:'អ្វី?', lat:'avəy?', ru:'что?'},
+    ],
+    literal: 'вопрос · ты · называться · что?'
+  },
+  {
+    cat: 'greet',
+    ru: 'До свидания',
+    kh: 'លា ហើយ',
+    ro: 'lia haəy', ruPron: '[лиа хаэй]', live: 'лиа хэй',
+    note: '',
+    words: [
+      {kh:'លា', lat:'lia', ru:'уходить'},
+      {kh:'ហើយ', lat:'haəy', ru:'уже'},
+    ],
+    literal: 'уходить · уже'
+  },
+
+  // ВЕЖЛИВОСТЬ
+  {
+    cat: 'polite',
+    ru: 'Спасибо',
+    kh: 'អរគុណ',
+    ro: 'ɔɔ kun', ruPron: '[оо кун]',
+    note: 'Говорят с улыбкой и лёгким поклоном',
+    words: [
+      {kh:'អរ', lat:'ɔɔ', ru:'радоваться'},
+      {kh:'គុណ', lat:'kun', ru:'доброта'},
+    ],
+    literal: 'радоваться · доброта'
+  },
+  {
+    cat: 'polite',
+    ru: 'Пожалуйста / Прошу',
+    kh: 'សូម',
+    ro: 'soum', ruPron: '[соум]', live: 'соом',
+    note: 'Ставится перед глаголом',
+    words: [{kh:'សូម', lat:'soum', ru:'прошу'}],
+    literal: 'прошу'
+  },
+  {
+    cat: 'polite',
+    ru: 'Да (муж.)',
+    kh: 'បាទ',
+    ro: 'baat', ruPron: '[баат]',
+    note: 'Только мужчины',
+    words: [{kh:'បាទ', lat:'baat', ru:'да (муж.)'}],
+    literal: 'да'
+  },
+  {
+    cat: 'polite',
+    ru: 'Да (жен.)',
+    kh: 'ចាស',
+    ro: 'jaah', ruPron: '[чаас]',
+    note: 'Только женщины',
+    words: [{kh:'ចាស', lat:'jaah', ru:'да (жен.)'}],
+    literal: 'да'
+  },
+  {
+    cat: 'polite',
+    ru: 'Нет',
+    kh: 'ទេ',
+    ro: 'tee', ruPron: '[тэ]',
+    note: 'Ставится в конце отрицательного предложения',
+    words: [{kh:'ទេ', lat:'tee', ru:'нет/[отриц.]'}],
+    literal: 'нет'
+  },
+  {
+    cat: 'polite',
+    ru: 'Окей / Договорились',
+    kh: 'បាន ហើយ',
+    ro: 'baan haəy', ruPron: '[баан хэй]', live: 'баан хэй',
+    note: 'Самое живое «окей» — дословно «уже можно»',
+    words: [
+      {kh:'បាន', lat:'baan', ru:'можно/получилось'},
+      {kh:'ហើយ', lat:'haəy', ru:'уже'},
+    ],
+    literal: 'можно · уже'
+  },
+  {
+    cat: 'polite',
+    ru: 'Я не понимаю',
+    kh: 'ខ្ញុំ មិន យល់ ទេ',
+    ro: 'kñom mɨn yul tee', ruPron: '[кньом мын юл тэ]', live: 'кньом мин юл тэ',
+    note: 'Очень полезная фраза для начинающих',
+    words: [
+      {kh:'ខ្ញុំ', lat:'kñom', ru:'я'},
+      {kh:'មិន', lat:'mɨn', ru:'не'},
+      {kh:'យល់', lat:'yul', ru:'понимать'},
+      {kh:'ទេ', lat:'tee', ru:'[отриц.]'},
+    ],
+    literal: 'я · не · понимать · [отриц.]'
+  },
+  {
+    cat: 'polite',
+    ru: 'Говорите помедленнее',
+    kh: 'សូម និយាយ យឺតៗ',
+    ro: 'soum niyiey yɨɨt yɨɨt', ruPron: '[соум нийиэй ыыт ыыт]', live: 'соом нийей юйт юйт',
+    note: '«ៗ» — знак повтора слова',
+    words: [
+      {kh:'សូម', lat:'soum', ru:'прошу'},
+      {kh:'និយាយ', lat:'niyiey', ru:'говорить'},
+      {kh:'យឺត', lat:'yɨɨt', ru:'медленно'},
+      {kh:'ៗ', lat:'(повтор)', ru:'(ещё медленнее)'},
+    ],
+    literal: 'прошу · говорить · медленно · медленно'
+  },
+
+  // ВОПРОСЫ И ПОИСК
+  {
+    cat: 'questions',
+    ru: 'Что это?',
+    kh: 'នេះ គឺ អ្វី?',
+    ro: 'nih kie avəy?', ruPron: '[ниh киа авэй?]', live: 'ниh киа авэй?',
+    note: 'Можно ещё короче: អ្វីនេះ? (авэй ниh?)',
+    words: [
+      {kh:'នេះ', lat:'nih', ru:'это'},
+      {kh:'គឺ', lat:'kie', ru:'есть/является'},
+      {kh:'អ្វី?', lat:'avəy?', ru:'что?'},
+    ],
+    literal: 'это · есть · что?'
+  },
+  {
+    cat: 'questions',
+    ru: 'Как это называется?',
+    kh: 'នេះ ហៅ ថា អ្វី?',
+    ro: 'nih hav thaa avəy?', ruPron: '[ниh хав тхаа авэй?]', live: 'ниh хав тхаа авэй?',
+    note: 'Самая полезная фраза на рынке — тычешь пальцем и спрашиваешь',
+    words: [
+      {kh:'នេះ', lat:'nih', ru:'это'},
+      {kh:'ហៅ', lat:'hav', ru:'называть'},
+      {kh:'ថា', lat:'thaa', ru:'говорить/что'},
+      {kh:'អ្វី?', lat:'avəy?', ru:'что?'},
+    ],
+    literal: 'это · называть · говорить · что?'
+  },
+  {
+    cat: 'questions',
+    ru: 'Где находится...?',
+    kh: '... នៅ ឯណា?',
+    ro: '... nɨv ae naa?', ruPron: '[... нив эй наа?]', live: '... нив эй наа?',
+    note: 'Поставьте нужное слово вместо «...»',
+    words: [
+      {kh:'នៅ', lat:'nɨv', ru:'находиться'},
+      {kh:'ឯណា?', lat:'ae naa?', ru:'где?'},
+    ],
+    literal: '... · находиться · где?'
+  },
+  {
+    cat: 'questions',
+    ru: 'Сколько стоит?',
+    kh: 'តម្លៃ ប៉ុន្មាន?',
+    ro: 'tɑmlay ponmaan?', ruPron: '[тамлай понмаан?]', live: 'тамлэй пунмаан?',
+    note: 'Незаменимо на рынке',
+    words: [
+      {kh:'តម្លៃ', lat:'tɑmlay', ru:'цена'},
+      {kh:'ប៉ុន្មាន?', lat:'ponmaan?', ru:'сколько?'},
+    ],
+    literal: 'цена · сколько?'
+  },
+  {
+    cat: 'questions',
+    ru: 'У тебя есть...?',
+    kh: 'អ្នក មាន ... ទេ?',
+    ro: 'neak mien ... tee?', ruPron: '[ниак миан ... тэ?]', live: 'няк миан ... тэ?',
+    note: 'Вставьте нужное слово вместо «...»',
+    words: [
+      {kh:'អ្នក', lat:'neak', ru:'ты'},
+      {kh:'មាន', lat:'mien', ru:'есть/иметь'},
+      {kh:'ទេ?', lat:'tee?', ru:'[вопрос]?'},
+    ],
+    literal: 'ты · есть · ... · вопрос?'
+  },
+  {
+    cat: 'questions',
+    ru: 'Можно мне с тобой?',
+    kh: 'ខ្ញុំ ទៅ ជាមួយ បាន ទេ?',
+    ro: 'kñom tɨv cie muəy baan tee?', ruPron: '[кньом тэв чья муй баан тэ?]', live: 'кньом тэв чья муй баан тэ?',
+    note: 'Короткий разговорный вариант',
+    words: [
+      {kh:'ខ្ញុំ', lat:'kñom', ru:'я'},
+      {kh:'ទៅ', lat:'tɨv', ru:'ехать'},
+      {kh:'ជាមួយ', lat:'cie muəy', ru:'вместе-с'},
+      {kh:'បាន', lat:'baan', ru:'можно'},
+      {kh:'ទេ?', lat:'tee?', ru:'[вопрос]?'},
+    ],
+    literal: 'я · ехать · вместе-с · можно · вопрос?'
+  },
+
+  // ЖЕЛАНИЯ И ПРОСЬБЫ
+  {
+    cat: 'wants',
+    ru: 'Я хочу это',
+    kh: 'ខ្ញុំ ចង់ បាន នេះ',
+    ro: 'kñom cɑŋ baan nih', ruPron: '[кньом чанг баан ниh]', live: 'кньом чанг бан ниh',
+    note: 'Укажите на предмет рукой',
+    words: [
+      {kh:'ខ្ញុំ', lat:'kñom', ru:'я'},
+      {kh:'ចង់', lat:'cɑŋ', ru:'хотеть'},
+      {kh:'បាន', lat:'baan', ru:'получить'},
+      {kh:'នេះ', lat:'nih', ru:'это'},
+    ],
+    literal: 'я · хотеть · получить · это'
+  },
+  {
+    cat: 'wants',
+    ru: 'Я хочу поехать вместе с вами',
+    kh: 'ខ្ញុំ ចង់ ទៅ ជាមួយ គ្នា',
+    ro: 'kñom cɑŋ tɨv cie muəy knie', ruPron: '[кньом чанг тэв чья муй книа]', live: 'кньом чанг тэв чья муй книа',
+    note: '',
+    words: [
+      {kh:'ខ្ញុំ', lat:'kñom', ru:'я'},
+      {kh:'ចង់', lat:'cɑŋ', ru:'хотеть'},
+      {kh:'ទៅ', lat:'tɨv', ru:'ехать'},
+      {kh:'ជាមួយ', lat:'cie muəy', ru:'вместе-с'},
+      {kh:'គ្នា', lat:'knie', ru:'друг-другом'},
+    ],
+    literal: 'я · хотеть · ехать · вместе-с · друг-другом'
+  },
+  {
+    cat: 'wants',
+    ru: 'Мне нужно...',
+    kh: 'ខ្ញុំ ត្រូវការ ...',
+    ro: 'kñom trəv kaa ...', ruPron: '[кньом трэв каа ...]', live: 'кньом трэвкаа ...',
+    note: 'Нейтральная потребность — в магазине, при просьбе',
+    words: [
+      {kh:'ខ្ញុំ', lat:'kñom', ru:'я'},
+      {kh:'ត្រូវការ', lat:'trəv kaa', ru:'нужно/требуется'},
+    ],
+    literal: 'я · нужно · ...'
+  },
+  {
+    cat: 'wants',
+    ru: 'Мне надо идти',
+    kh: 'ខ្ញុំ ត្រូវ ទៅ',
+    ro: 'kñom trəv tɨv', ruPron: '[кньом трэв тэв]', live: 'кньом трэв тэв',
+    note: 'Сильнее чем «хочу» — обязанность, долг',
+    words: [
+      {kh:'ខ្ញុំ', lat:'kñom', ru:'я'},
+      {kh:'ត្រូវ', lat:'trəv', ru:'должен'},
+      {kh:'ទៅ', lat:'tɨv', ru:'идти'},
+    ],
+    literal: 'я · должен · идти'
+  },
+  {
+    cat: 'wants',
+    ru: 'Я хочу попробовать порыбачить',
+    kh: 'ខ្ញុំ ចង់ សាកល្បង នេសាទ',
+    ro: 'kñom cɑŋ saak lbɑŋ niəsaat', ruPron: '[кньом чанг саак лбанг ниасаат]', live: 'кньом чанг саак лбанг ниасаат',
+    note: '',
+    words: [
+      {kh:'ខ្ញុំ', lat:'kñom', ru:'я'},
+      {kh:'ចង់', lat:'cɑŋ', ru:'хотеть'},
+      {kh:'សាកល្បង', lat:'saak lbɑŋ', ru:'попробовать'},
+      {kh:'នេសាទ', lat:'niəsaat', ru:'рыбачить'},
+    ],
+    literal: 'я · хотеть · попробовать · рыбачить'
+  },
+
+  // РЫБАЛКА И АКТИВНОСТИ
+  {
+    cat: 'fishing',
+    ru: 'Ты рыбак?',
+    kh: 'អ្នក នេសាទ ទេ?',
+    ro: 'neak niəsaat tee?', ruPron: '[ниак ниасаат тэ?]', live: 'няк ниасаат тэ?',
+    note: 'Также может значить «ты рыбачишь?» — зависит от контекста',
+    words: [
+      {kh:'អ្នក', lat:'neak', ru:'ты'},
+      {kh:'នេសាទ', lat:'niəsaat', ru:'рыбак/рыбачить'},
+      {kh:'ទេ?', lat:'tee?', ru:'[вопрос]?'},
+    ],
+    literal: 'ты · рыбак · вопрос?'
+  },
+  {
+    cat: 'fishing',
+    ru: 'У тебя есть лодка?',
+    kh: 'អ្នក មាន ទូក ទេ?',
+    ro: 'neak mien tuuk tee?', ruPron: '[ниак миан туук тэ?]', live: 'няк миан туук тэ?',
+    note: '',
+    words: [
+      {kh:'អ្នក', lat:'neak', ru:'ты'},
+      {kh:'មាន', lat:'mien', ru:'есть/иметь'},
+      {kh:'ទូក', lat:'tuuk', ru:'лодка'},
+      {kh:'ទេ?', lat:'tee?', ru:'[вопрос]?'},
+    ],
+    literal: 'ты · есть · лодка · вопрос?'
+  },
+  {
+    cat: 'fishing',
+    ru: 'Давай встретимся здесь',
+    kh: 'តើ ជួប គ្នា នៅ ទីនេះ បាន ទេ?',
+    ro: 'taə cuəp knie nɨv tii nih baan tee?', ruPron: '[тэ чуп книа нив тии ниh баан тэ?]', live: 'тэ чуп книа нив тии ниh баан тэ?',
+    note: 'Отправь с пином на карте 📍',
+    words: [
+      {kh:'តើ', lat:'taə', ru:'[вопрос]'},
+      {kh:'ជួប', lat:'cuəp', ru:'встретиться'},
+      {kh:'គ្នា', lat:'knie', ru:'друг-с-другом'},
+      {kh:'នៅ', lat:'nɨv', ru:'в/у'},
+      {kh:'ទីនេះ', lat:'tii nih', ru:'место-это'},
+      {kh:'បាន', lat:'baan', ru:'можно'},
+      {kh:'ទេ?', lat:'tee?', ru:'[вопрос]?'},
+    ],
+    literal: 'вопрос · встретиться · друг-с-другом · в · место-это · можно · вопрос?'
+  },
+  {
+    cat: 'fishing',
+    ru: 'Можешь помочь мне организовать?',
+    kh: 'តើ អ្នក អាច ជួយ រៀបចំ ឱ្យ ខ្ញុំ បាន ទេ?',
+    ro: 'taə neak aac cuəy riəpcɑm aoy kñom baan tee?', ruPron: '[тэ ниак аач чуй рьяпчам аой кньом баан тэ?]', live: 'тэ ниак аач чуй рьяпчам аой кньом баан тэ?',
+    note: '',
+    words: [
+      {kh:'តើ', lat:'taə', ru:'[вопрос]'},
+      {kh:'អ្នក', lat:'neak', ru:'ты'},
+      {kh:'អាច', lat:'aac', ru:'мочь'},
+      {kh:'ជួយ', lat:'cuəy', ru:'помочь'},
+      {kh:'រៀបចំ', lat:'riəpcɑm', ru:'организовать'},
+      {kh:'ឱ្យ', lat:'aoy', ru:'чтобы/для'},
+      {kh:'ខ្ញុំ', lat:'kñom', ru:'я'},
+      {kh:'បាន', lat:'baan', ru:'мог/можно'},
+      {kh:'ទេ?', lat:'tee?', ru:'[вопрос]?'},
+    ],
+    literal: 'вопрос · ты · мочь · помочь · организовать · чтобы · я · мог · вопрос?'
+  },
+
+  // ЧУВСТВА
+  {
+    cat: 'feelings',
+    ru: 'Я люблю тебя',
+    kh: 'ខ្ញុំ ស្រឡាញ់ អ្នក',
+    ro: 'kñom srɑlaɲ neak', ruPron: '[кньом сралань ниак]', live: 'кньом сралань няк',
+    note: '',
+    words: [
+      {kh:'ខ្ញុំ', lat:'kñom', ru:'я'},
+      {kh:'ស្រឡាញ់', lat:'srɑlaɲ', ru:'любить'},
+      {kh:'អ្នក', lat:'neak', ru:'тебя'},
+    ],
+    literal: 'я · любить · тебя'
+  },
+];
+
+const phraseCategories = {
+  greet:    {label:'👋 Приветствия'},
+  polite:   {label:'🙏 Вежливость'},
+  questions:{label:'❓ Вопросы'},
+  wants:    {label:'💬 Желания и просьбы'},
+  fishing:  {label:'🎣 Рыбалка и встречи'},
+  feelings: {label:'❤️ Чувства'},
+};
+
+// ===== РЕНДЕРИНГ =====
+
+function renderAlphabet() {
+  const g1 = document.getElementById('grid1');
+  const g2 = document.getElementById('grid2');
+  consonants1.forEach(c => {
+    g1.innerHTML += `<div class="alpha-card">
+      <span class="kh">${c.kh}</span>
+      <span class="trans">${c.trans}</span>
+      <span class="sound">${c.sound} <span style="color:var(--gold)">${c.ru}</span></span>
+    </div>`;
+  });
+  consonants2.forEach(c => {
+    g2.innerHTML += `<div class="alpha-card">
+      <span class="kh">${c.kh}</span>
+      <span class="trans">${c.trans}</span>
+      <span class="sound">${c.sound} <span style="color:var(--gold)">${c.ru}</span></span>
+    </div>`;
+  });
+}
+
+function renderVowels() {
+  const tbody = document.getElementById('vowelTable');
+  vowels.forEach(v => {
+    tbody.innerHTML += `<tr>
+      <td class="kh-big">${v.sign}</td>
+      <td><strong>${v.ser1}</strong></td>
+      <td><strong>${v.ser2}</strong></td>
+      <td style="font-size:12px;color:#888">${v.pos}</td>
+      <td class="kh-big" style="font-size:16px;color:#aaa">—</td>
+    </tr>`;
+  });
+}
+
+let currentPhraseCat = 'all';
+
+function renderPhrases(cat) {
+  currentPhraseCat = cat || 'all';
+  const container = document.getElementById('phraseList');
+  const filtered = currentPhraseCat === 'all' ? phrases : phrases.filter(p => p.cat === currentPhraseCat);
+
+  // Group by category
+  let html = '';
+  if (currentPhraseCat === 'all') {
+    const groups = {};
+    filtered.forEach(p => { if (!groups[p.cat]) groups[p.cat] = []; groups[p.cat].push(p); });
+    Object.keys(phraseCategories).forEach(cat => {
+      if (!groups[cat]) return;
+      html += `<h3 class="vocab-cat-title" style="margin-top:32px">${phraseCategories[cat].label}</h3>`;
+      html += groups[cat].map((p,i) => makePhraseCard(p, cat+i)).join('');
+    });
+  } else {
+    html = filtered.map((p,i) => makePhraseCard(p, cat+i)).join('');
+  }
+  container.innerHTML = html;
+}
+
+function makePhraseCard(p, id) {
+  const liveLine = p.live
+    ? `<div class="phrase-row"><div class="label">В живой речи</div>
+       <div class="roman"><span class="live-badge">🗣 разговорное</span><span class="live-text">${p.live}</span></div></div>`
+    : '';
+  const wordsHtml = p.words && p.words.length
+    ? `<div class="phrase-row"><div class="label">По словам</div>
+        <div class="word-breakdown">${p.words.map(w =>
+          `<span class="word-chip"><span class="wc-kh">${w.kh}</span><span class="wc-lat">${w.lat}</span><span class="wc-ru">${w.ru}</span></span>`
+        ).join('<span class="wc-plus">+</span>')}</div></div>`
+    : '';
+  const literalHtml = p.literal
+    ? `<div class="phrase-row"><div class="label">Дословно</div>
+       <div class="roman" style="color:var(--sage);font-style:normal">«${p.literal}»</div></div>`
+    : '';
+  return `<div class="phrase-block">
+    <div class="phrase-head" onclick="togglePhrase(this)">
+      <span class="ru">${p.ru}</span>
+      <span class="toggle">+</span>
+    </div>
+    <div class="phrase-body">
+      <div class="phrase-row">
+        <div class="label">Кхмерский</div>
+        <div class="kh-text">${p.kh}</div>
+      </div>
+      <div class="phrase-row">
+        <div class="label">Произношение</div>
+        <div class="roman">${p.ro} &nbsp;<span style="color:var(--rust);font-style:normal">${p.ruPron}</span></div>
+      </div>
+      ${liveLine}
+      ${wordsHtml}
+      ${literalHtml}
+      ${p.note ? `<div class="phrase-row"><div class="meaning">💬 ${p.note}</div></div>` : ''}
+    </div>
+  </div>`;
+}
+
+function filterPhrases(cat, btn) {
+  document.querySelectorAll('#phrases .vocab-filter').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderPhrases(cat);
+  const toggleBtn = document.getElementById('toggleAllBtn');
+  if (toggleBtn) toggleBtn.textContent = '↕ Открыть все';
+}
+
+function togglePhrase(head) {
+  const isOpen = head.classList.contains('open');
+  head.classList.toggle('open', !isOpen);
+  head.nextElementSibling.classList.toggle('open', !isOpen);
+  const allHeads = document.querySelectorAll('.phrase-head');
+  const allOpen = [...allHeads].every(h => h.classList.contains('open'));
+  const btn = document.getElementById('toggleAllBtn');
+  if (btn) btn.textContent = allOpen ? '↕ Закрыть все' : '↕ Открыть все';
+}
+
+function toggleAllPhrases() {
+  const heads = document.querySelectorAll('.phrase-head');
+  const bodies = document.querySelectorAll('.phrase-body');
+  const anyOpen = document.querySelector('.phrase-head.open');
+  heads.forEach(h => h.classList.toggle('open', !anyOpen));
+  bodies.forEach(b => b.classList.toggle('open', !anyOpen));
+  const btn = document.getElementById('toggleAllBtn');
+  if (btn) btn.textContent = anyOpen ? '↕ Открыть все' : '↕ Закрыть все';
+}
+
+// ===== СЛОВАРЬ =====
+
+const vocabData = [
+
+  // МЕСТОИМЕНИЯ
+  {kh:'ខ្ញុំ', ru:'я', lat:'kñom', pron:'[кньом]', live:'кньом', cat:'pronoun'},
+  {kh:'អ្នក', ru:'ты / вы', lat:'neak', pron:'[ниак]', live:'няк', cat:'pronoun'},
+  {kh:'គាត់', ru:'он / она (уваж.)', lat:'koat', pron:'[коат]', live:'коат', cat:'pronoun'},
+  {kh:'វា', ru:'он / она (фам., о вещи)', lat:'vea', pron:'[виа]', live:'виа', cat:'pronoun'},
+  {kh:'យើង', ru:'мы', lat:'yɨng', pron:'[йынг]', live:'йэнг', cat:'pronoun'},
+  {kh:'គេ', ru:'они / люди', lat:'kee', pron:'[кэ]', live:'кэ', cat:'pronoun'},
+  {kh:'នេះ', ru:'это / здесь (ближнее)', lat:'nih', pron:'[ниh]', live:'ниh', cat:'pronoun'},
+  {kh:'នោះ', ru:'то / там (дальнее)', lat:'nuh', pron:'[нуh]', live:'нуh', cat:'pronoun'},
+  {kh:'បង', ru:'ты (к старшему)', lat:'bɑɑŋ', pron:'[баанг]', live:'банг', cat:'pronoun'},
+  {kh:'អូន', ru:'ты (к младшему)', lat:'oon', pron:'[оон]', live:'оон', cat:'pronoun'},
+  {kh:'លោក', ru:'вы (к мужчине)', lat:'look', pron:'[лоок]', live:'лоок', cat:'pronoun'},
+  {kh:'លោកស្រី', ru:'вы (к женщине)', lat:'look srəy', pron:'[лоок срэй]', live:'лоок срэй', cat:'pronoun'},
+  {kh:'ខ្ញុំបាទ', ru:'я (муж., вежл.)', lat:'kñom baat', pron:'[кньом баат]', live:'кньом баат', cat:'pronoun'},
+  {kh:'អ្នកទាំងអស់', ru:'все вы', lat:'neak teəŋ ɑh', pron:'[ниак тянг аh]', live:'няк тянг аh', cat:'pronoun'},
+
+  // СУЩЕСТВИТЕЛЬНЫЕ — общие
+  {kh:'ផ្ទះ', ru:'дом', lat:'pteah', pron:'[птэах]', live:'птэа', cat:'noun'},
+  {kh:'ទឹក', ru:'вода', lat:'tɨk', pron:'[тык]', live:'тык', cat:'noun'},
+  {kh:'ភ្លៀង', ru:'дождь', lat:'pliəŋ', pron:'[плиэнг]', live:'плиэнг', cat:'noun'},
+  {kh:'ថ្ងៃ', ru:'солнце / день', lat:'tŋay', pron:'[тнгай]', live:'тнгай', cat:'noun'},
+  {kh:'យប់', ru:'ночь', lat:'yup', pron:'[юп]', live:'юп', cat:'noun'},
+  {kh:'ល្ងាច', ru:'вечер', lat:'lŋiec', pron:'[лнгьеч]', live:'лнгьеч', cat:'noun'},
+  {kh:'ព្រឹក', ru:'утро', lat:'prɨk', pron:'[прык]', live:'прык', cat:'noun'},
+  {kh:'ខ្យល់', ru:'ветер', lat:'khyal', pron:'[кхьял]', live:'кхьял', cat:'noun'},
+  {kh:'ភ្នំ', ru:'гора', lat:'phnum', pron:'[пхнум]', live:'пхнум', cat:'noun'},
+  {kh:'ទន្លេ', ru:'река', lat:'tonlee', pron:'[тонлэ]', live:'тонлэ', cat:'noun'},
+  {kh:'ផ្លូវ', ru:'дорога', lat:'plov', pron:'[плов]', live:'плов', cat:'noun'},
+  {kh:'ឡាន', ru:'машина', lat:'laan', pron:'[лаан]', live:'лаан', cat:'noun'},
+  {kh:'លុយ', ru:'деньги', lat:'luy', pron:'[луй]', live:'луй', cat:'noun'},
+  {kh:'ឈ្មោះ', ru:'имя', lat:'chmuh', pron:'[чмуh]', live:'чмуh', cat:'noun'},
+  {kh:'ភាសា', ru:'язык', lat:'phiasaa', pron:'[пхиасаа]', live:'пхиасаа', cat:'noun'},
+  {kh:'ពាក្យ', ru:'слово', lat:'piək', pron:'[пьяк]', live:'пьяк', cat:'noun'},
+  {kh:'មនុស្ស', ru:'человек / люди', lat:'mənuh', pron:'[мэнуh]', live:'мэнуh', cat:'noun'},
+  {kh:'កូន', ru:'ребёнок', lat:'koon', pron:'[коон]', live:'коон', cat:'noun'},
+  {kh:'ឪពុក', ru:'отец', lat:'əvpuk', pron:'[эвпук]', live:'пук', cat:'noun'},
+  {kh:'ម្តាយ', ru:'мать', lat:'mdaay', pron:'[мдааи]', live:'мааи ~ мэй', cat:'noun'},
+  {kh:'បង', ru:'старший брат/сестра', lat:'bɑɑŋ', pron:'[баанг]', live:'банг', cat:'noun'},
+  {kh:'ប្អូន', ru:'младший брат/сестра', lat:'p\'oon', pron:'[поон]', live:'поон', cat:'noun'},
+  {kh:'សត្វ', ru:'животное', lat:'sat', pron:'[сат]', live:'сат', cat:'noun'},
+  {kh:'ឆ្កែ', ru:'собака', lat:'cʰkae', pron:'[чхкэй]', live:'чхкэй', cat:'noun'},
+  {kh:'ឆ្មា', ru:'кошка', lat:'cʰmaa', pron:'[чхмаа]', live:'чхмаа', cat:'noun'},
+  {kh:'សៀវភៅ', ru:'книга', lat:'siəv phəv', pron:'[сьяв пхэв]', live:'сьяв пхэв', cat:'noun'},
+  {kh:'ទូរសព្ទ', ru:'телефон', lat:'tuurasap', pron:'[туурасап]', live:'туурасап', cat:'noun'},
+  {kh:'ខ្លួន', ru:'тело / сам', lat:'kluən', pron:'[клуэн]', live:'клуэн', cat:'noun'},
+  {kh:'ដំណើរ', ru:'путешествие / поездка', lat:'dɑmnaə', pron:'[дамнэ]', live:'дамнэ', cat:'noun'},
+  {kh:'ការងារ', ru:'работа', lat:'kaangia', pron:'[каангиа]', live:'каангиа', cat:'noun'},
+  {kh:'ប្រទេស', ru:'страна', lat:'prɑteh', pron:'[пратэh]', live:'пратэh', cat:'noun'},
+  {kh:'ពពក', ru:'облако', lat:'pɔpɔk', pron:'[попок]', live:'попок', cat:'noun'},
+  {kh:'ព្រះអាទិត្យ', ru:'солнце (поэт.)', lat:'preah aatɨt', pron:'[преа аатыт]', live:'преа аатыт', cat:'noun'},
+  {kh:'ព្រះច័ន្ទ', ru:'луна', lat:'preah can', pron:'[преа чан]', live:'преа чан', cat:'noun'},
+  {kh:'ផ្កាយ', ru:'звезда', lat:'pkay', pron:'[пкай]', live:'пкай', cat:'noun'},
+  {kh:'ក្រដាស', ru:'бумага', lat:'krɑdah', pron:'[крадаh]', live:'крадаh', cat:'noun'},
+  {kh:'ខ្មៅដៃ', ru:'карандаш', lat:'khmav day', pron:'[кхмав дай]', live:'кхмав дай', cat:'noun'},
+  {kh:'ថ្លើម', ru:'печень / суть', lat:'thlaəm', pron:'[тхлаэм]', live:'тхлаэм', cat:'noun'},
+  {kh:'ពណ៌', ru:'цвет', lat:'poa', pron:'[поа]', live:'поа', cat:'noun'},
+  {kh:'ចិត្ត', ru:'сердце / ум / чувство', lat:'cɨt', pron:'[чыт]', live:'чыт', cat:'noun'},
+
+  // ГЛАГОЛЫ
+  {kh:'ចូលចិត្ត', ru:'нравится', lat:'coul cɨt', pron:'[чоул чыт]', live:'чоул чыт', cat:'verb'},
+  {kh:'ស្រឡាញ់', ru:'любить (чувство)', lat:'srɑlaɲ', pron:'[сралань]', live:'сралань', cat:'verb'},
+  {kh:'ចង់', ru:'хотеть', lat:'cɑŋ', pron:'[чанг]', live:'чанг', cat:'verb'},
+  {kh:'ដឹង', ru:'знать (факт)', lat:'dəŋ', pron:'[дынг]', live:'дынг', cat:'verb'},
+  {kh:'ស្គាល់', ru:'знать (человека)', lat:'skɔal', pron:'[скоал]', live:'скоал', cat:'verb'},
+  {kh:'យល់', ru:'понимать', lat:'yul', pron:'[юл]', live:'юл', cat:'verb'},
+  {kh:'មើល', ru:'смотреть', lat:'məəl', pron:'[мэл]', live:'мэл', cat:'verb'},
+  {kh:'ស្ដាប់', ru:'слушать', lat:'sdap', pron:'[сдап]', live:'сдап', cat:'verb'},
+  {kh:'និយាយ', ru:'говорить', lat:'niyiey', pron:'[нийиэй]', live:'нийей', cat:'verb'},
+  {kh:'សរសេរ', ru:'писать', lat:'sɑɑsee', pron:'[саасэ]', live:'саасэ', cat:'verb'},
+  {kh:'អាន', ru:'читать', lat:'aan', pron:'[аан]', live:'аан', cat:'verb'},
+  {kh:'ទៅ', ru:'идти (туда)', lat:'tɨv', pron:'[тыв]', live:'тэв', cat:'verb'},
+  {kh:'មក', ru:'прийти (сюда)', lat:'mɔɔk', pron:'[моок]', live:'мок', cat:'verb'},
+  {kh:'ត្រឡប់មក', ru:'вернуться', lat:'trɑlɑp mɔɔk', pron:'[тралап моок]', live:'тралап мок', cat:'verb'},
+  {kh:'ជួប', ru:'встретить', lat:'cuəp', pron:'[чуэп]', live:'чуп', cat:'verb'},
+  {kh:'ជួយ', ru:'помочь', lat:'cuəy', pron:'[чуэй]', live:'чуй', cat:'verb'},
+  {kh:'ធ្វើ', ru:'делать', lat:'tvəə', pron:'[твэ]', live:'твэ', cat:'verb'},
+  {kh:'រស់នៅ', ru:'жить (проживать)', lat:'ruh nɨv', pron:'[руh нив]', live:'руh нив', cat:'verb'},
+  {kh:'ចេញ', ru:'выходить', lat:'ceɲ', pron:'[чень]', live:'чень', cat:'verb'},
+  {kh:'បើក', ru:'открывать / водить', lat:'baək', pron:'[бэк]', live:'бэк', cat:'verb'},
+  {kh:'ចាំ', ru:'ждать / помнить', lat:'cam', pron:'[чам]', live:'чам', cat:'verb'},
+  {kh:'រក', ru:'искать', lat:'rɔɔk', pron:'[роок]', live:'роок', cat:'verb'},
+  {kh:'យក', ru:'брать / взять', lat:'yɔɔk', pron:'[йоок]', live:'йоок', cat:'verb'},
+  {kh:'ដាក់', ru:'класть / ставить', lat:'dak', pron:'[дак]', live:'дак', cat:'verb'},
+  {kh:'ឈប់', ru:'останавливаться', lat:'cʰup', pron:'[чхуп]', live:'чхуп', cat:'verb'},
+  {kh:'ដំណើរ', ru:'путешествовать', lat:'dɑmnaə', pron:'[дамнэ]', live:'дамнэ', cat:'verb'},
+  {kh:'ទូរស័ព្ទ', ru:'звонить', lat:'tuurasap', pron:'[туурасап]', live:'туурасап', cat:'verb'},
+  {kh:'គិត', ru:'думать', lat:'kɨt', pron:'[кыт]', live:'кыт', cat:'verb'},
+  {kh:'ភ្លេច', ru:'забывать', lat:'plɨc', pron:'[плыч]', live:'плыч', cat:'verb'},
+  {kh:'សាកល្បង', ru:'попробовать', lat:'saak lbɑŋ', pron:'[саак лбанг]', live:'саак лбанг', cat:'verb'},
+  {kh:'លក់ដេក', ru:'спать (крепко)', lat:'loak daek', pron:'[лоак дэк]', live:'лоак дэк', cat:'verb'},
+
+  // ПРИЛАГАТЕЛЬНЫЕ
+  {kh:'ល្អ', ru:'хороший', lat:'lʔɑɑ', pron:'[лъоо]', live:'лоо', cat:'adj'},
+  {kh:'អាក្រក់', ru:'плохой', lat:'aakrɑk', pron:'[аакрак]', live:'акрак', cat:'adj'},
+  {kh:'ធំ', ru:'большой', lat:'thom', pron:'[том]', live:'том', cat:'adj'},
+  {kh:'តូច', ru:'маленький', lat:'touc', pron:'[точ]', live:'точ', cat:'adj'},
+  {kh:'ថ្មី', ru:'новый', lat:'thmay', pron:'[тхмэй]', live:'тхмэй', cat:'adj'},
+  {kh:'ចាស់', ru:'старый', lat:'cah', pron:'[чаh]', live:'чаh', cat:'adj'},
+  {kh:'ក្តៅ', ru:'горячий / жарко', lat:'kdav', pron:'[кдав]', live:'кдав', cat:'adj'},
+  {kh:'ត្រជាក់', ru:'холодный / прохладно', lat:'trɑciək', pron:'[трачьяк]', live:'трачьяк', cat:'adj'},
+  {kh:'ឆ្ងាញ់', ru:'вкусный', lat:'chnɑɲ', pron:'[чнань]', live:'чнань', cat:'adj'},
+  {kh:'ថ្លៃ', ru:'дорогой (цена)', lat:'thlay', pron:'[тхлай]', live:'тхлай', cat:'adj'},
+  {kh:'ថោក', ru:'дешёвый', lat:'thaok', pron:'[тхаок]', live:'тхаок', cat:'adj'},
+  {kh:'ច្រើន', ru:'много', lat:'craən', pron:'[чраэн]', live:'чраэн', cat:'adj'},
+  {kh:'តិច', ru:'мало', lat:'tɨc', pron:'[тыч]', live:'тыч', cat:'adj'},
+  {kh:'លឿន', ru:'быстрый', lat:'lɨən', pron:'[лыэн]', live:'лыэн', cat:'adj'},
+  {kh:'យឺត', ru:'медленный', lat:'yɨɨt', pron:'[ыыт]', live:'юйт', cat:'adj'},
+  {kh:'ខ្លាំង', ru:'сильный / громко', lat:'klaŋ', pron:'[кланг]', live:'кланг', cat:'adj'},
+  {kh:'ស្រាល', ru:'лёгкий / тихо', lat:'sraal', pron:'[сраал]', live:'сраал', cat:'adj'},
+  {kh:'ស្អាត', ru:'красивый / чистый', lat:'s\'aat', pron:'[саат]', live:'саат', cat:'adj'},
+  {kh:'កខ្វក់', ru:'грязный', lat:'kɑkvak', pron:'[каквак]', live:'каквак', cat:'adj'},
+  {kh:'ឆ្ងាយ', ru:'далёкий', lat:'cʰŋay', pron:'[чхнгай]', live:'чхнгай', cat:'adj'},
+  {kh:'ជិត', ru:'близкий', lat:'cɨt', pron:'[чыт]', live:'чыт', cat:'adj'},
+  {kh:'ងាយ', ru:'лёгкий (простой)', lat:'ŋiey', pron:'[нгьей]', live:'нгьей', cat:'adj'},
+  {kh:'ពិបាក', ru:'трудный', lat:'pɨbaak', pron:'[пыбаак]', live:'пыбаак', cat:'adj'},
+  {kh:'សប្បាយ', ru:'радостный / весело', lat:'sapbaay', pron:'[сапбааи]', live:'сабааи', cat:'adj'},
+  {kh:'ក្រៀម', ru:'грустный', lat:'kriem', pron:'[крьям]', live:'крьям', cat:'adj'},
+
+  // ТЕЛО
+  {kh:'ក្បាល', ru:'голова', lat:'kbaal', pron:'[кбаал]', live:'кбаал', cat:'body'},
+  {kh:'ភ្នែក', ru:'глаза', lat:'phnek', pron:'[пхнэк]', live:'пхнэк', cat:'body'},
+  {kh:'ត្រចៀក', ru:'уши', lat:'trɑciək', pron:'[трачьяк]', live:'трачьяк', cat:'body'},
+  {kh:'ច្រមុះ', ru:'нос', lat:'crɑmuh', pron:'[чрамуh]', live:'чрамуh', cat:'body'},
+  {kh:'មាត់', ru:'рот', lat:'moat', pron:'[моат]', live:'моат', cat:'body'},
+  {kh:'ធ្មេញ', ru:'зубы', lat:'tmiɲ', pron:'[тминь]', live:'тминь', cat:'body'},
+  {kh:'ក', ru:'шея', lat:'kɑɑ', pron:'[каа]', live:'каа', cat:'body'},
+  {kh:'ដៃ', ru:'рука', lat:'day', pron:'[дай]', live:'дай', cat:'body'},
+  {kh:'ម្រាមដៃ', ru:'пальцы', lat:'mriem day', pron:'[мрьям дай]', live:'мрьям дай', cat:'body'},
+  {kh:'ជើង', ru:'нога', lat:'cəəŋ', pron:'[чэнг]', live:'чэнг', cat:'body'},
+  {kh:'ពោះ', ru:'живот', lat:'puh', pron:'[пуh]', live:'пуh', cat:'body'},
+  {kh:'ខ្នង', ru:'спина', lat:'knɑŋ', pron:'[кнанг]', live:'кнанг', cat:'body'},
+  {kh:'បេះដូង', ru:'сердце', lat:'beh dooŋ', pron:'[бэh доонг]', live:'бэh доонг', cat:'body'},
+  {kh:'ឈឺ', ru:'болеть / больно', lat:'cʰɨɨ', pron:'[чхыы]', live:'чхыы', cat:'body'},
+
+  // ЕДА
+  {kh:'បាយ', ru:'рис (варёный)', lat:'baay', pron:'[бааи]', live:'бай', cat:'food'},
+  {kh:'ត្រី', ru:'рыба', lat:'trəy', pron:'[трэй]', live:'трэй', cat:'food'},
+  {kh:'សាច់', ru:'мясо', lat:'sac', pron:'[сач]', live:'сач', cat:'food'},
+  {kh:'បន្លែ', ru:'овощи', lat:'bɑnlae', pron:'[банлэй]', live:'банлэй', cat:'food'},
+  {kh:'ម្ទេស', ru:'перец чили', lat:'mteh', pron:'[мтэh]', live:'мтэh', cat:'food'},
+  {kh:'ស្ករ', ru:'сахар', lat:'skɑɑ', pron:'[скаа]', live:'скаа', cat:'food'},
+  {kh:'អំបិល', ru:'соль', lat:'ɑmbəl', pron:'[амбыл]', live:'амбыл', cat:'food'},
+  {kh:'ស្ល', ru:'суп / соус', lat:'slɑɑ', pron:'[слаа]', live:'слаа', cat:'food'},
+  {kh:'នំ', ru:'торт / печенье', lat:'num', pron:'[нум]', live:'нум', cat:'food'},
+  {kh:'ផ្លែឈើ', ru:'фрукт', lat:'play cʰəə', pron:'[плай чхэ]', live:'плай чхэ', cat:'food'},
+  {kh:'ការ៉េ', ru:'кофе', lat:'kafei', pron:'[кафэй]', live:'кафэй', cat:'food'},
+  {kh:'ស្ករអំពៅ', ru:'сахарный тростник', lat:'skɑɑ ɑmpəv', pron:'[скаа ампэв]', live:'скаа ампэв', cat:'food'},
+  {kh:'ទឹកដោះគោ', ru:'молоко', lat:'tɨk doh koo', pron:'[тык доh коо]', live:'тык доh коо', cat:'food'},
+  {kh:'ស៊ុត', ru:'яйцо', lat:'sut', pron:'[сут]', live:'сут', cat:'food'},
+  {kh:'នំបុ័ង', ru:'хлеб', lat:'num pang', pron:'[нум панг]', live:'нум панг', cat:'food'},
+
+  // МЕСТА
+  {kh:'ទីក្រុង', ru:'город', lat:'tii kruŋ', pron:'[тии крунг]', live:'тии крунг', cat:'place'},
+  {kh:'ផ្សារ', ru:'рынок', lat:'psaa', pron:'[псаа]', live:'псаа', cat:'place'},
+  {kh:'មន្ទីរពេទ្យ', ru:'больница', lat:'mɔntii peet', pron:'[монтии пэт]', live:'монтии пэт', cat:'place'},
+  {kh:'សាលារៀន', ru:'школа', lat:'saala riən', pron:'[саала рьян]', live:'саала рьян', cat:'place'},
+  {kh:'ហាង', ru:'магазин', lat:'haaŋ', pron:'[хаанг]', live:'хаанг', cat:'place'},
+  {kh:'សណ្ឋាគារ', ru:'отель', lat:'sɑnthaakia', pron:'[сантхаакиа]', live:'сантхаакиа', cat:'place'},
+  {kh:'វត្ត', ru:'храм', lat:'voat', pron:'[воат]', live:'воат', cat:'place'},
+  {kh:'ព្រលានយន្តហោះ', ru:'аэропорт', lat:'prɔliən yɑntahoh', pron:'[пролиэн янтахоh]', live:'пролиэн янтахоh', cat:'place'},
+  {kh:'ធនាគារ', ru:'банк', lat:'thɔniekie', pron:'[тхониакиа]', live:'тхониакиа', cat:'place'},
+  {kh:'ភ្នំពេញ', ru:'Пномпень', lat:'phnum pɨɲ', pron:'[пхнум пынь]', live:'пхнум пынь', cat:'place'},
+  {kh:'សៀមរាប', ru:'Сиемреап', lat:'siəm riəp', pron:'[сьям рьяп]', live:'сьям рьяп', cat:'place'},
+  {kh:'ឆ្នេរ', ru:'пляж / берег', lat:'cʰnee', pron:'[чхнэ]', live:'чхнэ', cat:'place'},
+  {kh:'ព្រៃ', ru:'лес / джунгли', lat:'prey', pron:'[прэй]', live:'прэй', cat:'place'},
+  {kh:'ដើមឈើ', ru:'дерево', lat:'daəm cʰəə', pron:'[дэм чхэ]', live:'дэм чхэ', cat:'place'},
+
+  // ВРЕМЯ
+  {kh:'ថ្ងៃនេះ', ru:'сегодня', lat:'tŋay nih', pron:'[тнгай ниh]', live:'тнгай ниh', cat:'time'},
+  {kh:'ម្សិលមិញ', ru:'вчера', lat:'msəl mɨɲ', pron:'[мсыл мынь]', live:'мсыл мынь', cat:'time'},
+  {kh:'ថ្ងៃស្អែក', ru:'завтра', lat:'tŋay s\'aek', pron:'[тнгай саэк]', live:'тнгай саэк', cat:'time'},
+  {kh:'ពេលនេះ', ru:'сейчас', lat:'peel nih', pron:'[пэл ниh]', live:'пэл ниh', cat:'time'},
+  {kh:'ម៉ោង', ru:'час', lat:'maaŋ', pron:'[маанг]', live:'маанг', cat:'time'},
+  {kh:'នាទី', ru:'минута', lat:'niətii', pron:'[ниатии]', live:'ниатии', cat:'time'},
+  {kh:'ថ្ងៃ', ru:'день', lat:'tŋay', pron:'[тнгай]', live:'тнгай', cat:'time'},
+  {kh:'សប្តាហ៍', ru:'неделя', lat:'sapdaa', pron:'[сапдаа]', live:'сапдаа', cat:'time'},
+  {kh:'ខែ', ru:'месяц', lat:'khae', pron:'[кхэй]', live:'кхэй', cat:'time'},
+  {kh:'ឆ្នាំ', ru:'год', lat:'chnam', pron:'[чнам]', live:'чнам', cat:'time'},
+  {kh:'ឆាប់ៗ', ru:'скоро', lat:'cʰap cʰap', pron:'[чхап чхап]', live:'чхап чхап', cat:'time'},
+  {kh:'ថ្ងៃចន្ទ', ru:'понедельник', lat:'tŋay can', pron:'[тнгай чан]', live:'тнгай чан', cat:'time'},
+  {kh:'ថ្ងៃអង្គារ', ru:'вторник', lat:'tŋay ɑŋkie', pron:'[тнгай ангкья]', live:'тнгай ангкья', cat:'time'},
+  {kh:'ថ្ងៃពុធ', ru:'среда', lat:'tŋay put', pron:'[тнгай пут]', live:'тнгай пут', cat:'time'},
+  {kh:'ថ្ងៃសៅរ៍', ru:'суббота', lat:'tŋay sav', pron:'[тнгай сав]', live:'тнгай сав', cat:'time'},
+  {kh:'ថ្ងៃអាទិត្យ', ru:'воскресенье', lat:'tŋay aatɨt', pron:'[тнгай аатыт]', live:'тнгай аатыт', cat:'time'},
+
+  // НАРЕЧИЯ и частицы
+  {kh:'ណាស់', ru:'очень', lat:'nah', pron:'[наh]', live:'наh', cat:'adv'},
+  {kh:'បន្តិច', ru:'немного / чуть', lat:'bɑntəc', pron:'[бантыч]', live:'бантыч ~ бандэч', cat:'adv'},
+  {kh:'ម្ដងទៀត', ru:'ещё раз', lat:'mdɑɑŋ tiət', pron:'[мдаанг тьят]', live:'мдаанг тьят', cat:'adv'},
+  {kh:'ហើយ', ru:'уже / готово', lat:'haəy', pron:'[хаэй]', live:'хэй', cat:'adv'},
+  {kh:'នៅ', ru:'ещё / находиться', lat:'nɨv', pron:'[нив]', live:'нив', cat:'adv'},
+  {kh:'ក៏', ru:'тоже / также', lat:'kɑɑ', pron:'[каа]', live:'каа', cat:'adv'},
+  {kh:'ពិតជា', ru:'действительно', lat:'pɨt cie', pron:'[пыт чья]', live:'пыт чья', cat:'adv'},
+  {kh:'ប្រហែល', ru:'наверное / примерно', lat:'prɑhael', pron:'[прахаэл]', live:'прахэл', cat:'adv'},
+  {kh:'ភ្លាម', ru:'сразу / немедленно', lat:'phliəm', pron:'[пхлиэм]', live:'пхлям', cat:'adv'},
+  {kh:'ទាំងអស់', ru:'все / всё', lat:'teəŋ ɑh', pron:'[тянг аh]', live:'тянг аh', cat:'adv'},
+  {kh:'ម្នាក់ឯង', ru:'один / в одиночку', lat:'mneak aeŋ', pron:'[мниак аенг]', live:'мниак аенг', cat:'adv'},
+  {kh:'ជានិច្ច', ru:'всегда', lat:'cie nɨc', pron:'[чья ныч]', live:'чья ныч', cat:'adv'},
+  {kh:'ម្តេចក៏', ru:'никогда', lat:'mdəc kɑɑ', pron:'[мдэч каа]', live:'мдэч каа', cat:'adv'},
+  {kh:'ជាមួយ', ru:'вместе с / с', lat:'cie muəy', pron:'[чья муэй]', live:'чья муй', cat:'adv'},
+  {kh:'ពេលខ្លះ', ru:'иногда', lat:'peel klah', pron:'[пэл клаh]', live:'пэл клаh', cat:'adv'},
+
+  // ГЛАГОЛЫ-СВЯЗКИ (добавление)
+  {kh:'មាន', ru:'иметь / есть / существует', lat:'mien', pron:'[миан]', live:'миан', cat:'verb'},
+  {kh:'មិនមាន', ru:'не иметь / нет / не существует', lat:'mɨn mien', pron:'[мин миан]', live:'мин миан', cat:'verb'},
+  {kh:'អាច', ru:'мочь / быть в состоянии', lat:'aac', pron:'[аач]', live:'аач', cat:'verb'},
+  {kh:'ហៅថា', ru:'называться / называть', lat:'hav thaa', pron:'[хав тхаа]', live:'хав тхаа', cat:'verb'},
+  {kh:'គឺ', ru:'есть / является (связка)', lat:'kie', pron:'[киа]', live:'киа', cat:'verb'},
+  {kh:'រៀបចំ', ru:'организовать / подготовить', lat:'riəpcɑm', pron:'[рьяпчам]', live:'рьяпчам', cat:'verb'},
+  {kh:'ឱ្យ', ru:'чтобы / для / давать', lat:'aoy', pron:'[аой]', live:'аой', cat:'verb'},
+  {kh:'ទីនេះ', ru:'здесь / это место', lat:'tii nih', pron:'[тии ниh]', live:'тии ниh', cat:'noun'},
+  {kh:'ទីនោះ', ru:'там / то место', lat:'tii nuh', pron:'[тии нуh]', live:'тии нуh', cat:'noun'},
+
+  // ВОПРОСИТЕЛЬНЫЕ СЛОВА
+  {kh:'អ្វី', ru:'что?', lat:'avəy', pron:'[авэй]', live:'авэй', cat:'question'},
+  {kh:'នរណា', ru:'кто?', lat:'nɔɔ naa', pron:'[ноо наа]', live:'но наа', cat:'question'},
+  {kh:'ណា / ឯណា', ru:'где?', lat:'naa / ae naa', pron:'[наа / эй наа]', live:'наа / эй наа', cat:'question'},
+  {kh:'ពេលណា', ru:'когда?', lat:'peel naa', pron:'[пэл наа]', live:'пэл наа', cat:'question'},
+  {kh:'ម្ដេច', ru:'как?', lat:'mdəc', pron:'[мдэч]', live:'мдэч ~ дэч', cat:'question'},
+  {kh:'ហេតុអ្វី', ru:'почему?', lat:'het avəy', pron:'[хет авэй]', live:'хет авэй ~ хет эй', cat:'question'},
+  {kh:'ប៉ុន្មាន', ru:'сколько?', lat:'ponmaan', pron:'[понмаан]', live:'пунмаан', cat:'question'},
+  {kh:'របស់នរណា', ru:'чей?', lat:'rɔbɑh nɔɔ naa', pron:'[робаh ноо наа]', live:'робаh но наа', cat:'question'},
+  {kh:'ទៅណា', ru:'куда?', lat:'tɨv naa', pron:'[тыв наа]', live:'тэв наа', cat:'question'},
+  {kh:'មកពីណា', ru:'откуда?', lat:'mɔɔk pii naa', pron:'[моок пии наа]', live:'мок пии наа', cat:'question'},
+  {kh:'តើ', ru:'вопросит. частица', lat:'taə', pron:'[тэ]', live:'тэ', cat:'question'},
+
+  // МЯСО, РЫБА И РЫБАЛКА
+  {kh:'សាច់មាន់', ru:'курица (мясо)', lat:'sac moan', pron:'[сач моан]', live:'сач моан', cat:'meat'},
+  {kh:'មាន់', ru:'курица (птица)', lat:'moan', pron:'[моан]', live:'моан', cat:'meat'},
+  {kh:'សាច់ជ្រូក', ru:'свинина', lat:'sac crook', pron:'[сач чруук]', live:'сач чруук', cat:'meat'},
+  {kh:'ជ្រូក', ru:'свинья', lat:'crook', pron:'[чруук]', live:'чруук', cat:'meat'},
+  {kh:'សាច់គោ', ru:'говядина', lat:'sac koo', pron:'[сач коо]', live:'сач коо', cat:'meat'},
+  {kh:'គោ', ru:'корова', lat:'koo', pron:'[коо]', live:'коо', cat:'meat'},
+  {kh:'សាច់ទា', ru:'утка (мясо)', lat:'sac tie', pron:'[сач тья]', live:'сач тья', cat:'meat'},
+  {kh:'ទា', ru:'утка', lat:'tie', pron:'[тья]', live:'тья', cat:'meat'},
+  {kh:'ត្រី', ru:'рыба', lat:'trəy', pron:'[трэй]', live:'трэй', cat:'meat'},
+  {kh:'បង្កង', ru:'креветка / лангуст', lat:'bɑŋkɑŋ', pron:'[бангканг]', live:'бангканг', cat:'meat'},
+  {kh:'ក្តាម', ru:'краб', lat:'kdaam', pron:'[кдаам]', live:'кдаам', cat:'meat'},
+  {kh:'ខ្យង', ru:'улитка / ракушка', lat:'khyɑŋ', pron:'[кхьянг]', live:'кхьянг', cat:'meat'},
+  {kh:'មឹក', ru:'кальмар', lat:'mɨk', pron:'[мык]', live:'мык', cat:'meat'},
+  {kh:'ក្រើម', ru:'осьминог', lat:'kraəm', pron:'[краэм]', live:'краэм', cat:'meat'},
+  {kh:'នេសាទ', ru:'рыбачить / рыбалка', lat:'niəsaat', pron:'[ниасаат]', live:'ниасаат', cat:'meat'},
+  {kh:'អ្នកនេសាទ', ru:'рыбак', lat:'neak niəsaat', pron:'[ниак ниасаат]', live:'ниак ниасаат', cat:'meat'},
+  {kh:'ចាប់ត្រី', ru:'ловить рыбу', lat:'cap trəy', pron:'[чап трэй]', live:'чап трэй', cat:'meat'},
+  {kh:'សំណាញ់', ru:'сеть (рыболовная)', lat:'sɑmnaɲ', pron:'[самнань]', live:'самнань', cat:'meat'},
+  {kh:'បន្លាំ', ru:'удочка', lat:'bɑnlam', pron:'[банлам]', live:'банлам', cat:'meat'},
+  {kh:'ទូក', ru:'лодка', lat:'tuuk', pron:'[туук]', live:'туук', cat:'meat'},
+
+  // ЖИВОТНЫЕ
+  {kh:'ពស់', ru:'змея', lat:'pŭəh', pron:'[пуэh]', live:'пуэh', cat:'animal'},
+  {kh:'កង្កែប', ru:'лягушка', lat:'kɑŋkaep', pron:'[кангкэп]', live:'кангкэп', cat:'animal'},
+  {kh:'ក្រពើ', ru:'крокодил', lat:'krɑpəə', pron:'[крапэ]', live:'крапэ', cat:'animal'},
+  {kh:'ខ្លា', ru:'тигр', lat:'khlaa', pron:'[кхлаа]', live:'кхлаа', cat:'animal'},
+  {kh:'ដំរី', ru:'слон', lat:'dɑmrəy', pron:'[дамрэй]', live:'дамрэй', cat:'animal'},
+  {kh:'ស្វា', ru:'обезьяна', lat:'svaa', pron:'[свааа]', live:'свааа', cat:'animal'},
+  {kh:'ឆ្កែ', ru:'собака', lat:'cʰkae', pron:'[чхкэй]', live:'чхкэй', cat:'animal'},
+  {kh:'ឆ្មា', ru:'кошка', lat:'cʰmaa', pron:'[чхмаа]', live:'чхмаа', cat:'animal'},
+  {kh:'សេះ', ru:'лошадь', lat:'seh', pron:'[сэh]', live:'сэh', cat:'animal'},
+  {kh:'ពពែ', ru:'коза', lat:'pɔpae', pron:'[попэй]', live:'попэй', cat:'animal'},
+  {kh:'ក្របី', ru:'буйвол', lat:'krɑbəy', pron:'[крабэй]', live:'крабэй', cat:'animal'},
+  {kh:'មាន់', ru:'курица', lat:'moan', pron:'[моан]', live:'моан', cat:'animal'},
+  {kh:'ទា', ru:'утка', lat:'tie', pron:'[тья]', live:'тья', cat:'animal'},
+  {kh:'ត្រី', ru:'рыба', lat:'trəy', pron:'[трэй]', live:'трэй', cat:'animal'},
+  {kh:'មឹក', ru:'кальмар', lat:'mɨk', pron:'[мык]', live:'мык', cat:'animal'},
+  {kh:'ក្តាម', ru:'краб', lat:'kdaam', pron:'[кдаам]', live:'кдаам', cat:'animal'},
+  {kh:'បង្កង', ru:'креветка', lat:'bɑŋkɑŋ', pron:'[бангканг]', live:'бангканг', cat:'animal'},
+  {kh:'ខ្យង', ru:'улитка', lat:'khyɑŋ', pron:'[кхьянг]', live:'кхьянг', cat:'animal'},
+  {kh:'ខ្លាឃ្មុំ', ru:'медведь', lat:'khlaa khmum', pron:'[кхлаа кхмум]', live:'кхлаа кхмум', cat:'animal'},
+  {kh:'សត្វស្លាប', ru:'птица', lat:'sat slaap', pron:'[сат слааp]', live:'сат слааp', cat:'animal'},
+  {kh:'មូស', ru:'комар', lat:'muuh', pron:'[муух]', live:'муух', cat:'animal'},
+  {kh:'ចន្លុះ', ru:'светлячок', lat:'cɑnluh', pron:'[чанлуh]', live:'чанлуh', cat:'animal'},
+  {kh:'ចចក', ru:'волк', lat:'cɑcɑk', pron:'[чачак]', live:'чачак', cat:'animal'},
+  {kh:'ដង្កូវ', ru:'червяк / личинка', lat:'dɑŋkəv', pron:'[дангков]', live:'дангков', cat:'animal'},
+
+  // ПРИРОДА И ПОГОДА
+  {kh:'សមុទ្រ', ru:'море', lat:'samut', pron:'[самут]', live:'самут', cat:'nature'},
+  {kh:'បឹង', ru:'озеро', lat:'bɨŋ', pron:'[бынг]', live:'бынг', cat:'nature'},
+  {kh:'ដី', ru:'земля / почва', lat:'dəy', pron:'[дэй]', live:'дэй', cat:'nature'},
+  {kh:'ថ្ម', ru:'камень', lat:'thm', pron:'[тхм]', live:'тхм', cat:'nature'},
+  {kh:'ភ្លើង', ru:'огонь', lat:'pləəŋ', pron:'[плэнг]', live:'плэнг', cat:'nature'},
+  {kh:'ខ្យល់ព្យុះ', ru:'буря / шторм', lat:'khyal pyuh', pron:'[кхьял пьюh]', live:'кхьял пьюh', cat:'nature'},
+  {kh:'ស្រែ', ru:'рисовое поле', lat:'srae', pron:'[срэй]', live:'срэй', cat:'nature'},
+
+  // ТРАНСПОРТ
+  {kh:'មុតូ', ru:'мотобайк', lat:'moto', pron:'[мото]', live:'мото', cat:'transport'},
+  {kh:'តុក់តុក់', ru:'тук-тук', lat:'tuk tuk', pron:'[тук тук]', live:'тук тук', cat:'transport'},
+  {kh:'ទូក', ru:'лодка', lat:'tuuk', pron:'[туук]', live:'туук', cat:'transport'},
+  {kh:'យន្តហោះ', ru:'самолёт', lat:'yɑntahoh', pron:'[янтахоh]', live:'янтахоh', cat:'transport'},
+  {kh:'រថភ្លើង', ru:'поезд', lat:'rɔt pləəŋ', pron:'[рот плэнг]', live:'рот плэнг', cat:'transport'},
+  {kh:'ស្ថានីយ', ru:'станция / остановка', lat:'sthanii', pron:'[стханий]', live:'стханий', cat:'transport'},
+  {kh:'ចរាចរណ៍', ru:'пробка / трафик', lat:'cɑraacɑɑ', pron:'[чараачаа]', live:'чараачаа', cat:'transport'},
+  {kh:'បត់', ru:'поворачивать', lat:'bɑt', pron:'[бат]', live:'бат', cat:'transport'},
+  {kh:'ត្រង់', ru:'прямо', lat:'trɑŋ', pron:'[транг]', live:'транг', cat:'transport'},
+  {kh:'ឆ្វេង', ru:'налево', lat:'cʰveeŋ', pron:'[чхвэнг]', live:'чхвэнг', cat:'transport'},
+  {kh:'ស្តាំ', ru:'направо', lat:'sdam', pron:'[сдам]', live:'сдам', cat:'transport'},
+
+  // ЦВЕТА
+  {kh:'ពណ៌ក្រហម', ru:'красный', lat:'poa krɑhɑɑm', pron:'[поа крахаам]', live:'крахаам', cat:'color'},
+  {kh:'ពណ៌លឿង', ru:'жёлтый', lat:'poa lɨəŋ', pron:'[поа лыэнг]', live:'лыэнг', cat:'color'},
+  {kh:'ពណ៌ខៀវ', ru:'синий / голубой', lat:'poa khiev', pron:'[поа кхьяв]', live:'кхьяв', cat:'color'},
+  {kh:'ពណ៌បៃតង', ru:'зелёный', lat:'poa baytɑŋ', pron:'[поа байтанг]', live:'байтанг', cat:'color'},
+  {kh:'ពណ៌ស', ru:'белый', lat:'poa sɑɑ', pron:'[поа саа]', live:'саа', cat:'color'},
+  {kh:'ពណ៌ខ្មៅ', ru:'чёрный', lat:'poa khmav', pron:'[поа кхмав]', live:'кхмав', cat:'color'},
+  {kh:'ពណ៌ក្រូចឆ្មារ', ru:'оранжевый', lat:'poa krouc', pron:'[поа кроуч]', live:'кроуч', cat:'color'},
+  {kh:'ពណ៌ផ្កា', ru:'розовый', lat:'poa pkaa', pron:'[поа пкаа]', live:'пкаа', cat:'color'},
+  {kh:'ពណ៌ត្នោត', ru:'коричневый', lat:'poa tnaat', pron:'[поа тнаат]', live:'тнаат', cat:'color'},
+  {kh:'ពណ៌ប្រផេះ', ru:'серый', lat:'poa prɑpeh', pron:'[поа прапэh]', live:'прапэh', cat:'color'},
+
+  // СЕМЬЯ И ЛЮДИ
+  {kh:'គ្រួសារ', ru:'семья', lat:'kruəsaa', pron:'[круэсаа]', live:'круэсаа', cat:'people'},
+  {kh:'ប្ដី', ru:'муж', lat:'pdəy', pron:'[пдэй]', live:'пдэй', cat:'people'},
+  {kh:'ប្រពន្ធ', ru:'жена', lat:'prɑpun', pron:'[прапун]', live:'прапун', cat:'people'},
+  {kh:'កូនប្រុស', ru:'сын', lat:'koon proh', pron:'[коон прох]', live:'коон прох', cat:'people'},
+  {kh:'កូនស្រី', ru:'дочь', lat:'koon srəy', pron:'[коон срэй]', live:'коон срэй', cat:'people'},
+  {kh:'ជីដូន', ru:'бабушка', lat:'cii doon', pron:'[чии доон]', live:'чии доон', cat:'people'},
+  {kh:'ជីតា', ru:'дедушка', lat:'cii taa', pron:'[чии таа]', live:'чии таа', cat:'people'},
+  {kh:'ញាតិ', ru:'родственник', lat:'ɲiet', pron:'[ньят]', live:'ньят', cat:'people'},
+  {kh:'មិត្ត', ru:'друг', lat:'mɨt', pron:'[мыт]', live:'мыт', cat:'people'},
+  {kh:'មិត្តភ័ក្ត', ru:'друг / приятель', lat:'mɨt pheak', pron:'[мыт пхяк]', live:'мыт пхяк', cat:'people'},
+  {kh:'អ្នកជិតខាង', ru:'сосед', lat:'neak cɨt khaang', pron:'[ниак чыт кхаанг]', live:'ниак чыт кхаанг', cat:'people'},
+  {kh:'គ្រូ', ru:'учитель / мастер', lat:'kruu', pron:'[круу]', live:'круу', cat:'people'},
+  {kh:'វេជ្ជបណ្ឌិត', ru:'врач / доктор', lat:'vɨcpɑndɨt', pron:'[вычпандыт]', live:'крuu пэт', cat:'people'},
+  {kh:'អ្នកបើកបរ', ru:'водитель', lat:'neak baək bɑɑ', pron:'[ниак бэк баа]', live:'ниак бэк баа', cat:'people'},
+  {kh:'ប្រជាជន', ru:'народ / население', lat:'praciecun', pron:'[прачьячун]', live:'прачьячун', cat:'people'},
+  {kh:'ម្ចាស់', ru:'хозяин / владелец', lat:'mcah', pron:'[мчаh]', live:'мчаh', cat:'people'},
+  {kh:'ភ្ញៀវ', ru:'гость / турист', lat:'pɲiev', pron:'[пньяв]', live:'пньяв', cat:'people'},
+  {kh:'ជនបរទេស', ru:'иностранец', lat:'cun bɑɑ teh', pron:'[чун бо тэh]', live:'барангь', cat:'people'},
+
+  // ДОМ И БЫТ
+  {kh:'បន្ទប់', ru:'комната', lat:'bɑntup', pron:'[бантуп]', live:'бантуп', cat:'home'},
+  {kh:'បន្ទប់គេង', ru:'спальня', lat:'bɑntup keeng', pron:'[бантуп кэнг]', live:'бантуп кэнг', cat:'home'},
+  {kh:'បន្ទប់ទឹក', ru:'ванная / туалет', lat:'bɑntup tɨk', pron:'[бантуп тык]', live:'бантуп тык', cat:'home'},
+  {kh:'ផ្ទះបាយ', ru:'кухня', lat:'pteah baay', pron:'[птэа бай]', live:'птэа бай', cat:'home'},
+  {kh:'ទ្វារ', ru:'дверь', lat:'tvie', pron:'[твья]', live:'твья', cat:'home'},
+  {kh:'បង្អួច', ru:'окно', lat:'bɑŋuəc', pron:'[бангуэч]', live:'бангуэч', cat:'home'},
+  {kh:'តុ', ru:'стол', lat:'tok', pron:'[ток]', live:'ток', cat:'home'},
+  {kh:'កៅអី', ru:'стул', lat:'kav əy', pron:'[кав эй]', live:'кав эй', cat:'home'},
+  {kh:'គ្រែ', ru:'кровать', lat:'kree', pron:'[крэ]', live:'крэ', cat:'home'},
+  {kh:'ទូ', ru:'шкаф', lat:'tuu', pron:'[туу]', live:'туу', cat:'home'},
+  {kh:'ចង្កេះ', ru:'стена', lat:'cɑŋkeh', pron:'[чангкэh]', live:'чангкэh', cat:'home'},
+  {kh:'ជណ្ដើរ', ru:'лестница', lat:'cɑndaə', pron:'[чандэ]', live:'чандэ', cat:'home'},
+  {kh:'ទឹក', ru:'вода', lat:'tɨk', pron:'[тык]', live:'тык', cat:'home'},
+  {kh:'អគ្គិសនី', ru:'электричество', lat:'akkisənii', pron:'[аккисэний]', live:'аккисэний', cat:'home'},
+  {kh:'ត្រជាក់', ru:'кондиционер / прохладно', lat:'trɑciək', pron:'[трачьяк]', live:'трачьяк', cat:'home'},
+  {kh:'ក្រណាត់', ru:'ткань / полотенце', lat:'krɑnaat', pron:'[кранаат]', live:'кранаат', cat:'home'},
+  {kh:'ថ្នាំ', ru:'лекарство', lat:'tnam', pron:'[тнам]', live:'тнам', cat:'home'},
+
+  // ГЛАГОЛЫ (дополнительные)
+  {kh:'ងូតទឹក', ru:'мыться / душ', lat:'ŋuut tɨk', pron:'[нгуут тык]', live:'нгуут тык', cat:'verb'},
+  {kh:'ដោះ', ru:'снимать / расстёгивать', lat:'dɑh', pron:'[доh]', live:'доh', cat:'verb'},
+  {kh:'ស្លៀក', ru:'надевать / одеваться', lat:'sliək', pron:'[сльяк]', live:'сльяк', cat:'verb'},
+  {kh:'ធ្លាក់', ru:'падать', lat:'tleək', pron:'[тлэк]', live:'тлэк', cat:'verb'},
+  {kh:'ដើរ', ru:'ходить пешком', lat:'daə', pron:'[дэ]', live:'дэ', cat:'verb'},
+  {kh:'រត់', ru:'бежать', lat:'rut', pron:'[рут]', live:'рут', cat:'verb'},
+  {kh:'ហើរ', ru:'летать', lat:'haə', pron:'[хэ]', live:'хэ', cat:'verb'},
+  {kh:'ហែល', ru:'плыть / купаться', lat:'hael', pron:'[хэл]', live:'хэл', cat:'verb'},
+  {kh:'ឡើង', ru:'подниматься / входить', lat:'laəŋ', pron:'[лэнг]', live:'лэнг', cat:'verb'},
+  {kh:'ចុះ', ru:'спускаться / выходить', lat:'coh', pron:'[чоh]', live:'чоh', cat:'verb'},
+  {kh:'បើក', ru:'открывать / водить', lat:'baək', pron:'[бэк]', live:'бэк', cat:'verb'},
+  {kh:'បិទ', ru:'закрывать / выключать', lat:'bɨt', pron:'[быт]', live:'быт', cat:'verb'},
+  {kh:'ទទួល', ru:'получать / принимать', lat:'tɔtuəl', pron:'[тотуэл]', live:'тотуэл', cat:'verb'},
+  {kh:'បញ្ជូន', ru:'отправлять', lat:'bɑɲcuun', pron:'[баньчуун]', live:'баньчуун', cat:'verb'},
+  {kh:'ទូរស័ព្ទ', ru:'звонить по телефону', lat:'tuurasap', pron:'[туурасап]', live:'туурасап', cat:'verb'},
+  {kh:'ជួល', ru:'арендовать / нанимать', lat:'cuəl', pron:'[чуэл]', live:'чуэл', cat:'verb'},
+  {kh:'ចែករំលែក', ru:'делиться', lat:'caek rumlɛk', pron:'[чэк румлэк]', live:'чэк румлэк', cat:'verb'},
+  {kh:'ជួសជុល', ru:'ремонтировать', lat:'cuəs cul', pron:'[чуэс чул]', live:'чуэс чул', cat:'verb'},
+  {kh:'ចម្អិន', ru:'готовить еду', lat:'cɑm ən', pron:'[чамэн]', live:'чамэн', cat:'verb'},
+  {kh:'សម្អាត', ru:'убирать / чистить', lat:'sɑmaat', pron:'[самаат]', live:'самаат', cat:'verb'},
+  {kh:'ញញឹម', ru:'улыбаться', lat:'ɲɔɲɨm', pron:'[нёньым]', live:'нёньым', cat:'verb'},
+  {kh:'យំ', ru:'плакать', lat:'yum', pron:'[юм]', live:'юм', cat:'verb'},
+  {kh:'សើច', ru:'смеяться', lat:'saəc', pron:'[сэч]', live:'сэч', cat:'verb'},
+  {kh:'ខឹង', ru:'злиться / сердиться', lat:'khəŋ', pron:'[кхэнг]', live:'кхэнг', cat:'verb'},
+  {kh:'ភ្ញាក់', ru:'просыпаться', lat:'pɲeak', pron:'[пньяк]', live:'пньяк', cat:'verb'},
+  {kh:'គិត', ru:'думать', lat:'kɨt', pron:'[кыт]', live:'кыт', cat:'verb'},
+  {kh:'ភ្លេច', ru:'забывать', lat:'plɨc', pron:'[плыч]', live:'плыч', cat:'verb'},
+  {kh:'ចាំ', ru:'помнить / ждать', lat:'cam', pron:'[чам]', live:'чам', cat:'verb'},
+  {kh:'ជឿ', ru:'верить', lat:'ciə', pron:'[чья]', live:'чья', cat:'verb'},
+  {kh:'ព្រួយ', ru:'беспокоиться', lat:'pruəy', pron:'[пруэй]', live:'пруэй', cat:'verb'},
+  {kh:'ចង់បាន', ru:'желать / хотеть получить', lat:'cɑŋ baan', pron:'[чанг баан]', live:'чанг бан', cat:'verb'},
+  {kh:'ចូលរួម', ru:'участвовать', lat:'coul ruəm', pron:'[чоул руэм]', live:'чоул руэм', cat:'verb'},
+
+  // ПРИЛАГАТЕЛЬНЫЕ (дополнительные)
+  {kh:'ឡើយ', ru:'готовый', lat:'laəy', pron:'[лэй]', live:'лэй', cat:'adj'},
+  {kh:'ឆ្អែត', ru:'сытый', lat:'cʰaet', pron:'[чхэт]', live:'чхэт', cat:'adj'},
+  {kh:'ស្រេក', ru:'голодный / жаждущий', lat:'srɛɛk', pron:'[срэк]', live:'срэк', cat:'adj'},
+  {kh:'នឿយ', ru:'уставший', lat:'nɨəy', pron:'[нёй]', live:'нёй', cat:'adj'},
+  {kh:'ខ្លាច', ru:'боязливый / страшно', lat:'klac', pron:'[клач]', live:'клач', cat:'adj'},
+  {kh:'ក្លាហាន', ru:'смелый / храбрый', lat:'klaa haan', pron:'[клаа хаан]', live:'клаа хаан', cat:'adj'},
+  {kh:'ឆ្លាត', ru:'умный', lat:'chlaat', pron:'[чхлаат]', live:'чхлаат', cat:'adj'},
+  {kh:'ល្ងង់', ru:'глупый', lat:'lŋɔŋ', pron:'[лнгонг]', live:'лнгонг', cat:'adj'},
+  {kh:'ឈឺ', ru:'больной / болит', lat:'cʰɨɨ', pron:'[чхыы]', live:'чхыы', cat:'adj'},
+  {kh:'មានសុខភាព', ru:'здоровый', lat:'mien sokkaphiep', pron:'[миан сокхапхьяп]', live:'миан сокхапхьяп', cat:'adj'},
+  {kh:'ស្ងាត់', ru:'тихий / спокойный', lat:'sŋat', pron:'[снгат]', live:'снгат', cat:'adj'},
+  {kh:'រំខាន', ru:'шумный / беспокойный', lat:'rumkhaan', pron:'[румкхаан]', live:'румкхаан', cat:'adj'},
+  {kh:'ចំណាស់', ru:'старший / старый (о человеке)', lat:'cɑmnas', pron:'[чамнас]', live:'чамнас', cat:'adj'},
+  {kh:'ក្មេង', ru:'молодой', lat:'kmeeŋ', pron:'[кмэнг]', live:'кмэнг', cat:'adj'},
+  {kh:'ពេញ', ru:'полный', lat:'pɨɲ', pron:'[пынь]', live:'пынь', cat:'adj'},
+  {kh:'ទទេ', ru:'пустой', lat:'tɔtee', pron:'[тотэ]', live:'тотэ', cat:'adj'},
+  {kh:'ត្រឹមត្រូវ', ru:'правильный / верный', lat:'trɨm trəv', pron:'[трым трэв]', live:'трым трэв', cat:'adj'},
+  {kh:'ខុស', ru:'неправильный / ошибочный', lat:'khoh', pron:'[кхоh]', live:'кхоh', cat:'adj'},
+  {kh:'ច្បាស់', ru:'ясный / чёткий', lat:'cbah', pron:'[чбаh]', live:'чбаh', cat:'adj'},
+
+  // НАРЕЧИЯ (дополнительные)
+  {kh:'ដូច្នេះ', ru:'поэтому / вот так', lat:'douc neh', pron:'[доуч нэh]', live:'доуч нэh', cat:'adv'},
+  {kh:'ដូចគ្នា', ru:'тоже самое / так же', lat:'douc knie', pron:'[доуч книа]', live:'доуч книа', cat:'adv'},
+  {kh:'ម្ដងមួយ', ru:'одновременно / вдруг', lat:'mdɑɑŋ muəy', pron:'[мдаанг муй]', live:'мдаанг муй', cat:'adv'},
+  {kh:'ខ្លះ', ru:'некоторые / немного', lat:'klah', pron:'[клаh]', live:'клаh', cat:'adv'},
+  {kh:'ទាំងអស់', ru:'все / всё', lat:'teəŋ ah', pron:'[тянг аh]', live:'тянг аh', cat:'adv'},
+  {kh:'ច្រើន', ru:'много / часто', lat:'craən', pron:'[чраэн]', live:'чраэн', cat:'adv'},
+  {kh:'ដែរ', ru:'тоже / также', lat:'daə', pron:'[дэ]', live:'дэ', cat:'adv'},
+  {kh:'ទោះ', ru:'хотя / несмотря на', lat:'touh', pron:'[тоуh]', live:'тоуh', cat:'adv'},
+  {kh:'ចំពោះ', ru:'относительно / по поводу', lat:'cɑmpuəh', pron:'[чампуэh]', live:'чампуэh', cat:'adv'},
+  {kh:'ពិតណាស់', ru:'действительно / точно', lat:'pɨt nah', pron:'[пыт наh]', live:'пыт наh', cat:'adv'},
+
+  // ЧИСЛА И ДЕНЬГИ
+  {kh:'រៀល', ru:'риел (валюта)', lat:'riel', pron:'[рьял]', live:'рьял', cat:'money'},
+  {kh:'ដុល្លារ', ru:'доллар', lat:'dollar', pron:'[доллар]', live:'доллар', cat:'money'},
+  {kh:'ថ្លៃប៉ុន្មាន', ru:'сколько стоит', lat:'thlay ponmaan', pron:'[тхлай понмаан]', live:'тхлай пунмаан', cat:'money'},
+  {kh:'បញ្ចុះ', ru:'скидка', lat:'bɑɲcoh', pron:'[баньчоh]', live:'баньчоh', cat:'money'},
+  {kh:'ថ្លៃ', ru:'дорого', lat:'thlay', pron:'[тхлай]', live:'тхлай', cat:'money'},
+  {kh:'ថោក', ru:'дёшево', lat:'thaok', pron:'[тхаок]', live:'тхаок', cat:'money'},
+  {kh:'ប្រាក់', ru:'деньги / серебро', lat:'prak', pron:'[прак]', live:'прак', cat:'money'},
+  {kh:'ចំណូល', ru:'доход', lat:'cɑmnoəl', pron:'[чамнуэл]', live:'чамнуэл', cat:'money'},
+  {kh:'ចំណាយ', ru:'расход / тратить', lat:'cɑmnaay', pron:'[чамнааи]', live:'чамнааи', cat:'money'},
+  {kh:'ទូទាត់', ru:'оплатить / расплатиться', lat:'tuu tiet', pron:'[туу тьят]', live:'туу тьят', cat:'money'},
+  {kh:'ប្រាក់អាប់', ru:'сдача', lat:'prak ap', pron:'[прак ап]', live:'прак ап', cat:'money'},
+  {kh:'ហាង', ru:'магазин', lat:'haaŋ', pron:'[хаанг]', live:'хаанг', cat:'money'},
+
+  // ЗДОРОВЬЕ
+  {kh:'ឈឺ', ru:'болеть / больно', lat:'cʰɨɨ', pron:'[чхыы]', live:'чхыы', cat:'health'},
+  {kh:'ក្តៅខ្លួន', ru:'температура / жар', lat:'kdav kluən', pron:'[кдав клуэн]', live:'кдав клуэн', cat:'health'},
+  {kh:'ក្អក', ru:'кашлять', lat:'kɑk', pron:'[как]', live:'как', cat:'health'},
+  {kh:'ចង្អោរ', ru:'тошнить', lat:'cɑŋao', pron:'[чангаов]', live:'чангаов', cat:'health'},
+  {kh:'រំញ័រ', ru:'дрожать', lat:'rumɲɔɔ', pron:'[румньоо]', live:'румньоо', cat:'health'},
+  {kh:'ថ្នាំ', ru:'лекарство', lat:'tnam', pron:'[тнам]', live:'тнам', cat:'health'},
+  {kh:'គ្លីនិក', ru:'клиника', lat:'klinik', pron:'[клиник]', live:'клиник', cat:'health'},
+  {kh:'មន្ទីរពេទ្យ', ru:'больница', lat:'mɔntii peet', pron:'[монтии пэт]', live:'монтии пэт', cat:'health'},
+  {kh:'គ្រប់គ្រាន់', ru:'достаточно / хватает', lat:'krɑp kraan', pron:'[крап краан]', live:'крап краан', cat:'health'},
+  {kh:'សំណាក', ru:'отдыхать', lat:'sɑmnaak', pron:'[самнаак]', live:'самнаак', cat:'health'},
+
+  // ПРИРОДА (дополнительные)
+  {kh:'ខ្សាច់', ru:'песок', lat:'ksac', pron:'[ксач]', live:'ксач', cat:'nature'},
+  {kh:'ភ្លៀងធ្លាក់', ru:'идёт дождь', lat:'pliəŋ tleək', pron:'[плиэнг тлэк]', live:'плиэнг тлэк', cat:'nature'},
+  {kh:'ព្រះអាទិត្យរះ', ru:'восход солнца', lat:'preah aatɨt rɔh', pron:'[преа аатыт роh]', live:'преа аатыт роh', cat:'nature'},
+  {kh:'ព្រះអាទិត្យលិច', ru:'закат', lat:'preah aatɨt lɨc', pron:'[преа аатыт лыч]', live:'преа аатыт лыч', cat:'nature'},
+  {kh:'ច្រាំង', ru:'берег / край обрыва', lat:'craŋ', pron:'[чранг]', live:'чранг', cat:'nature'},
+  {kh:'ប្រជុំទឹក', ru:'дельта / слияние рек', lat:'prɑcum tɨk', pron:'[прачум тык]', live:'прачум тык', cat:'nature'},
+  {kh:'ទឹកជំនន់', ru:'наводнение', lat:'tɨk cumnun', pron:'[тык чумнун]', live:'тык чумнун', cat:'nature'},
+  {kh:'រដូវវស្សា', ru:'сезон дождей', lat:'rɑdəv vɑssaa', pron:'[радэв васса]', live:'радэв васса', cat:'nature'},
+  {kh:'រដូវប្រាំង', ru:'сухой сезон', lat:'rɑdəv praŋ', pron:'[радэв прангь]', live:'радэв прангь', cat:'nature'},
+  {kh:'ដំណាំ', ru:'посев / урожай', lat:'dɑmnam', pron:'[дамнам]', live:'дамнам', cat:'nature'},
+
+  // ЕДА (дополнительные)
+  {kh:'ហូបចុក', ru:'еда вообще / питание', lat:'hoop cok', pron:'[хооп чок]', live:'хооп чок', cat:'food'},
+  {kh:'អំពិល', ru:'тамаринд', lat:'ɑmpɨl', pron:'[ампыл]', live:'ампыл', cat:'food'},
+  {kh:'ស្វាយ', ru:'манго', lat:'svaay', pron:'[свааи]', live:'свааи', cat:'food'},
+  {kh:'ចេក', ru:'банан', lat:'ceek', pron:'[чэк]', live:'чэк', cat:'food'},
+  {kh:'ល្ហុង', ru:'папайя', lat:'lhoŋ', pron:'[лхонг]', live:'лхонг', cat:'food'},
+  {kh:'ទទឹម', ru:'ананас', lat:'tɔtɨm', pron:'[тотым]', live:'тотым', cat:'food'},
+  {kh:'ដូង', ru:'кокос', lat:'dooŋ', pron:'[доонг]', live:'доонг', cat:'food'},
+  {kh:'ខ្ទឹម', ru:'чеснок', lat:'khtɨm', pron:'[кхтым]', live:'кхтым', cat:'food'},
+  {kh:'ខ្ញី', ru:'имбирь', lat:'khɲəy', pron:'[кхньэй]', live:'кхньэй', cat:'food'},
+  {kh:'ស្ករត្នោត', ru:'пальмовый сахар', lat:'skaa tnaat', pron:'[скаа тнаат]', live:'скаа тнаат', cat:'food'},
+  {kh:'ក្រូច', ru:'апельсин / цитрус', lat:'krouc', pron:'[кроуч]', live:'кроуч', cat:'food'},
+  {kh:'ទឹកដំណើរ', ru:'соус / подлива', lat:'tɨk dɑmnaə', pron:'[тык дамнэ]', live:'тык дамнэ', cat:'food'},
+  {kh:'ម្ហូបជាតិហឹរ', ru:'острая еда', lat:'mhoup ciet həy', pron:'[мхуп чьят хэй]', live:'мхуп чьят хэй', cat:'food'},
+  {kh:'ក្បាលត្រី', ru:'рыбный суп / голова рыбы', lat:'kbaal trəy', pron:'[кбаал трэй]', live:'кбаал трэй', cat:'food'},
+  {kh:'បបរ', ru:'рисовая каша', lat:'bɑbɑɑ', pron:'[бабаа]', live:'бабаа', cat:'food'},
+
+  // ТРАНСПОРТ (дополнительные)
+  {kh:'ចតរថ', ru:'парковка', lat:'cɑt rɔt', pron:'[чат рот]', live:'чат рот', cat:'transport'},
+  {kh:'ផ្លូវតូច', ru:'переулок / узкая дорога', lat:'plov touc', pron:'[плов точ]', live:'плов точ', cat:'transport'},
+  {kh:'ស្ពាន', ru:'мост', lat:'spien', pron:'[спьян]', live:'спьян', cat:'transport'},
+  {kh:'ច្រក', ru:'перекрёсток / проход', lat:'crɑk', pron:'[чрак]', live:'чрак', cat:'transport'},
+  {kh:'ចម្ងាយ', ru:'расстояние', lat:'cɑmŋaay', pron:'[чамнгааи]', live:'чамнгааи', cat:'transport'},
+  {kh:'ជិះ', ru:'ехать / сесть на транспорт', lat:'cih', pron:'[чиh]', live:'чиh', cat:'transport'},
+  {kh:'ចុះ', ru:'выходить (из транспорта)', lat:'coh', pron:'[чоh]', live:'чоh', cat:'transport'},
+  {kh:'ជំនិះ', ru:'транспортное средство', lat:'cumnɨh', pron:'[чумных]', live:'чумных', cat:'transport'},
+  {kh:'ម៉ាស៊ីន', ru:'мотор / двигатель / машина', lat:'maasɨn', pron:'[маасын]', live:'маасын', cat:'transport'},
+
+  // МЕСТА (дополнительные)
+  {kh:'វាលស្រែ', ru:'рисовые поля (пейзаж)', lat:'viel srae', pron:'[вьял срэй]', live:'вьял срэй', cat:'place'},
+  {kh:'ក្រុង', ru:'провинциальный город', lat:'kruŋ', pron:'[крунг]', live:'крунг', cat:'place'},
+  {kh:'ភូមិ', ru:'деревня', lat:'phumɨ', pron:'[пхумы]', live:'пхумы', cat:'place'},
+  {kh:'ច្រើន', ru:'много (людей/мест)', lat:'craən', pron:'[чраэн]', live:'чраэн', cat:'place'},
+  {kh:'ព្រំដែន', ru:'граница', lat:'prɨm daen', pron:'[прым дэн]', live:'прым дэн', cat:'place'},
+  {kh:'សួន', ru:'парк / сад', lat:'suən', pron:'[суэн]', live:'суэн', cat:'place'},
+  {kh:'ព្រះរាជវាំង', ru:'королевский дворец', lat:'preah riec vieŋ', pron:'[преа рьяч вьянг]', live:'преа рьяч вьянг', cat:'place'},
+  {kh:'អ្នកស្រុក', ru:'местный житель', lat:'neak srɑk', pron:'[ниак срак]', live:'ниак срак', cat:'place'},
+  {kh:'ទីតាំង', ru:'локация / место расположения', lat:'tii taŋ', pron:'[тии танг]', live:'тии танг', cat:'place'},
+
+  // ВРЕМЯ (дополнительные)
+  {kh:'ព្រឹកមិញ', ru:'сегодня утром', lat:'prɨk mɨɲ', pron:'[прык мынь]', live:'прык мынь', cat:'time'},
+  {kh:'យប់មិញ', ru:'вчера вечером', lat:'yup mɨɲ', pron:'[юп мынь]', live:'юп мынь', cat:'time'},
+  {kh:'ថ្ងៃក្រោយ', ru:'послезавтра', lat:'tŋay kraoy', pron:'[тнгай краой]', live:'тнгай краой', cat:'time'},
+  {kh:'ឆ្នាំមុន', ru:'в прошлом году', lat:'chnam mun', pron:'[чнам мун]', live:'чнам мун', cat:'time'},
+  {kh:'ឆ្នាំក្រោយ', ru:'в следующем году', lat:'chnam kraoy', pron:'[чнам краой]', live:'чнам краой', cat:'time'},
+  {kh:'ម្នាក់ម្នាក់', ru:'каждый', lat:'mneak mneak', pron:'[мниак мниак]', live:'мниак мниак', cat:'time'},
+  {kh:'រៀងរាល់ថ្ងៃ', ru:'каждый день', lat:'rieŋ riel tŋay', pron:'[рьянг рьял тнгай]', live:'рьянг рьял тнгай', cat:'time'},
+  {kh:'ចំណុចម៉ោង', ru:'часовая точка / момент', lat:'cɑmnouc maaŋ', pron:'[чамнуч маанг]', live:'чамнуч маанг', cat:'time'},
+  {kh:'ភ្លាមៗ', ru:'немедленно / сразу', lat:'phliəm phliəm', pron:'[пхлиэм пхлиэм]', live:'пхлям пхлям', cat:'time'},
+];
+
+const tagLabels = {
+  pronoun:  {label:'мест.',     cls:'tag-pronoun'},
+  question: {label:'вопрос.',   cls:'tag-question'},
+  noun:     {label:'сущ.',      cls:'tag-noun'},
+  verb:     {label:'глаг.',     cls:'tag-verb'},
+  adj:      {label:'прил.',     cls:'tag-adj'},
+  adv:      {label:'нареч.',    cls:'tag-adv'},
+  people:   {label:'люди',      cls:'tag-people'},
+  home:     {label:'дом/быт',   cls:'tag-home'},
+  body:     {label:'тело',      cls:'tag-body'},
+  health:   {label:'здоровье',  cls:'tag-health'},
+  food:     {label:'еда',       cls:'tag-food'},
+  meat:     {label:'мясо/рыба', cls:'tag-meat'},
+  animal:   {label:'животное',  cls:'tag-animal'},
+  place:    {label:'место',     cls:'tag-place'},
+  time:     {label:'время',     cls:'tag-time'},
+  nature:   {label:'природа',   cls:'tag-nature'},
+  transport:{label:'транспорт', cls:'tag-transport'},
+  color:    {label:'цвет',      cls:'tag-color'},
+  money:    {label:'деньги',    cls:'tag-money'},
+};
+
+function renderVocabCards(data) {
+  const grid = document.getElementById('vocabGrid');
+  const empty = document.getElementById('vocabEmpty');
+  const count = document.getElementById('searchCount');
+  if (!data.length) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    if (count) count.textContent = '';
+    return;
+  }
+  empty.style.display = 'none';
+  if (count) count.textContent = data.length + ' сл.';
+  grid.innerHTML = data.map(w => {
+    const t = tagLabels[w.cat];
+    const liveHtml = w.live && w.live !== w.pron.replace(/[\[\]]/g,'').trim()
+      ? `<span class="vc-live">🗣 ${w.live}</span>` : '';
+    return `<div class="vocab-card">
+      <span class="vc-kh">${w.kh}</span>
+      <span class="vc-ru">${w.ru}</span>
+      <span class="vc-lat">${w.lat}</span>
+      <span class="vc-rus-pron">${w.pron}</span>
+      ${liveHtml}
+      <span class="vc-tag ${t.cls}">${t.label}</span>
+    </div>`;
+  }).join('');
+}
+
+let currentCat = 'all';
+
+function renderVocab(cat) {
+  currentCat = cat;
+  const filtered = cat === 'all' ? vocabData : vocabData.filter(w => w.cat === cat);
+  // clear search
+  const searchEl = document.getElementById('vocabSearch');
+  if (searchEl) searchEl.value = '';
+  renderVocabCards(filtered);
+}
+
+function filterVocab(cat, btn) {
+  document.querySelectorAll('.vocab-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderVocab(cat);
+}
+
+function searchVocab(query) {
+  const q = query.trim().toLowerCase();
+  // reset filter buttons when searching
+  if (q) {
+    document.querySelectorAll('.vocab-filter').forEach(b => b.classList.remove('active'));
+  } else {
+    // restore active filter
+    document.querySelectorAll('.vocab-filter').forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${currentCat}'`)) {
+        b.classList.add('active');
+      }
+    });
+  }
+  const pool = currentCat === 'all' || q ? vocabData : vocabData.filter(w => w.cat === currentCat);
+  const results = q
+    ? vocabData.filter(w =>
+        w.ru.toLowerCase().includes(q) ||
+        w.kh.includes(query) ||
+        w.lat.toLowerCase().includes(q) ||
+        w.pron.toLowerCase().includes(q) ||
+        (w.live && w.live.toLowerCase().includes(q))
+      )
+    : (currentCat === 'all' ? vocabData : vocabData.filter(w => w.cat === currentCat));
+  renderVocabCards(results);
+}
+
+// ===== КОНСТРУКТОР ФРАЗ =====
+
+const builderSlots = [
+  { id:'subject',    label:'Подлежащее',        icon:'👤', required:true,  defaultIdx:0,
+    options:[
+      {kh:'ខ្ញុំ',  lat:'kñom',      ru:'я',              pron:'[кньом]'},
+      {kh:'អ្នក',  lat:'neak',      ru:'ты / вы',        pron:'[ниак]'},
+      {kh:'គាត់',  lat:'koat',      ru:'он / она',       pron:'[коат]'},
+      {kh:'យើង',  lat:'yɨng',      ru:'мы',             pron:'[йынг]'},
+      {kh:'គេ',   lat:'kee',       ru:'они',            pron:'[кэ]'},
+    ]
+  },
+  { id:'tense_pre',  label:'Время (маркер)',     icon:'⏰', required:false, defaultIdx:0,
+    options:[
+      {kh:'—',     lat:'',          ru:'— (простое)',         pron:''},
+      {kh:'នឹង',   lat:'nɨng',      ru:'будет (будущее)',      pron:'[нынг]'},
+      {kh:'កំពុង', lat:'kɑmpung',   ru:'сейчас (длит.)',      pron:'[кампунг]'},
+    ]
+  },
+  { id:'neg',        label:'Отрицание',          icon:'🚫', required:false, defaultIdx:0,
+    options:[
+      {kh:'—',    lat:'',     ru:'— (без отрицания)',   pron:''},
+      {kh:'មិន',  lat:'mɨn',  ru:'не',                 pron:'[мин]'},
+      {kh:'កុំ',  lat:'kom',  ru:'не! (запрет)',        pron:'[ком]'},
+    ]
+  },
+  { id:'modal',      label:'Модальность',        icon:'💭', required:false, defaultIdx:0,
+    options:[
+      {kh:'—',         lat:'',           ru:'— (без)',               pron:''},
+      {kh:'ចង់',       lat:'cɑŋ',        ru:'хочу',                 pron:'[чанг]'},
+      {kh:'ត្រូវ',      lat:'trəv',       ru:'должен',               pron:'[трэв]'},
+      {kh:'ត្រូវការ',   lat:'trəv kaa',   ru:'нужно',                pron:'[трэвкаа]'},
+      {kh:'អាច',       lat:'aac',        ru:'могу / можно',          pron:'[аач]'},
+      {kh:'សាកល្បង',   lat:'saak lbɑŋ',  ru:'попробовать',           pron:'[саак лбанг]'},
+    ]
+  },
+  { id:'verb',       label:'Глагол',             icon:'🏃', required:true,  defaultIdx:0,
+    options:[
+      {kh:'ទៅ',       lat:'tɨv',      ru:'идти / ехать',     pron:'[тэв]'},
+      {kh:'មក',       lat:'mɔɔk',     ru:'прийти',           pron:'[мок]'},
+      {kh:'ញ៉ាំ',      lat:'ɲam',      ru:'есть / кушать',    pron:'[ньам]'},
+      {kh:'ផឹក',      lat:'pʰɨk',     ru:'пить',             pron:'[пхэк]'},
+      {kh:'ទិញ',      lat:'tiɲ',      ru:'покупать',         pron:'[тинь]'},
+      {kh:'លក់',      lat:'loak',     ru:'продавать',        pron:'[лоак]'},
+      {kh:'មើល',      lat:'məəl',     ru:'смотреть',         pron:'[мэл]'},
+      {kh:'ស្ដាប់',    lat:'sdap',     ru:'слушать',          pron:'[сдап]'},
+      {kh:'និយាយ',    lat:'niyiey',   ru:'говорить',         pron:'[нийей]'},
+      {kh:'ចាប់ត្រី',  lat:'cap trəy', ru:'ловить рыбу',      pron:'[чап трэй]'},
+      {kh:'នេសាទ',    lat:'niəsaat',  ru:'рыбачить',         pron:'[ниасаат]'},
+      {kh:'ជួប',      lat:'cuəp',     ru:'встретиться',      pron:'[чуп]'},
+      {kh:'ជួយ',      lat:'cuəy',     ru:'помочь',           pron:'[чуй]'},
+      {kh:'ធ្វើ',      lat:'tvəə',     ru:'делать',           pron:'[твэ]'},
+      {kh:'រក',       lat:'rɔɔk',     ru:'искать',           pron:'[роок]'},
+      {kh:'យក',       lat:'yɔɔk',     ru:'взять',            pron:'[йоок]'},
+      {kh:'ដឹង',      lat:'dəŋ',      ru:'знать (факт)',      pron:'[дынг]'},
+      {kh:'យល់',      lat:'yul',      ru:'понимать',         pron:'[юл]'},
+      {kh:'មាន',      lat:'mien',     ru:'иметь / есть',     pron:'[миан]'},
+      {kh:'ស្រឡាញ់',  lat:'srɑlaɲ',  ru:'любить',           pron:'[сралань]'},
+      {kh:'ហៅថា',     lat:'hav thaa', ru:'называться',       pron:'[хав тхаа]'},
+      {kh:'ចាំ',       lat:'cam',      ru:'ждать',            pron:'[чам]'},
+      {kh:'ចូលចិត្ត', lat:'coul cɨt', ru:'нравится',         pron:'[чоул чыт]'},
+    ]
+  },
+  { id:'object',     label:'Дополнение',         icon:'🎯', required:false, defaultIdx:0,
+    options:[
+      {kh:'—',          lat:'',            ru:'— (без)',            pron:''},
+      {kh:'ទឹក',        lat:'tɨk',         ru:'воду',              pron:'[тык]'},
+      {kh:'បាយ',        lat:'baay',        ru:'рис',               pron:'[бай]'},
+      {kh:'ត្រី',        lat:'trəy',        ru:'рыбу',              pron:'[трэй]'},
+      {kh:'សាច់មាន់',   lat:'sac moan',    ru:'курицу',            pron:'[сач моан]'},
+      {kh:'ទូក',        lat:'tuuk',        ru:'лодку',             pron:'[туук]'},
+      {kh:'លុយ',        lat:'luy',         ru:'деньги',            pron:'[луй]'},
+      {kh:'ទូរស័ព្ទ',   lat:'tuurasap',    ru:'телефон',           pron:'[туурасап]'},
+      {kh:'នេះ',        lat:'nih',         ru:'это',               pron:'[ниh]'},
+      {kh:'គ្នា',        lat:'knie',        ru:'друг с другом',     pron:'[книа]'},
+      {kh:'ខ្ញុំ',       lat:'kñom',        ru:'меня / мне',        pron:'[кньом]'},
+      {kh:'អ្នក',       lat:'neak',        ru:'тебя / вам',        pron:'[ниак]'},
+    ]
+  },
+  { id:'place',      label:'Место / Направление',icon:'📍', required:false, defaultIdx:0,
+    options:[
+      {kh:'—',             lat:'',                ru:'— (без)',        pron:''},
+      {kh:'នៅ ទីនេះ',      lat:'nɨv tii nih',     ru:'здесь',         pron:'[нив тии ниh]'},
+      {kh:'នៅ ទីនោះ',      lat:'nɨv tii nuh',     ru:'там',           pron:'[нив тии нуh]'},
+      {kh:'នៅ ផ្សារ',      lat:'nɨv psaa',        ru:'на рынке',      pron:'[нив псаа]'},
+      {kh:'នៅ ផ្ទះ',       lat:'nɨv pteah',       ru:'дома',          pron:'[нив птэа]'},
+      {kh:'នៅ ទន្លេ',      lat:'nɨv tonlee',      ru:'на реке',       pron:'[нив тонлэ]'},
+      {kh:'នៅ សមុទ្រ',     lat:'nɨv samut',       ru:'у моря',        pron:'[нив самут]'},
+      {kh:'ជាមួយ អ្នក',   lat:'cie muəy neak',   ru:'с тобой',       pron:'[чья муй ниак]'},
+      {kh:'ជាមួយ គ្នា',   lat:'cie muəy knie',   ru:'вместе',        pron:'[чья муй книа]'},
+    ]
+  },
+  { id:'tense_post', label:'Завершённость',       icon:'✅', required:false, defaultIdx:0,
+    options:[
+      {kh:'—',    lat:'',      ru:'— (без)',           pron:''},
+      {kh:'ហើយ', lat:'haəy',  ru:'уже / готово',      pron:'[хэй]'},
+      {kh:'នៅ',  lat:'nɨv',   ru:'всё ещё / пока',    pron:'[нив]'},
+    ]
+  },
+  { id:'question',   label:'Тип фразы',           icon:'❓', required:true,  defaultIdx:0,
+    options:[
+      {kh:'',     lat:'',      ru:'Утверждение  .',       pron:''},
+      {kh:'ទេ?',  lat:'tee?',  ru:'Вопрос да/нет  ?',    pron:'[тэ?]'},
+    ]
+  },
+];
+
+function renderSchema() {
+  const el = document.getElementById('schemaRow');
+  if (!el) return;
+  const items = [
+    {label:'Подлежащее', kh:'ខ្ញុំ...', req:true},
+    {label:'Время', kh:'នឹង/កំពុង', req:false},
+    {label:'Отрицание', kh:'មិន/កុំ', req:false},
+    {label:'Модальность', kh:'ចង់/អាច...', req:false},
+    {label:'Глагол', kh:'ទៅ/ញ៉ាំ...', req:true},
+    {label:'Доп.', kh:'ទឹក/ត្រី...', req:false},
+    {label:'Место', kh:'នៅ.../ជាមួយ...', req:false},
+    {label:'Завершённость', kh:'ហើយ/នៅ', req:false},
+    {label:'Вопрос', kh:'ទេ?', req:false},
+  ];
+  el.innerHTML = items.map((s,i) =>
+    `${i > 0 ? '<span style="color:var(--gold);opacity:0.5;font-size:16px">→</span>' : ''}
+    <span style="text-align:center">
+      <span style="display:block;font-size:15px;color:${s.req ? 'white' : '#999'}">${s.kh}</span>
+      <span style="display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:${s.req ? 'var(--gold)' : '#555'};margin-top:2px">${s.label}${s.req ? ' ✱' : ''}</span>
+    </span>`
+  ).join('');
+}
+
+const builderTemplates = [
+  {label:'Я хочу поесть',        vals:{subject:'ខ្ញុំ', tense_pre:'—',neg:'—',modal:'ចង់',    verb:'ញ៉ាំ',      object:'—',   place:'—',         tense_post:'—', question:''}},
+  {label:'Ты рыбак?',            vals:{subject:'អ្នក',tense_pre:'—',neg:'—',modal:'—',      verb:'នេសាទ',    object:'—',   place:'—',         tense_post:'—', question:'ទេ?'}},
+  {label:'Есть лодка?',          vals:{subject:'អ្នក',tense_pre:'—',neg:'—',modal:'—',      verb:'មាន',      object:'ទូក', place:'—',         tense_post:'—', question:'ទេ?'}},
+  {label:'Встретимся здесь?',    vals:{subject:'ខ្ញុំ', tense_pre:'—',neg:'—',modal:'—',    verb:'ជួប',      object:'គ្នា',place:'នៅ ទីនេះ',  tense_post:'—', question:'ទេ?'}},
+  {label:'Я не понимаю',         vals:{subject:'ខ្ញុំ', tense_pre:'—',neg:'មិន',modal:'—',  verb:'យល់',      object:'—',   place:'—',         tense_post:'—', question:'ទេ?'}},
+  {label:'Хочу рыбачить вместе', vals:{subject:'ខ្ញុំ', tense_pre:'—',neg:'—',modal:'ចង់',  verb:'នេសាទ',    object:'—',   place:'ជាមួយ គ្នា',tense_post:'—', question:''}},
+  {label:'Он уже поел',          vals:{subject:'គាត់',tense_pre:'—',neg:'—',modal:'—',      verb:'ញ៉ាំ',      object:'បាយ',place:'—',         tense_post:'ហើយ',question:''}},
+  {label:'Я люблю тебя',         vals:{subject:'ខ្ញុំ', tense_pre:'—',neg:'—',modal:'—',    verb:'ស្រឡាញ់', object:'អ្នក',place:'—',         tense_post:'—', question:''}},
+];
+
+const bState = {};
+let bDropActive = null;
+let bInited = false;
+
+function initBuilder() {
+  if (bInited) return;
+  const tb = document.getElementById('templateBtns');
+  const bb = document.getElementById('builderBlocks');
+  if (!tb || !bb) return;
+  bInited = true;
+
+  renderSchema();
+
+  tb.innerHTML = builderTemplates.map((t,i) =>
+    `<button onclick="bApplyTemplate(${i})"
+      style="padding:7px 16px;border-radius:20px;border:1px solid var(--gold);background:transparent;
+             font-size:13px;font-family:'Source Sans 3',sans-serif;cursor:pointer;color:var(--ink)"
+      onmouseover="this.style.background='var(--papyrus)'"
+      onmouseout="this.style.background='transparent'">${t.label}</button>`
+  ).join('');
+
+  builderSlots.forEach(s => { bState[s.id] = s.options[s.defaultIdx].kh; });
+
+  bb.innerHTML = builderSlots.map(slot => {
+    const def = slot.options[slot.defaultIdx];
+    return `<div style="margin-bottom:12px" id="bWrap_${slot.id}">
+      <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--sage);margin-bottom:5px">
+        ${slot.icon} ${slot.label}${slot.required ? ' <span style="color:var(--rust)">✱</span>' : ''}
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div style="position:relative;flex:1">
+          <input id="bInp_${slot.id}" type="text" autocomplete="off"
+            placeholder="Поиск — введи по-русски, кхмерски или транскрипцией..."
+            value="${def.ru}"
+            oninput="bOnInput('${slot.id}', this.value)"
+            onfocus="bOpenDrop('${slot.id}')"
+            style="width:100%;padding:10px 50px 10px 14px;border:2px solid #e0d4be;border-radius:8px;
+                   font-size:15px;font-family:'Source Sans 3',sans-serif;color:var(--ink);
+                   background:white;box-sizing:border-box;outline:none;transition:border-color 0.2s">
+          <span id="bKh_${slot.id}"
+            style="position:absolute;right:10px;top:50%;transform:translateY(-50%);
+                   font-size:20px;color:var(--rust);pointer-events:none;line-height:1">
+            ${def.kh && def.kh !== '—' ? def.kh : ''}
+          </span>
+          <div id="bDrop_${slot.id}"
+            style="display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:300;
+                   background:white;border:2px solid var(--gold);border-radius:8px;
+                   box-shadow:0 8px 24px rgba(0,0,0,0.14);max-height:200px;overflow-y:auto">
+          </div>
+        </div>
+        <button onclick="bClearSlot('${slot.id}')" title="Сбросить поле"
+          style="flex-shrink:0;width:36px;height:42px;border:1px solid #ddd;border-radius:8px;
+                 background:white;cursor:pointer;font-size:18px;color:#bbb;line-height:1;transition:all 0.2s"
+          onmouseover="this.style.borderColor='var(--rust)';this.style.color='var(--rust)'"
+          onmouseout="this.style.borderColor='#ddd';this.style.color='#bbb'">×</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.addEventListener('click', e => {
+    if (bDropActive && !e.target.closest('#bWrap_' + bDropActive)) bCloseDrop(bDropActive);
+  });
+
+  bBuild();
+}
+
+function bOpenDrop(slotId) {
+  if (bDropActive && bDropActive !== slotId) bCloseDrop(bDropActive);
+  bDropActive = slotId;
+  const inp = document.getElementById('bInp_' + slotId);
+  if (inp) inp.style.borderColor = 'var(--gold)';
+  bFilterDrop(slotId, '');
+  const drop = document.getElementById('bDrop_' + slotId);
+  if (drop) drop.style.display = 'block';
+}
+
+function bCloseDrop(slotId) {
+  const drop = document.getElementById('bDrop_' + slotId);
+  const inp  = document.getElementById('bInp_'  + slotId);
+  if (drop) drop.style.display = 'none';
+  if (inp)  inp.style.borderColor = bState[slotId] && bState[slotId] !== '—' ? 'var(--gold)' : '#e0d4be';
+  if (bDropActive === slotId) bDropActive = null;
+}
+
+function bOnInput(slotId, val) {
+  bFilterDrop(slotId, val);
+  const drop = document.getElementById('bDrop_' + slotId);
+  if (drop) drop.style.display = 'block';
+  bDropActive = slotId;
+}
+
+function bFilterDrop(slotId, query) {
+  const slot = builderSlots.find(s => s.id === slotId);
+  const q    = query.trim().toLowerCase();
+  const list = q
+    ? slot.options.filter(o =>
+        o.ru.toLowerCase().includes(q) ||
+        o.kh.includes(query) ||
+        o.pron.toLowerCase().includes(q)
+      )
+    : slot.options;
+  const drop = document.getElementById('bDrop_' + slotId);
+  if (!drop) return;
+  drop.innerHTML = list.length
+    ? list.map(o => {
+        const khSafe = o.kh.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        const ruSafe = o.ru.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        const latSafe = o.lat.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        const pronSafe = o.pron.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        return `<div onclick="bSelect('${slotId}','${khSafe}','${ruSafe}','${latSafe}','${pronSafe}')"
+          style="padding:10px 14px;cursor:pointer;display:flex;justify-content:space-between;
+                 align-items:center;gap:12px;border-bottom:1px solid #f5ede0"
+          onmouseover="this.style.background='var(--papyrus)'"
+          onmouseout="this.style.background='white'">
+          <div>
+            <span style="font-size:14px;color:var(--ink)">${o.ru}</span>
+            ${o.pron ? `<span style="font-size:12px;color:var(--rust);margin-left:6px">${o.pron}</span>` : ''}
+          </div>
+          <span style="font-size:22px;color:var(--dark);flex-shrink:0">${!o.kh || o.kh === '—' ? '—' : o.kh}</span>
+        </div>`;
+      }).join('')
+    : '<div style="padding:10px 14px;color:#aaa;font-size:13px;font-style:italic">Ничего не найдено</div>';
+}
+
+function bSelect(slotId, kh, ru, lat, pron) {
+  bState[slotId] = kh;
+  const inp  = document.getElementById('bInp_' + slotId);
+  const khEl = document.getElementById('bKh_'  + slotId);
+  if (inp)  { inp.value = ru; inp.style.borderColor = kh && kh !== '—' ? 'var(--gold)' : '#e0d4be'; }
+  if (khEl) khEl.textContent = kh && kh !== '—' ? kh : '';
+  bCloseDrop(slotId);
+  bBuild();
+}
+
+function bClearSlot(slotId) {
+  const slot = builderSlots.find(s => s.id === slotId);
+  const def  = slot.options[slot.defaultIdx];
+  bSelect(slotId, def.kh, def.ru, def.lat, def.pron);
+}
+
+function bApplyTemplate(idx) {
+  const t = builderTemplates[idx];
+  Object.keys(t.vals).forEach(slotId => {
+    const kh   = t.vals[slotId];
+    const slot = builderSlots.find(s => s.id === slotId);
+    if (!slot) return;
+    const opt  = slot.options.find(o => o.kh === kh) || slot.options[0];
+    bSelect(slotId, opt.kh, opt.ru, opt.lat, opt.pron);
+  });
+}
+
+function bBuild() {
+  const parts = [];
+  builderSlots.forEach(slot => {
+    const kh  = bState[slot.id] !== undefined ? bState[slot.id] : slot.options[0].kh;
+    const opt = slot.options.find(o => o.kh === kh) || slot.options[0];
+    if (opt.kh && opt.kh !== '—') parts.push({slotId: slot.id, label: slot.label, ...opt});
+  });
+
+  // tense_post после verb
+  const tpi = parts.findIndex(p => p.slotId === 'tense_post');
+  const vi  = parts.findIndex(p => p.slotId === 'verb');
+  if (tpi !== -1 && vi !== -1 && tpi < vi) {
+    const [tp] = parts.splice(tpi, 1);
+    parts.splice(vi + 1, 0, tp);
+  }
+
+  // question всегда в конце
+  const qi = parts.findIndex(p => p.slotId === 'question');
+  if (qi !== -1 && qi !== parts.length - 1) {
+    const [qp] = parts.splice(qi, 1);
+    parts.push(qp);
+  }
+
+  const kh  = parts.map(p => p.kh).join(' ').trim();
+  const lat = parts.map(p => p.lat).filter(Boolean).join(' ').trim();
+  const lit = parts.map(p => p.ru.replace(/\s*[\.\?]$/,'')).join(' · ');
+  const ru  = bRussian(parts);
+
+  document.getElementById('resKhmer').textContent   = kh  || '—';
+  document.getElementById('resLat').textContent     = lat || '';
+  document.getElementById('resRu').textContent      = ru  || '';
+  document.getElementById('resLiteral').textContent = lit ? '«' + lit + '»' : '';
+
+  const chips = document.getElementById('resChips');
+  if (!parts.length) {
+    chips.innerHTML = '<span style="color:#ccc;font-style:italic;font-size:13px">выбери слова слева</span>';
+    return;
+  }
+  chips.innerHTML = parts.map((c,i) =>
+    `${i > 0 ? '<span style="color:var(--gold);font-size:14px;align-self:center">·</span>' : ''}
+    <span style="background:white;border:1px solid #d8ccb4;border-radius:7px;padding:6px 9px;
+                 text-align:center;display:inline-flex;flex-direction:column;gap:1px;min-width:40px">
+      <span style="font-size:19px;color:var(--dark);line-height:1.2">${c.kh}</span>
+      <span style="font-size:10px;color:#aaa;font-style:italic">${c.lat}</span>
+      <span style="font-size:11px;color:var(--rust);font-weight:600">${c.ru.replace(/\s*[\.\?]$/,'').replace(/^—\s*/,'').trim()}</span>
+    </span>`
+  ).join('');
+}
+
+function bRussian(parts) {
+  const m = {};
+  parts.forEach(p => m[p.slotId] = p.ru.replace(/\s*[\.\?]$/,'').trim());
+  const subj  = m.subject                         || '';
+  const tpre  = m.tense_pre && m.tense_pre !== '—' ? m.tense_pre + ' '  : '';
+  const neg   = m.neg && m.neg.startsWith('не')    ? 'не '              : '';
+  const modal = m.modal && m.modal !== '—'         ? m.modal + ' '      : '';
+  const verb  = m.verb                            || '';
+  const obj   = m.object && m.object !== '—'      ? ' ' + m.object     : '';
+  const place = m.place  && m.place  !== '—'      ? ' ' + m.place      : '';
+  const tpost = m.tense_post && m.tense_post !== '—' ? ' (' + m.tense_post + ')' : '';
+  const q     = m.question && m.question !== ''   ? '?'                : '.';
+  const core  = (tpre + neg + modal + verb + obj + place + tpost).trim();
+  return [subj, core].filter(Boolean).join(' ') + q;
+}
+
+function resetBuilder() {
+  builderSlots.forEach(slot => {
+    const def = slot.options[slot.defaultIdx];
+    bState[slot.id] = def.kh;
+    const inp  = document.getElementById('bInp_' + slot.id);
+    const khEl = document.getElementById('bKh_'  + slot.id);
+    if (inp)  { inp.value = def.ru; inp.style.borderColor = '#e0d4be'; }
+    if (khEl) khEl.textContent = def.kh && def.kh !== '—' ? def.kh : '';
+  });
+  bBuild();
+}
+
+// ===== НАВИГАЦИЯ =====
+function showSection(id, link) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (link) link.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  if (id === 'builder') initBuilder();
+  return false;
+}
+
+// ===== INIT =====
+renderAlphabet();
+renderVowels();
+renderNumbers();
+renderPhrases('all');
+renderVocab('all');
+</script>
+</body>
+</html>
