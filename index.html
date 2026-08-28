@@ -149,13 +149,27 @@ nav {
 /* ── CATEGORY FILTER ── */
 .category-bar {
   display: flex;
+  align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  overflow-x: auto;
   flex-shrink: 0;
-  scrollbar-width: none;
+  max-width: 100%;
 }
-.category-bar::-webkit-scrollbar { display: none; }
+
+.cat-pinned {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.cat-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  min-width: 0;
+}
+.cat-scroll::-webkit-scrollbar { display: none; }
 
 .cat-chip {
   flex-shrink: 0;
@@ -170,10 +184,28 @@ nav {
   transition: all 0.18s;
   white-space: nowrap;
 }
+.cat-scroll .cat-chip:not(.active) { opacity: 0.72; }
+
 .cat-chip.active {
   border-color: var(--gold);
   color: var(--gold);
   background: rgba(232,169,77,0.1);
+}
+
+.cat-chip.icon-chip {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  border-color: var(--bg3);
+}
+.cat-chip.icon-chip.active {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--bg);
 }
 
 /* ── SCREEN AREA ── */
@@ -199,12 +231,38 @@ nav {
 /* Card — checkbox flip */
 #card-flip { display: none; }
 
+.card-wrap {
+  position: relative;
+  width: 100%;
+}
+
 .card-label {
   min-width: 300px;
   display: block;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
+
+.fav-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.15);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--cream-dim);
+  transition: transform 0.15s;
+}
+.fav-btn.active { color: var(--gold); }
+.fav-btn:active { transform: scale(0.85); }
 
 .card-face-front,
 .card-face-back {
@@ -280,6 +338,102 @@ nav {
   gap: 4px;
   opacity: 0.7;
 }
+
+/* ── FAVORITES SCREEN (standalone) ── */
+#favorites-screen {
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.fav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.fav-back-btn {
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: 10px;
+  padding: 7px 14px;
+  color: var(--cream);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.fav-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cream-dim);
+}
+
+.fav-empty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--cream-dim);
+  font-size: 13px;
+  padding: 0 32px;
+  line-height: 1.5;
+}
+
+.fav-nav-arrow {
+  flex-shrink: 0;
+  align-self: center;
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.8;
+}
+.fav-nav-arrow:active { opacity: 0.4; }
+
+.fav-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.fav-list::-webkit-scrollbar { display: none; }
+.fav-list { scrollbar-width: none; }
+
+.fav-card-item {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  height: calc(50% - 6px);
+  min-height: 150px;
+  position: relative;
+}
+.fav-card-item .card-wrap { height: 100%; }
+.fav-card-item .card-face-front,
+.fav-card-item .card-face-back {
+  min-height: 0;
+  height: 100%;
+  padding: 16px 20px;
+  gap: 4px;
+  box-sizing: border-box;
+}
+.fav-card-item .card-khmer { font-size: 30px; }
+.fav-card-item .card-russian { font-size: 18px; }
+.fav-card-item .card-transcription { font-size: 12px; }
+.fav-card-item .card-tap-hint { display: none; }
+
+/* class-based flip so several cards can flip independently on one screen */
+.fav-card-flip { display: none; }
+.fav-card-flip:checked ~ .card-wrap .card-face-front { display: none; }
+.fav-card-flip:checked ~ .card-wrap .card-face-back   { display: flex; }
 
 /* Rating buttons */
 .rating-btns {
@@ -783,6 +937,9 @@ nav {
 
     <!-- STATS (hidden) -->
     <div id="stats-screen" style="display:none"></div>
+
+    <!-- FAVORITES (hidden, standalone view) -->
+    <div id="favorites-screen" style="display:none"></div>
   </div>
 
   <div class="bottom-safe"></div>
@@ -1297,6 +1454,7 @@ const CATS = ['Все', ...new Set(DICT.map(w => w.cat))];
 let state = {
   tab: 'cards',
   cat: 'Все',
+  favoritesOpen: false,
   direction: 'kh2ru', // kh2ru | ru2kh
   cards: {
     flipped: false,
@@ -1318,13 +1476,15 @@ let state = {
 // SRS data in localStorage
 let srs = {}; // id -> { interval, ef, due, reviews }
 let streakData = {}; // { lastDate, streak, history: [{date,count}] }
+let favorites = {}; // id -> true
 
 function loadStorage() {
   try {
     srs = JSON.parse(localStorage.getItem('khmer_srs') || '{}');
     streakData = JSON.parse(localStorage.getItem('khmer_streak') || '{"lastDate":null,"streak":0,"history":[]}');
+    favorites = JSON.parse(localStorage.getItem('khmer_favorites') || '{}');
   } catch(e) {
-    srs = {}; streakData = {lastDate:null,streak:0,history:[]};
+    srs = {}; streakData = {lastDate:null,streak:0,history:[]}; favorites = {};
   }
 }
 
@@ -1334,6 +1494,20 @@ function saveSRS() {
 
 function saveStreak() {
   try { localStorage.setItem('khmer_streak', JSON.stringify(streakData)); } catch(e) {}
+}
+
+function saveFavorites() {
+  try { localStorage.setItem('khmer_favorites', JSON.stringify(favorites)); } catch(e) {}
+}
+
+function isFavorite(id) {
+  return !!favorites[id];
+}
+
+function toggleFavorite(id) {
+  if (favorites[id]) delete favorites[id];
+  else favorites[id] = true;
+  saveFavorites();
 }
 
 // ════════════════════════════════════════
@@ -1436,10 +1610,28 @@ function renderHeader() {
 // ════════════════════════════════════════
 function renderCategoryBar() {
   const bar = document.getElementById('category-bar');
-  bar.innerHTML = CATS.map(c =>
-    `<button class="cat-chip${state.cat===c?' active':''}" data-cat="${c}">${c}</button>`
-  ).join('');
-  bar.querySelectorAll('.cat-chip').forEach(btn => {
+  const isFoodActive = state.cat === 'Еда';
+
+  bar.innerHTML = `
+    <div class="cat-pinned">
+      <button class="cat-chip icon-chip" id="fav-filter-chip" aria-label="Избранное">★</button>
+      <button class="cat-chip icon-chip${isFoodActive ? ' active' : ''}" id="food-filter-chip" aria-label="Еда">🍜</button>
+    </div>
+    <div class="cat-scroll" id="cat-scroll">
+      ${CATS.map(c => `<button class="cat-chip${state.cat===c?' active':''}" data-cat="${c}">${c}</button>`).join('')}
+    </div>
+  `;
+
+  document.getElementById('fav-filter-chip').addEventListener('click', openFavoritesView);
+
+  document.getElementById('food-filter-chip').addEventListener('click', () => {
+    state.cat = 'Еда';
+    renderCategoryBar();
+    if (state.tab === 'cards') initCards();
+    else if (state.tab === 'quiz') initQuiz();
+  });
+
+  document.getElementById('cat-scroll').querySelectorAll('.cat-chip[data-cat]').forEach(btn => {
     btn.addEventListener('click', () => {
       state.cat = btn.dataset.cat;
       renderCategoryBar();
@@ -1450,8 +1642,101 @@ function renderCategoryBar() {
 }
 
 // ════════════════════════════════════════
-// CARDS
+// FAVORITES SCREEN (standalone)
 // ════════════════════════════════════════
+function openFavoritesView() {
+  state.favoritesOpen = true;
+  document.getElementById('cards-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('stats-screen').style.display = 'none';
+  document.querySelector('nav').style.display = 'none';
+  document.getElementById('category-bar').style.display = 'none';
+  document.getElementById('favorites-screen').style.display = 'flex';
+  renderFavoritesScreen();
+}
+
+function closeFavoritesView() {
+  state.favoritesOpen = false;
+  document.getElementById('favorites-screen').style.display = 'none';
+  document.querySelector('nav').style.display = 'flex';
+  document.getElementById('category-bar').style.display = 'flex';
+  document.getElementById(state.tab + '-screen').style.display = state.tab === 'stats' ? 'block' : 'flex';
+  if (state.tab === 'cards') initCards();
+  else if (state.tab === 'quiz') initQuiz();
+  else renderStats();
+}
+
+function renderFavoritesScreen() {
+  const screen = document.getElementById('favorites-screen');
+  const favWords = Object.keys(favorites).map(id => DICT.find(w => w.id === Number(id))).filter(Boolean);
+
+  const header = `
+    <div class="fav-header">
+      <button class="fav-back-btn" id="fav-back-btn">← Назад</button>
+      <div class="fav-title">★ Избранное (${favWords.length})</div>
+    </div>
+  `;
+
+  if (favWords.length === 0) {
+    screen.innerHTML = header + `
+      <div class="fav-empty">Пока нет избранных слов.<br>Нажмите ☆ на карточке, чтобы добавить сюда.</div>
+    `;
+    document.getElementById('fav-back-btn').addEventListener('click', closeFavoritesView);
+    return;
+  }
+
+  const showArrows = favWords.length > 2;
+
+  screen.innerHTML = header +
+    (showArrows ? `<button class="fav-nav-arrow" id="fav-up">▲ прокрутить вверх</button>` : '') +
+    `<div class="fav-list" id="fav-list">
+      ${favWords.map(word => `
+        <div class="fav-card-item">
+          <input type="checkbox" class="fav-card-flip" id="fav-flip-${word.id}">
+          <div class="card-wrap">
+            <button class="fav-btn active" data-id="${word.id}" aria-label="Убрать из избранного">★</button>
+            <label class="card-label" for="fav-flip-${word.id}">
+              <div class="card-face-front">
+                <div class="card-eyebrow">кхмерский</div>
+                <div class="card-khmer">${word.k}</div>
+                <div class="card-transcription">${word.l} · ${word.r}</div>
+              </div>
+              <div class="card-face-back">
+                <div class="card-eyebrow">перевод</div>
+                <div class="card-russian">${word.ru}</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      `).join('')}
+    </div>` +
+    (showArrows ? `<button class="fav-nav-arrow" id="fav-down">▼ прокрутить вниз</button>` : '');
+
+  document.getElementById('fav-back-btn').addEventListener('click', closeFavoritesView);
+
+  // star tap removes the word from favorites — the only way to remove it here
+  screen.querySelectorAll('.fav-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleFavorite(Number(btn.dataset.id));
+      vibrate([15]);
+      renderFavoritesScreen();
+    });
+  });
+
+  if (showArrows) {
+    const list = document.getElementById('fav-list');
+    document.getElementById('fav-up').addEventListener('click', () => {
+      list.scrollBy({ top: -list.clientHeight / 2, behavior: 'smooth' });
+    });
+    document.getElementById('fav-down').addEventListener('click', () => {
+      list.scrollBy({ top: list.clientHeight / 2, behavior: 'smooth' });
+    });
+  }
+}
+
+
 function initCards() {
   state.cards.queue = buildCardQueue();
   state.cards.idx = 0;
@@ -1503,6 +1788,7 @@ function renderCard() {
     <input type="checkbox" id="card-flip">
 
     <div class="card-wrap">
+      <button class="fav-btn${isFavorite(word.id) ? ' active' : ''}" id="fav-btn" aria-label="В избранное">${isFavorite(word.id) ? '★' : '☆'}</button>
       <label class="card-label" for="card-flip">
         <div class="card-face-front">${frontHTML}</div>
         <div class="card-face-back">${backHTML}</div>
@@ -1527,6 +1813,18 @@ function renderCard() {
   // Vibrate on flip
   document.getElementById('card-flip').addEventListener('change', () => {
     state.cards.flipped = true;
+    vibrate([15]);
+  });
+
+  // FAVORITE TOGGLE
+  document.getElementById('fav-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(word.id);
+    const btn = e.currentTarget;
+    const nowFav = isFavorite(word.id);
+    btn.classList.toggle('active', nowFav);
+    btn.textContent = nowFav ? '★' : '☆';
     vibrate([15]);
   });
 
@@ -1719,6 +2017,10 @@ function renderStats() {
         <div class="stat-num">${notStarted}</div>
         <div class="stat-label">Не начато</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-num">${Object.keys(favorites).length}</div>
+        <div class="stat-label">★ Избранное</div>
+      </div>
     </div>
 
     <div class="section-title">Активность за неделю</div>
@@ -1777,7 +2079,7 @@ function renderStats() {
 // EXPORT / IMPORT
 // ════════════════════════════════════════
 function exportProgress() {
-  const data = { srs, streakData, exportedAt: new Date().toISOString(), version: 1 };
+  const data = { srs, streakData, favorites, exportedAt: new Date().toISOString(), version: 1 };
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -1795,6 +2097,7 @@ function importProgress(e) {
       const data = JSON.parse(ev.target.result);
       if (data.srs) { srs = data.srs; saveSRS(); }
       if (data.streakData) { streakData = data.streakData; saveStreak(); }
+      if (data.favorites) { favorites = data.favorites; saveFavorites(); }
       renderHeader();
       renderStats();
       showToast('✅ Прогресс загружен');
@@ -1818,8 +2121,8 @@ document.getElementById('modal-cancel').addEventListener('click', () => {
 });
 
 document.getElementById('modal-confirm').addEventListener('click', () => {
-  srs = {}; streakData = {lastDate:null,streak:0,history:[]};
-  saveSRS(); saveStreak();
+  srs = {}; streakData = {lastDate:null,streak:0,history:[]}; favorites = {};
+  saveSRS(); saveStreak(); saveFavorites();
   document.getElementById('modal-overlay').classList.remove('show');
   renderHeader();
   renderStats();
