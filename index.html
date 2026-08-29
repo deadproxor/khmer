@@ -261,7 +261,7 @@ nav {
   color: var(--cream-dim);
   transition: transform 0.15s;
 }
-.fav-btn.active { color: var(--gold); }
+.fav-btn.active { color: var(--gold-dim); opacity: 0.85; }
 .fav-btn:active { transform: scale(0.85); }
 
 .card-face-front,
@@ -404,7 +404,7 @@ nav {
   scroll-snap-type: y mandatory;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
 }
 .fav-list::-webkit-scrollbar { display: none; }
 .fav-list { scrollbar-width: none; }
@@ -412,11 +412,12 @@ nav {
 .fav-card-item {
   scroll-snap-align: start;
   flex-shrink: 0;
-  height: calc(50% - 6px);
-  min-height: 150px;
+  height: calc((100% - 30px) / 6);
+  min-height: 160px;
   position: relative;
 }
 .fav-card-item .card-wrap { height: 100%; }
+.fav-card-item .card-label { height: 100%; }
 .fav-card-item .card-face-front,
 .fav-card-item .card-face-back {
   min-height: 0;
@@ -1685,10 +1686,10 @@ function renderFavoritesScreen() {
     return;
   }
 
-  const showArrows = favWords.length > 2;
+  const showArrows = favWords.length > 6;
 
   screen.innerHTML = header +
-    (showArrows ? `<button class="fav-nav-arrow" id="fav-up">▲ прокрутить вверх</button>` : '') +
+    (showArrows ? `<button class="fav-nav-arrow" id="fav-up">▲</button>` : '') +
     `<div class="fav-list" id="fav-list">
       ${favWords.map(word => `
         <div class="fav-card-item">
@@ -1697,7 +1698,6 @@ function renderFavoritesScreen() {
             <button class="fav-btn active" data-id="${word.id}" aria-label="Убрать из избранного">★</button>
             <label class="card-label" for="fav-flip-${word.id}">
               <div class="card-face-front">
-                <div class="card-eyebrow">кхмерский</div>
                 <div class="card-khmer">${word.k}</div>
                 <div class="card-transcription">${word.l} · ${word.r}</div>
               </div>
@@ -1710,7 +1710,7 @@ function renderFavoritesScreen() {
         </div>
       `).join('')}
     </div>` +
-    (showArrows ? `<button class="fav-nav-arrow" id="fav-down">▼ прокрутить вниз</button>` : '');
+    (showArrows ? `<button class="fav-nav-arrow" id="fav-down">▼</button>` : '');
 
   document.getElementById('fav-back-btn').addEventListener('click', closeFavoritesView);
 
